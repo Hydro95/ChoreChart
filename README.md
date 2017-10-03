@@ -17,20 +17,20 @@ In order to make this clear + avoid most merge conflicts, you should first make 
 
 On this page, you'll see a fork button in the top right. Click that and the repo will be forked to your own github account. Clone your new version into a directory on your computer in a terminal window using
 
-{% highlight %}
+```
   git clone [your new forked repo url]
-{% endhighlight %}
+```
 
 ## Set up remotes
 
 Now that you have your own forked repo on your computer you need to set up remotes so you can fetch updates from the main repo. Enter the working directory of the repo on your computer and type into a terminal
 
-{% highlight %}
+```
   git remote add upstream https://github.com/Hydro95/ChoreChart.git
   git fetch upstream
-{% endhighlight %}
+```
 
-Performing {% highlight %} git fetch upstream {% endhighlight %} will fetch changes from the main repository and merge them with your fork. Make sure you always run this before making any changes. To double check, make sure the amount of commits on the main repo matches the amount of commits on your forked repo (visible on the github site)
+Performing ```git fetch upstream``` will fetch changes from the main repository and merge them with your fork. Make sure you always run this before making any changes. To double check, make sure the amount of commits on the main repo matches the amount of commits on your forked repo (visible on the github site)
 
 ## Make changes
 
