@@ -13,32 +13,17 @@ LEAD: Joshua Vinge, 8655939
 
 In order to make this clear + avoid most merge conflicts, you should make a pull request on this repo after coding in your own branch so changes can be reviewed + conflicts can be resolved easier. Here is what you need to do:
 
-## Fork the repo
+## Make a branch
 
-On this page, you'll see a fork button in the top right. Click that and the repo will be forked to your own github account. Clone your new version into a directory on your computer in a terminal window using
-
-```
-  git clone [your new forked repo url]
-```
-
-## Set up remotes
-
-Now that you have your own forked repo on your computer you need to set up remotes so you can fetch updates from the main repo. Enter the working directory of the repo on your computer and type into a terminal
-
-```
-  git remote add upstream https://github.com/Hydro95/ChoreChart.git
-  git fetch upstream
-```
-
-Performing ```git fetch upstream``` will fetch changes from the main repository and merge them with your fork. Make sure you always run this before making any changes. To double check, make sure the amount of commits on the main repo matches the amount of commits on your forked repo (visible on the github site)
+You should use ```git branch [your name]``` to create a branch that will host your version of the project while you make changes. Switch to this branch by typing ```git checkout [your name]```.
 
 ## Make changes
 
-You can now make any changes and commit/push like normal. Your changes will go to your own fork instead of the main repo so you won't have to worry about merge conflicts until you make a pull request later.
+You can now make any changes and commit/push like normal. Make sure you push using ```git push origin [your name]``` so the changes go into your branch instead of the main repo.
 
 ## Making a pull request
 
-When you're finished making changes, commit and push your changes. Visit your forked repo page and you'll see a button called "New Pull Request" To the left of the branch selector. Click this and compare the changes to the master branch. If there are no conflicts the files will be marked as able to merge without conflict and you can submit the pull request. The pull request will appear on the main repo page to be reviewed and closed, which merges the changes into the main repo.
+When you're finished making changes, commit and push your changes. Visit the repo page and you'll see a button called "New Pull Request" To the left of the branch selector. Click this and compare the changes to the master branch. If there are no conflicts the files will be marked as able to merge without conflict and you can submit the pull request. The pull request will appear on the main repo page to be reviewed and closed, which merges the changes into the main repo.
 
 # PS
 
