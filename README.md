@@ -3,7 +3,7 @@
 This is a chore chart to keep track of chores around the house, ideal for families or other
 people living together.
 
-This project was created in 2017 for the course SEG2105 at the University of Ottawa.
+This project was created in 2017 for the course SEG2105 at the University of Ottawa, by the group "sudo rm -rf /".
 
 # Contributors
 
@@ -11,7 +11,7 @@ LEAD: Joshua Vinge, 8655939
 
 # Contribution Instructions
 
-In order to make this clear + avoid most merge conflicts, you should first make your own fork of this repo, commit your changes to your own version, and then make a pull request on this repo so changes can be reviewed + conflicts can be resolved easier. Here is what you need to do:
+In order to make this clear + avoid most merge conflicts, you should make a pull request on this repo after coding in your own branch so changes can be reviewed + conflicts can be resolved easier. Here is what you need to do:
 
 ## Fork the repo
 
