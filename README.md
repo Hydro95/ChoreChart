@@ -11,7 +11,7 @@ LEAD: Joshua Vinge, 8655939
 
 # Contribution Instructions
 
-In order to make this clear + avoid most merge conflicts, you should first make your own fork of this repo, commit your changes to your own version, and then make a pull request on the github page so changes can be reviewed + conflicts can be resolved easier. Here is what you need to do:
+In order to make this clear + avoid most merge conflicts, you should first make your own fork of this repo, commit your changes to your own version, and then make a pull request on this repo so changes can be reviewed + conflicts can be resolved easier. Here is what you need to do:
 
 ## Fork the repo
 
@@ -38,7 +38,7 @@ You can now make any changes and commit/push like normal. Your changes will go t
 
 ## Making a pull request
 
-When you're finished making changes, commit and push your changes. Visit the github page for your fork and you'll see a new button called "New Pull Request" To the left of the branch selector. Click this and compare the changes to the master branch. If there are no conflicts the files will be marked as able to merge without conflict and you can submit the pull request. The pull request will appear on the main repo page to be reviewed and closed, which merges the changes into the main repo.
+When you're finished making changes, commit and push your changes. Visit your forked repo page and you'll see a button called "New Pull Request" To the left of the branch selector. Click this and compare the changes to the master branch. If there are no conflicts the files will be marked as able to merge without conflict and you can submit the pull request. The pull request will appear on the main repo page to be reviewed and closed, which merges the changes into the main repo.
 
 # PS
 
