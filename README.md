@@ -24,7 +24,3 @@ You can now make any changes and commit/push like normal. Make sure you push usi
 ## Making a pull request
 
 When you're finished making changes, commit and push your changes. Visit the repo page and you'll see a button called "New Pull Request" To the left of the branch selector. Click this and compare the changes to the master branch. If there are no conflicts the files will be marked as able to merge without conflict and you can submit the pull request. The pull request will appear on the main repo page to be reviewed and closed, which merges the changes into the main repo.
-
-# PS
-
-If you haven't already done so, make sure to sign up for Hacktoberfest at http://hacktoberfest.digitalocean.com/ . By making 4 pull requests or more during October you can get a bunch of free stickers and a T shirt.
