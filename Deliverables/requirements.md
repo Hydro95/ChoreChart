@@ -17,4 +17,5 @@
 1. The application must be ready for deployment by December 6th.
 1. The application must run on the earliest android SDK version allowed by the API methods used.
 1. The application should follow Google's standards for Material Design.
+1. The application shall run on Android 4.0 and up.
 1. The application must display the list of assigned tasks straight away from the time the app is opened so that tasks can be completed with one tap.
