@@ -14,12 +14,13 @@ Users use this use case to allocate task to themselves.
 This use case is for users to take on unallocated tasks. Any task that is either new or has been released by another user is considered unallocated.
 
 ## Related Use Cases
-Specialization of: Allocate Task //Do we need hierchies?
+Specialization of: Allocate Task **//Do we need hierchies?** testing
 
 ## Steps
-### Actor Action				System Responses
-1. Choose a task 				Confirmation dialog appears
-1. Confirm allocation			Confirmation dialog dissapears
+### Actor Action		|		System Responses
+--------------			|		----------------
+1. Choose a task 		|		Confirmation dialog appears
+1. Confirm allocation	|		Confirmation dialog dissapears
 
 ## Postconditions
 * The unallocated task is now allocated.
