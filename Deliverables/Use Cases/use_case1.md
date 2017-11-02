@@ -14,7 +14,7 @@ Users use this use case to allocate task to themselves.
 This use case is for users to take on unallocated tasks. Any task that is either new or has been released by another user is considered unallocated.
 
 ## Related Use Cases
-Specialization of: Allocate Task **//Do we need hierarchies?** testing
+Specialization of: Allocate Task
 
 ## Steps
 | Actor Action | System Responses |
