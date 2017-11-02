@@ -19,13 +19,11 @@ Set up app (If no accounts exist)
 ## Steps
 | Actor Action | System Responses |
 | --- | --- |
-|  | If no accounts exist, prompt user to set up app |
-| Choose "Create Account" from settings menu | Screen changes to display input fields for new account |
+| opens app for first time | If no accounts exist, prompt user to set up app |
+| Choose "Create Account" from settings menu | Prompts user for new account information |
 | User enters Name and chooses privilege level (Adult/Child) |  |
-| User confirms information by tapping "Okay" button at bottom of screen | Toast informing the user the account has been created |
-| | Screen changes back to default task list |
+| User confirms information | Confirm to user account has been created |
 
 ## Post-conditions
 * The account will now be available to choose when assigning tasks
-* The account will now appear on the switch user screen
-* The user will now be on the main task list screen.
+* The account will now appear in the list of users.

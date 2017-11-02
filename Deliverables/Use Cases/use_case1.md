@@ -1,26 +1,24 @@
-# Name: Allocate Task to Self
+# Name: Allocate Task
 
 ## Actors
 * User
 
 ## Goals
-Users use this use case to allocate task to themselves.
+Users use this use case to allocate tasks.
 
 ## Preconditions:
 * An unallocated task must exist.
-* A user must be signed into the account they wish to allocate the task to.
+* A user must either be a parent or be logged into the account they wish to assign the task to.
 
 ## Summary
-This use case is for users to take on unallocated tasks. Any task that is either new or has been released by another user is considered unallocated.
-
-## Related Use Cases
-Specialization of: Allocate Task **//Do we need hierarchies?** testing
+This use case is for users to allocate unallocated tasks. Any task that is either new or has been released by another user is considered unallocated.
 
 ## Steps
 | Actor Action | System Responses |
 | --- | --- |
-| Choose a task | Confirmation dialog appears |
-| Confirm allocation | Confirmation dialog disappears |
+| Choose a task | (If user is a parent) Prompt user for account to allocate task to (otherwise skip to next system response) |
+| Select a user to allocate to | Prompt user for confirmation
+| Confirm allocation | confirm to user action has been completed |
 
 ## Post-conditions
 * The unallocated task is now allocated.
