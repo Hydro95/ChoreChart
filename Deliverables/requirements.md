@@ -12,6 +12,13 @@
 1. The application must allow an adult to delete a task whether it has been completed or not.
 1. The application must allow a user to add an optional time for task completion.
 1. The application must allow a user to view a history of their completed tasks.
+1. The application must allow an adult to create a task
+1. The application must allow an adult to assign a task to another user.
+1. The application must allow an adult to create a "Home" to associate other users with.
+1. The application must allow a user to add, edit or remove items from the communal shopping list.
+1. The application must allow a user to mark an item in the communal shopping list as purchased.
+1. The application must allow a user to leave messages on a communal "Message Board".
+1. The application must allow an adult to edit or delete existing messages on the "Message Board".
 
 ## Non-functional requirements
 1. The application must be ready for deployment by December 6th.
