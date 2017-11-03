@@ -1,4 +1,4 @@
-# Name: Create New Account
+# Use Case 2: Create New Account
 
 ## Actors
 * Adult
