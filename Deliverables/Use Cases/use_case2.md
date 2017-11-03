@@ -19,7 +19,7 @@ Set up app (If no accounts exist)
 ## Steps
 | Actor Action | System Responses |
 | --- | --- |
-| opens app for first time | If no accounts exist, prompt user to set up app |
+| Opens app for first time | If no accounts exist, prompt user to set up app |
 | Choose "Create Account" from settings menu | Prompts user for new account information |
 | User enters Name and chooses privilege level (Adult/Child) |  |
 | User confirms information | Confirm to user account has been created |
