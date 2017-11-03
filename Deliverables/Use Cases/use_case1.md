@@ -1,4 +1,4 @@
-# Name: Allocate Task
+# Use Case 1: Allocate Task
 
 ## Actors
 * User
