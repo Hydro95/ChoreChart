@@ -1,0 +1,40 @@
+class User {
+	String name;
+
+}
+
+class Parent {
+	isA User;
+}
+
+class Task {
+	Date deadline;
+	Time timeLine;
+	String comment;
+	boolean completed;
+	Repeat frequency;
+
+	enum Repeat {NEVER, DAILY, WEEKLY, MONTHY, YEARLY};
+
+	* -- 1 User;
+}
+
+
+
+class Tools {
+	String name;
+
+	* -- * Task;
+}
+
+class ShoppingList {
+	* -- User
+}
+
+class Facade {
+
+	1 -- * User;
+	1 -- * Task;
+	1 -- * Tools;
+	1 -- * ShoppingList;
+}
