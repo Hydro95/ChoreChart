@@ -17,6 +17,21 @@ class Task {
 	enum Repeat {NEVER, DAILY, WEEKLY, MONTHY, YEARLY};
 
 	* -- 1 User;
+
+	status {
+		Unallocated {
+			allocateTask -> InProgress;
+			deadlinePassed -> Failed;
+		}
+		InProgress {
+			markCompleted -> Completed;
+			release -> Unallocated;
+			deadlinePassed -> Failed;
+		}
+		Completed {}
+		Failed { extendDeadline -> Unallocated; }
+	}
+
 }
 
 
