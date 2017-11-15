@@ -1,22 +1,26 @@
 class User {
 	String name;
-
+	
+	void allocateTask(Task task) {}
 }
 
 class Parent {
 	isA User;
+	void createNewAccount(String name) {}
 }
 
 class Task {
+
+	enum Repeat {NEVER, DAILY, WEEKLY, MONTHY, YEARLY}
+	
 	Date deadline;
-	Time timeLine;
+	Time length;
 	String comment;
 	boolean completed;
 	Repeat frequency;
+	
 
-	enum Repeat {NEVER, DAILY, WEEKLY, MONTHY, YEARLY};
-
-	* -- 1 User;
+	void markCompleted() {}
 
 	status {
 		Unallocated {
@@ -34,6 +38,13 @@ class Task {
 
 }
 
+class Allocation {
+
+	void markCompleted() {}
+
+	0..1 -- 1 Task;
+	* -- 1 User;
+}
 
 
 class Tools {
@@ -43,10 +54,22 @@ class Tools {
 }
 
 class ShoppingList {
-	* -- User
+	String location; // example hardware or grocery store
+	List<String> items;
+
+	void add(String item) {}
+	void delete(int index) {}
+
+	1 -- 1 Task;
 }
 
+
 class Facade {
+
+	createNewAccount(String name) {}
+	allocateTask(User user, Task task) {}
+	markCompleted(User user, Task, task) {}
+	addToShopping(ShoppingList list, String item) {}
 
 	1 -- * User;
 	1 -- * Task;
