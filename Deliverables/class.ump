@@ -59,10 +59,18 @@ class ShoppingList {
 
 	void add(String item) {}
 	void delete(int index) {}
+	void createList(String name, Home, home, String[] items) {}
 
 	1 -- 1 Task;
 }
 
+
+class Home {
+	String name
+
+	1 -- 1..* Parent
+	1 -- * User
+}
 
 class Facade {
 
