@@ -1,10 +1,10 @@
-# Use Case 3: Create A Communial Shopping List
+# Use Case 3: Create A Communal Shopping List
 
 ## Actors
 * Adult
 
 ## Goals
-Create a new communial shopping list and associate it with a Home.
+Create a new communal shopping list and associate it with a Home.
 
 ## Preconditions:
 * The user must be logged in as an adult.
@@ -27,5 +27,5 @@ Remove an item on the shopping list.
 | | Confirm to user that the shopping list is saved. |
 
 ## Post-conditions
-* The shopping list will now be avaliable on a list of shopping lists for a given Home.
+* The shopping list will now be available on a list of shopping lists for a given Home.
 * The shopping list can be modified by of the members of the Home.
