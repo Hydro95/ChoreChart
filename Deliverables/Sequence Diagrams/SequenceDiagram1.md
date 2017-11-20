@@ -1,22 +1,25 @@
 title Allocate Task
 
-":Parent"->+":GUI": modifyTask()
+"aParent:Parent"->+":GUI": modifyTask()
 ":GUI"->+":TaskModifier" : displayTaskModifier()
 ":TaskModifier"-->":GUI":
-":Parent"->":GUI" : allocateUser()
+"aParent:Parent"->":GUI" : allocateUser()
 ":GUI"->+":UserSelect" : displayUserSelect()
 ":UserSelect"-->":GUI":
-":Parent"-> ":GUI" : selectUser()
+"aParent:Parent"-> ":GUI" : selectUser()
 ":GUI"->":UserSelect":  aUser := selectUser()
 ":UserSelect"-->":TaskModifier":
 ":TaskModifier"-->":GUI":
 destroy ":UserSelect"
-":Parent"->":GUI": exitTaskModifier()
+"aParent:Parent"->":GUI": exitTaskModifier()
 ":GUI"->":GUI" : confirm := promptConfirmAction("Save Changes?")
 
 opt confirm
+
     ":GUI"->":Task" : allocateUser(aUser)
-    ":Task"-->":GUI":
-    ":TaskModifier"-->":GUI" : DisplayTasks()
-    destroy ":TaskModifier"
+    ":Task"-->":TaskModifier":
+
 end
+
+":TaskModifier"-->":GUI" : DisplayTasks()
+destroy ":TaskModifier"
