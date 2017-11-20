@@ -1,22 +1,31 @@
 title Allocate Task
 
-":Parent"->+":GUI": modifyTask()
+"Parent Actor"->+":GUI" : selectTask()
+":GUI"->+":Task" : task := selectTask()
+
+"Parent Actor"->":GUI": modifyTask()
 ":GUI"->+":TaskModifier" : displayTaskModifier()
-":TaskModifier"-->":GUI":
-":Parent"->":GUI" : allocateUser()
+":TaskModifier"-->":GUI" :
+
+
+"Parent Actor"->":GUI" : allocateUser()
 ":GUI"->+":UserSelect" : displayUserSelect()
 ":UserSelect"-->":GUI":
-":Parent"-> ":GUI" : selectUser()
+"Parent Actor"-> ":GUI" : selectUser()
 ":GUI"->":UserSelect":  aUser := selectUser()
 ":UserSelect"-->":TaskModifier":
 ":TaskModifier"-->":GUI":
 destroy ":UserSelect"
-":Parent"->":GUI": exitTaskModifier()
+"Parent Actor"->":GUI": exitTaskModifier()
 ":GUI"->":GUI" : confirm := promptConfirmAction("Save Changes?")
 
 opt confirm
-    ":GUI"->":Task" : allocateUser(aUser)
-    ":Task"-->":GUI":
-    ":TaskModifier"-->":GUI" : DisplayTasks()
-    destroy ":TaskModifier"
+
+    ":GUI"->":Task" : task.allocateUser(aUser)
+    ":Task"-->":TaskModifier":
+
 end
+
+":TaskModifier"-->":GUI" : DisplayTasks()
+destroy ":TaskModifier"
+
