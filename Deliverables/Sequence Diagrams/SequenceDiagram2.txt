@@ -1,0 +1,16 @@
+title Create New Account
+
+"Human Actor"->+":GUI": onCreate()
+":AppSettings"->":AppSettings": numAccounts := accounts.length
+
+opt numAccounts == 0
+    ":AppSettings"->":GUI": firstTimeSetup()
+    "Human Actor"->":GUI": collectFirstTimeSetupInputs()
+    ":GUI"->":AppSettings": completeFirstTimeSetup()
+end
+
+"Human Actor"->":GUI": onCreateAccountClick()
+":GUI"->":GUI": getNewAccountInfo()
+"Human Actor"->":GUI": onConfirmNewAccountInfoClick()
+":GUI"->":AccountStorage": addNewAccount()
+":AccountStorage"-->":GUI":
