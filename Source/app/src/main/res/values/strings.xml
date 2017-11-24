@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ChoreChart</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="tab_text_1">Shopping</string>
+    <string name="tab_text_2">Tasks</string>
+    <string name="tab_text_3">People</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="teamAvatarDescription">Team Logo Avatar</string>
 </resources>
