@@ -140,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0)
                 return new TasksFragment();
+            else if (position == 1)
+                return new ShoppingListFragment();
             return PlaceholderFragment.newInstance(position + 1);
         }
 
