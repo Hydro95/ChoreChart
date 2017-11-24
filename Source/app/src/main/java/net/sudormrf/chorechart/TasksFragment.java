@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 public class TasksFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityC2reated(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
