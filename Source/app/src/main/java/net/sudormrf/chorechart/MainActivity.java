@@ -100,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
           
             else if (position == 1)
                 return new ShoppingListFragment();
+
+            else if (position == 2)
+                return new PeopleFragment();
           
             else
                 return new TasksFragment();
