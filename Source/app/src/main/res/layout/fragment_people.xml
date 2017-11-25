@@ -9,9 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:numColumns="3"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:scrollbars="none"
-        android:verticalSpacing="10dp"
+        android:verticalSpacing="5dp"
         tools:layout_editor_absoluteX="5dp"
         tools:layout_editor_absoluteY="5dp" />
 </android.support.constraint.ConstraintLayout>
