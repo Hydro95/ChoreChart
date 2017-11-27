@@ -35,9 +35,9 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
         TextView name = convertView.findViewById(R.id.userName);
         TextView points = convertView.findViewById(R.id.userPoints);
         // Populate the data into the template view using the data object
-        icon.setImageResource(user.icon);
-        name.setText(user.name);
-        points.setText(Integer.toString(user.points));
+        icon.setImageResource(user.getIcon());
+        name.setText(user.getName());
+        points.setText(Integer.toString(user.getPoints()));
         // Return the completed view to render on screen
         return convertView;
     }
