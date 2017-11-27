@@ -1,5 +1,7 @@
 package net.sudormrf.chorechart;
 
+import java.io.Serializable;
+
 /**
  * Created by Josh on 2017-11-24.
  */

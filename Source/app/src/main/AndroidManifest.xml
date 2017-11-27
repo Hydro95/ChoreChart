@@ -20,6 +20,18 @@
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+        <!-- From https://developer.android.com/training/basics/firstapp/starting-activity.html -->
+        <!-- Adds a back button to the menu bar -->
+        <activity android:name=".UserModifierActivity"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
     </application>
+
+
 
 </manifest>

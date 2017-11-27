@@ -6,20 +6,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 /**
- * Created by Josh on 2017-11-24.
+ * Created by Josh on 2017-11-27.
  */
 
-//Code adapted from github wiki "Using an ArrayAdapter with ListView"
-//at link: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
-public class UserArrayAdapter extends ArrayAdapter<User> {
 
-    UserArrayAdapter(Context context, ArrayList<User> users) {
+public class UserModifierAdapter extends ArrayAdapter<User> {
+
+    UserModifierAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
     }
 
@@ -29,11 +29,11 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
         User user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_card_layout, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_modify_user, parent, false);
         }
         // Lookup view for data population
         ImageView icon = convertView.findViewById(R.id.userIcon);
-        TextView name = convertView.findViewById(R.id.userName);
+        EditText name = convertView.findViewById(R.id.userName);
         TextView points = convertView.findViewById(R.id.userPoints);
 
         //create rounded versions of the stored profile images
@@ -47,4 +47,3 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
         return convertView;
     }
 }
-
