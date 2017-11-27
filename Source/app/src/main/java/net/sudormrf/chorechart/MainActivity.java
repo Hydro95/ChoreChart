@@ -1,5 +1,6 @@
 package net.sudormrf.chorechart;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //handle switching to the user modifier activity
+    public void modifyUser(View view) {
+        Intent intent = new Intent(this, UserModifierActivity.class);
+        startActivity(intent);
     }
 
     /**
