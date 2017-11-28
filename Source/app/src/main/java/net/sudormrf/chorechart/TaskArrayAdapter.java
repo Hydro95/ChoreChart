@@ -40,8 +40,8 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
             icon.setImageResource(task.getUser().getIcon());
         else
             icon.setImageResource(R.drawable.add_new);
-        name.setText(task.name);
-        deadline.setText("Deadline:" + task.deadline.toString());
+        name.setText(task.getName());
+        deadline.setText("Deadline:" + task.getDeadline().toString());
         // Return the completed view to render on screen
         return convertView;
     }
