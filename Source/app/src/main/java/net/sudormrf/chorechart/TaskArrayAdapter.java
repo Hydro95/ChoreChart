@@ -36,9 +36,12 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         TextView name = (TextView) convertView.findViewById(R.id.taskName);
         TextView deadline = (TextView) convertView.findViewById(R.id.deadline);
         // Populate the data into the template view using the data object
-        icon.setImageResource(task.icon);
+        if(task.hasAllocation())
+            icon.setImageResource(task.getUser().getIcon());
+        else
+            icon.setImageResource(R.drawable.add_new);
         name.setText(task.name);
-        deadline.setText("Deadline:" + task.deadline);
+        deadline.setText("Deadline:" + task.deadline.toString());
         // Return the completed view to render on screen
         return convertView;
     }
