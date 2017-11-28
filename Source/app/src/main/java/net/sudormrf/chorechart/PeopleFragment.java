@@ -29,13 +29,13 @@ public class PeopleFragment extends Fragment {
         //generate some dummy users for the UI
         for (int i = 0; i < 5; i++) {
             String name = "Anon" + Integer.toString((int)Math.round(Math.random() * 99));
-            User nextUser = new User(name,  R.drawable.ic_logo_mil);
+            User nextUser = Facade.getInstance().addUser(name, R.drawable.ic_logo_mil);
             nextUser.setPoints((int)Math.round(Math.random() * 99));
             users.add(nextUser);
         }
 
         //create the add user button
-        users.add(new User("New", R.drawable.add_new));
+        users.add(Facade.getInstance().addUser("New", R.drawable.add_new));
 
         UserArrayAdapter adapter = new UserArrayAdapter(getActivity(), users);
 

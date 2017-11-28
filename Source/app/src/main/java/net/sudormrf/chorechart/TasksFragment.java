@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -27,11 +28,7 @@ public class TasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tasks, container, false);
         ArrayList<Task> tasks = new ArrayList<Task>();
         for (int i = 0; i < 10; i++) {
-            if (i==1)
-                tasks.add(new Task("Clean Car", "You've already missed it...",
-                        R.drawable.ic_logo_mil));
-            else
-                tasks.add(new Task());
+            tasks.add(Facade.getInstance().addTask("Clean Car", "Now"));
         }
 
         TaskArrayAdapter adapter = new TaskArrayAdapter(getActivity(), tasks);
