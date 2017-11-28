@@ -1,31 +1,37 @@
 class User {
 	String name;
+	int points = 0;
 
-	void allocateTask(Task task) {}
+	void allocateTask(Task task) {
+		allocations.add(new Allocation(task, this);
+	} 
 }
 
 class Parent {
 	isA User;
-	void createNewAccount(String name) {}
+	void createNewAccount(String name) {
+
+	}
 }
 
 class Task {
 
 	enum Repeat {NEVER, DAILY, WEEKLY, MONTHY, YEARLY}
 
+	String name;
 	Date deadline;
-	Time length;
+	String duration;
 	String comment;
-	boolean completed;
-	Repeat frequency;
+	boolean completed = false;
+	Repeat frequency = NEVER;
 
-
-	void markCompleted() {}
-	allocateUser(User user) {}
+	User getUser() {
+		return allocation.getUser();
+	}
 
 	status {
 		Unallocated {
-			allocateTask -> InProgress;
+			setAllocation -> InProgress; //this should check if setAllocation returns true
 			deadlinePassed -> Failed;
 		}
 		InProgress {
@@ -62,24 +68,40 @@ class ShoppingList {
 	void delete(int index) {}
 	void createList(String name, Home, home, String[] items) {}
 
-	1 -- 1 Task;
+	1 -- 0..1 Task;
 }
 
 class Home {
-	String name
+	String name;
 
-	1 -- 1..* Parent
-	1 -- * User
+	1 -- 1..* Parent;
+	1 -- * User;
 }
 
 class Facade {
 
-	createNewAccount(String name) {}
-	allocateTask(User user, Task task) {}
-	markCompleted(User user, Task, task) {}
-	addToShopping(ShoppingList list, String item) {}
-	promptConfirmAction(String message) {}
-	modifyTask(Task task) {}
+	Home currentHome = null;
+	User currentUser = null;
+
+	void createNewAccount(String name) {
+		currentHome.addUser(name, this);
+	}
+
+	void allocateTask(User user, Task task) {
+		new Allocation(task, user);
+	}
+
+	boolean markCompleted(Task, task) {
+		if(currentUser == task.getUser())
+			return task.markCompleted()  // Not sure how to respond if task is not InProgress
+	}
+
+	void addToShopping(ShoppingList list, String item) {
+		list.add(item);
+	}
+
+	//void promptConfirmAction(String message) {} //WTF is this?
+	//void modifyTask(Task task) {}
 
 	1 -- * User;
 	1 -- * Task;
