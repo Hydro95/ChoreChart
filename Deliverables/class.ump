@@ -113,9 +113,6 @@ class Facade {
 		return user;
 	}
 
-	//void promptConfirmAction(String message) {} //WTF is this?
-	//void modifyTask(Task task) {}
-
 	1 -- * User;
 	1 -- * Task;
 	1 -- * Tools;
