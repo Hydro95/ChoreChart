@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 20 "../../../class.ump"
+// line 21 "../../../class.ump"
 public class Task
 {
 
@@ -19,6 +19,7 @@ public class Task
   private String comment;
   private boolean completed;
   private Repeat frequency;
+  private String id;
 
   //Task State Machines
   enum Status { Unallocated, InProgress, Completed, Failed }
@@ -41,6 +42,7 @@ public class Task
     comment = "";
     completed = false;
     frequency = Repeat.NEVER;
+    id = Facade.getInstance().getTaskRef().push().getKey();
     tools = new ArrayList<Tools>();
     boolean didAddFacade = setFacade(aFacade);
     if (!didAddFacade)
@@ -102,6 +104,14 @@ public class Task
     return wasSet;
   }
 
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getName()
   {
     return name;
@@ -130,6 +140,11 @@ public class Task
   public Repeat getFrequency()
   {
     return frequency;
+  }
+
+  public String getId()
+  {
+    return id;
   }
 
   public String getStatusFullName()
@@ -435,7 +450,7 @@ public class Task
     placeholderFacade.removeTask(this);
   }
 
-  // line 32 "../../../class.ump"
+  // line 35 "../../../class.ump"
   public User getUser(){
     return allocation.getUser();
   }
@@ -449,7 +464,8 @@ public class Task
             "deadline" + ":" + getDeadline()+ "," +
             "duration" + ":" + getDuration()+ "," +
             "comment" + ":" + getComment()+ "," +
-            "completed" + ":" + getCompleted()+ "]" + System.getProperties().getProperty("line.separator") +
+            "completed" + ":" + getCompleted()+ "," +
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "frequency" + "=" + (getFrequency() != null ? !getFrequency().equals(this)  ? getFrequency().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "allocation = "+(getAllocation()!=null?Integer.toHexString(System.identityHashCode(getAllocation())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
@@ -459,7 +475,7 @@ public class Task
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 22 ../../../class.ump
+  // line 23 ../../../class.ump
   public enum Repeat 
   {
     NEVER, DAILY, WEEKLY, MONTHY, YEARLY

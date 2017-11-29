@@ -4,10 +4,11 @@ class User {
 	String name;
 	int points = 0;
 	int icon = 0;
+	String id = Facade.getInstance().getUserRef().push().getKey();
 
 	//void allocateTask(Task task) {
 	//	allocations.add(new Allocation(task, this));
-	//} 
+	//}
 }
 
 class Parent {
@@ -27,6 +28,8 @@ class Task {
 	String comment = "";
 	boolean completed = false;
 	Repeat frequency = Repeat.NEVER;
+
+	String id = Facade.getInstance().getTaskRef().push().getKey();
 
 	User getUser() {
 		return allocation.getUser();
@@ -67,6 +70,8 @@ class ShoppingList {
 	String location; // example hardware or grocery store
 	String[] items;
 
+	String id = Facade.getInstance().getShoppingRef().push().getKey();
+
 	void add(String item) {}
 	void delete(int index) {}
 	//void createList(String name, Home home, String[] items) {}
@@ -83,6 +88,86 @@ class Home {
 
 class Facade {
 	singleton;
+
+	FirebaseDatabase database = FirebaseDatabase.getInstance();
+	DatabaseReference userRef = database.getReference("users");
+	DatabaseReference shoppingRef = database.getReference("shopping");
+	DatabaseReference taskRef = database.getReference("tasks");
+
+	// Listeners
+	void createListeners() {
+		userRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				users.clear();
+
+				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+					User user = userSnapshot.getValue(User.class);
+					users.add(user);
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+					//don't worry this will definitely never fail (nope)
+			}
+		});
+
+		shoppingRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				shoppingLists.clear();
+
+				for (DataSnapshot shoppingListSnapshot : dataSnapshot.getChildren()) {
+					ShoppingList list = shoppingListSnapshot.getValue(ShoppingList.class);
+					shoppingLists.add(list);
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+					//don't worry this will probably never ever fail (never ever)
+			}
+		});
+
+		taskRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				tasks.clear();
+
+				for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+					Task task = taskSnapshot.getValue(Task.class);
+					tasks.add(task);
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+					//don't worry this will never fail (not even once)
+			}
+		});
+	}
+
+
+	void publishUsers() {
+		for (User user : users) {
+			userRef.child(user.getId()).setValue(user);
+		}
+	}
+
+	void publishTasks() {
+		for (Task task : tasks) {
+			taskRef.child(task.getId()).setValue(task);
+		}
+	}
+
+	void publishShoppingLists() {
+		for (ShoppingList list : shoppingLists) {
+			shoppingRef.child(list.getId()).setValue(list);
+		}
+	}
+
+	//END OF DATABASE ZONE//
 
 	Home currentHome = new Home("Test Home");
 	User currentUser = null;
@@ -112,9 +197,6 @@ class Facade {
 		user.setIcon(icon);
 		return user;
 	}
-
-	//void promptConfirmAction(String message) {} //WTF is this?
-	//void modifyTask(Task task) {}
 
 	1 -- * User;
 	1 -- * Task;

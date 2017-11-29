@@ -3,7 +3,7 @@
 
 package net.sudormrf.chorechart;
 
-// line 51 "../../../class.ump"
+// line 54 "../../../class.ump"
 public class Allocation
 {
 
@@ -107,7 +107,7 @@ public class Allocation
     placeholderUser.removeAllocation(this);
   }
 
-  // line 53 "../../../class.ump"
+  // line 56 "../../../class.ump"
   public void markCompleted(){
     
   }
