@@ -15,6 +15,7 @@ import android.view.View;
 
 import android.widget.Toast;
 
+
 public class MainActivity extends AppCompatActivity {
 
     /**
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        Facade.getInstance().createListeners(); //for the database
+
     }
 
 

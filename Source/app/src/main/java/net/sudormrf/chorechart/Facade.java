@@ -2,9 +2,15 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.*;
 
-// line 84 "../../../class.ump"
+// line 89 "../../../class.ump"
 public class Facade
 {
 
@@ -19,6 +25,10 @@ public class Facade
   //------------------------
 
   //Facade Attributes
+  private FirebaseDatabase database;
+  private DatabaseReference userRef;
+  private DatabaseReference shoppingRef;
+  private DatabaseReference taskRef;
   private Home currentHome;
   private User currentUser;
 
@@ -34,6 +44,10 @@ public class Facade
 
   private Facade()
   {
+    database = FirebaseDatabase.getInstance();
+    userRef = database.getReference("users");
+    shoppingRef = database.getReference("shopping");
+    taskRef = database.getReference("tasks");
     currentHome = new Home("Test Home");
     currentUser = null;
     users = new ArrayList<User>();
@@ -55,6 +69,38 @@ public class Facade
   // INTERFACE
   //------------------------
 
+  public boolean setDatabase(FirebaseDatabase aDatabase)
+  {
+    boolean wasSet = false;
+    database = aDatabase;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setUserRef(DatabaseReference aUserRef)
+  {
+    boolean wasSet = false;
+    userRef = aUserRef;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setShoppingRef(DatabaseReference aShoppingRef)
+  {
+    boolean wasSet = false;
+    shoppingRef = aShoppingRef;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setTaskRef(DatabaseReference aTaskRef)
+  {
+    boolean wasSet = false;
+    taskRef = aTaskRef;
+    wasSet = true;
+    return wasSet;
+  }
+
   public boolean setCurrentHome(Home aCurrentHome)
   {
     boolean wasSet = false;
@@ -71,6 +117,29 @@ public class Facade
     return wasSet;
   }
 
+  public FirebaseDatabase getDatabase()
+  {
+    return database;
+  }
+
+  public DatabaseReference getUserRef()
+  {
+    return userRef;
+  }
+
+  public DatabaseReference getShoppingRef()
+  {
+    return shoppingRef;
+  }
+
+  public DatabaseReference getTaskRef()
+  {
+    return taskRef;
+  }
+
+  /**
+   * END OF DATABASE ZONE//
+   */
   public Home getCurrentHome()
   {
     return currentHome;
@@ -87,10 +156,6 @@ public class Facade
     return aUser;
   }
 
-  /**
-   * void promptConfirmAction(String message) {} //WTF is this?
-   * void modifyTask(Task task) {}
-   */
   public List<User> getUsers()
   {
     List<User> newUsers = Collections.unmodifiableList(users);
@@ -517,24 +582,103 @@ public class Facade
     }
   }
 
-  // line 91 "../../../class.ump"
+
+  /**
+   * Listeners
+   */
+  // line 99 "../../../class.ump"
+  public void createListeners(){
+    userRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				users.clear();
+
+				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+					User user = userSnapshot.getValue(User.class);
+					users.add(user);
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+					//don't worry this will definitely never fail (nope)
+			}
+		});
+
+		shoppingRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				shoppingLists.clear();
+
+				for (DataSnapshot shoppingListSnapshot : dataSnapshot.getChildren()) {
+					ShoppingList list = shoppingListSnapshot.getValue(ShoppingList.class);
+					shoppingLists.add(list);
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+					//don't worry this will probably never ever fail (never ever)
+			}
+		});
+
+		taskRef.addValueEventListener(new ValueEventListener() {
+			@Override
+			public void onDataChange(DataSnapshot dataSnapshot) {
+				tasks.clear();
+
+				for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
+					Task task = taskSnapshot.getValue(Task.class);
+					tasks.add(task);
+				}
+			}
+
+			@Override
+			public void onCancelled(DatabaseError error) {
+					//don't worry this will never fail (not even once)
+			}
+		});
+  }
+
+  // line 153 "../../../class.ump"
+  public void publishUsers(){
+    for (User user : users) {
+			userRef.child(user.getId()).setValue(user);
+		}
+  }
+
+  // line 159 "../../../class.ump"
+  public void publishTasks(){
+    for (Task task : tasks) {
+			taskRef.child(task.getId()).setValue(task);
+		}
+  }
+
+  // line 165 "../../../class.ump"
+  public void publishShoppingLists(){
+    for (ShoppingList list : shoppingLists) {
+			shoppingRef.child(list.getId()).setValue(list);
+		}
+  }
+
+  // line 176 "../../../class.ump"
   public void createNewAccount(String name){
     currentHome.addUser(name, this);
   }
 
-  // line 95 "../../../class.ump"
+  // line 180 "../../../class.ump"
   public void allocateTask(User user, Task task){
     new Allocation(task, user);
   }
 
-  // line 99 "../../../class.ump"
+  // line 184 "../../../class.ump"
   public boolean markCompleted(Task task){
     if(currentUser == task.getUser())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 105 "../../../class.ump"
+  // line 190 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
   }
@@ -543,7 +687,7 @@ public class Facade
   /**
    * Figure out if you can deel with this (automatically using currentX)
    */
-  // line 111 "../../../class.ump"
+  // line 196 "../../../class.ump"
   public User addUser(String aName, int icon){
     User user = new User(aName, currentHome, this);
 		user.setIcon(icon);
@@ -555,6 +699,10 @@ public class Facade
   {
 	  String outputString = "";
     return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "database" + "=" + (getDatabase() != null ? !getDatabase().equals(this)  ? getDatabase().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "userRef" + "=" + (getUserRef() != null ? !getUserRef().equals(this)  ? getUserRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "shoppingRef" + "=" + (getShoppingRef() != null ? !getShoppingRef().equals(this)  ? getShoppingRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "taskRef" + "=" + (getTaskRef() != null ? !getTaskRef().equals(this)  ? getTaskRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "currentHome" + "=" + (getCurrentHome() != null ? !getCurrentHome().equals(this)  ? getCurrentHome().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "currentUser" + "=" + (getCurrentUser() != null ? !getCurrentUser().equals(this)  ? getCurrentUser().toString().replaceAll("  ","    ") : "this" : "null")
      + outputString;

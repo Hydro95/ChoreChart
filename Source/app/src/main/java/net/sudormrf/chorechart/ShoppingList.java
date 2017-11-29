@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 66 "../../../class.ump"
+// line 69 "../../../class.ump"
 public class ShoppingList
 {
 
@@ -15,6 +15,7 @@ public class ShoppingList
   //ShoppingList Attributes
   private String location;
   private List<String> items;
+  private String id;
 
   //ShoppingList Associations
   private Facade facade;
@@ -27,6 +28,7 @@ public class ShoppingList
   {
     location = aLocation;
     items = new ArrayList<String>();
+    id = Facade.getInstance().getShoppingRef().push().getKey();
     boolean didAddFacade = setFacade(aFacade);
     if (!didAddFacade)
     {
@@ -58,6 +60,14 @@ public class ShoppingList
     boolean wasRemoved = false;
     wasRemoved = items.remove(aItem);
     return wasRemoved;
+  }
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
   }
 
   /**
@@ -98,6 +108,11 @@ public class ShoppingList
     return index;
   }
 
+  public String getId()
+  {
+    return id;
+  }
+
   public Facade getFacade()
   {
     return facade;
@@ -129,12 +144,12 @@ public class ShoppingList
     placeholderFacade.removeShoppingList(this);
   }
 
-  // line 70 "../../../class.ump"
+  // line 75 "../../../class.ump"
   public void add(String item){
     
   }
 
-  // line 71 "../../../class.ump"
+  // line 76 "../../../class.ump"
   public void delete(int index){
     
   }
@@ -144,7 +159,8 @@ public class ShoppingList
   {
 	  String outputString = "";
     return super.toString() + "["+
-            "location" + ":" + getLocation()+ "]" + System.getProperties().getProperty("line.separator") +
+            "location" + ":" + getLocation()+ "," +
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
      + outputString;
   }
