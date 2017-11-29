@@ -151,19 +151,19 @@ class Facade {
 
 	void publishUsers() {
 		for (User user : users) {
-			userRef.child(user.getId()).setValue(user);
+			this.getUserRef().child(user.getId()).setValue(user);
 		}
 	}
 
 	void publishTasks() {
 		for (Task task : tasks) {
-			taskRef.child(task.getId()).setValue(task);
+			this.getTaskRef().child(task.getId()).setValue(task);
 		}
 	}
 
 	void publishShoppingLists() {
 		for (ShoppingList list : shoppingLists) {
-			shoppingRef.child(list.getId()).setValue(list);
+			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
 	}
 

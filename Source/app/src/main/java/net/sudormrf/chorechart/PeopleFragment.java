@@ -25,19 +25,19 @@ public class PeopleFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_people, container, false);
-        ArrayList<User> users = new ArrayList();
+
         //generate some dummy users for the UI
         for (int i = 0; i < 5; i++) {
             String name = "Anon" + Integer.toString((int)Math.round(Math.random() * 99));
             User nextUser = Facade.getInstance().addUser(name, R.drawable.ic_logo_mil);
             nextUser.setPoints((int)Math.round(Math.random() * 99));
-            users.add(nextUser);
+
+            Facade.getInstance().addUser(nextUser);
         }
 
-        //create the add user button
-        users.add(Facade.getInstance().addUser("New", R.drawable.add_new));
+        Facade.getInstance().publishUsers();
 
-        UserArrayAdapter adapter = new UserArrayAdapter(getActivity(), users);
+        UserArrayAdapter adapter = new UserArrayAdapter(getActivity(), Facade.getInstance().getUsers());
 
         GridView gridView = view.findViewById(R.id.peopleGrid);
         gridView.setAdapter(adapter);

@@ -643,21 +643,21 @@ public class Facade
   // line 153 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
-			userRef.child(user.getId()).setValue(user);
+			this.getUserRef().child(user.getId()).setValue(user);
 		}
   }
 
   // line 159 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
-			taskRef.child(task.getId()).setValue(task);
+			this.getTaskRef().child(task.getId()).setValue(task);
 		}
   }
 
   // line 165 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
-			shoppingRef.child(list.getId()).setValue(list);
+			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
