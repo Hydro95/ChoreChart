@@ -1,10 +1,19 @@
 namespace net.sudormrf.chorechart;
 
+/*
+every time you recompile you must:
+
+manually add imports in android studio
+@Exclude the getters for complex objects
+
+*/
+
 class User {
 	String name;
 	int points = 0;
 	int icon = 0;
 	String id = Facade.getInstance().getUserRef().push().getKey();
+
 
 	//void allocateTask(Task task) {
 	//	allocations.add(new Allocation(task, this));
@@ -52,6 +61,8 @@ class Task {
 }
 
 class Allocation {
+
+	String id = Facade.getInstance().getDatabase().getReference("allocations").push().getKey();
 
 	void markCompleted() {}
 
@@ -102,7 +113,19 @@ class Facade {
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-					User user = userSnapshot.getValue(User.class);
+				    String name = (String) userSnapshot.child("name").getValue();
+                    int icon = Integer.valueOf(Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue());
+                    int points = (int) userSnapshot.child("points").getValue();
+                    String id = userSnapshot.getKey();
+
+                    Home home = Facade.getInstance().getCurrentHome();
+
+					User user = new User(name, home, Facade.getInstance());
+
+					user.setIcon(icon);
+					user.setPoints(points);
+					user.setId(id);
+
 					users.add(user);
 				}
 			}
@@ -151,7 +174,19 @@ class Facade {
 
 	void publishUsers() {
 		for (User user : users) {
-			this.getUserRef().child(user.getId()).setValue(user);
+			DatabaseReference ref = this.getUserRef().child(user.getId());
+
+			ref.child("name").setValue(user.getName());
+			ref.child("icon").setValue(user.getIcon());
+			ref.child("points").setValue(user.getPoints());
+
+			DatabaseReference allocRef = ref.child("allocations");
+			for (Allocation alloc : user.getAllocations()) {
+				allocRef.child(alloc.getId()).setValue(alloc.getId());
+			}
+
+
+
 		}
 	}
 
@@ -168,6 +203,10 @@ class Facade {
 	}
 
 	//END OF DATABASE ZONE//
+
+	String getAllocationId(Allocation alloc) {
+		return alloc.getId();
+	}
 
 	Home currentHome = new Home("Test Home");
 	User currentUser = null;

@@ -4,7 +4,13 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 3 "../../../class.ump"
+/**
+ * every time you recompile you must:
+ * 
+ * manually add imports in android studio
+ * @Exclude the getters for complex objects
+ */
+// line 11 "../../../class.ump"
 public class User
 {
 
