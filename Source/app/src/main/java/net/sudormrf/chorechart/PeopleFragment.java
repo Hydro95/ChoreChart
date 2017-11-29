@@ -27,15 +27,17 @@ public class PeopleFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_people, container, false);
 
         //generate some dummy users for the UI
+        /*
         for (int i = 0; i < 5; i++) {
             String name = "Anon" + Integer.toString((int)Math.round(Math.random() * 99));
             User nextUser = Facade.getInstance().addUser(name, R.drawable.ic_logo_mil);
             nextUser.setPoints((int)Math.round(Math.random() * 99));
-
-            Facade.getInstance().addUser(nextUser);
         }
+        */
 
         Facade.getInstance().publishUsers();
+
+
 
         UserArrayAdapter adapter = new UserArrayAdapter(getActivity(), Facade.getInstance().getUsers());
 
