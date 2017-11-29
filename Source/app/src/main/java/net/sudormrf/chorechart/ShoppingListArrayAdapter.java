@@ -19,10 +19,7 @@ import java.util.ArrayList;
 
 public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
 
-    public ShoppingListArrayAdapter(Context context, ArrayList<ShoppingList> lists){
-        super(context, 0, lists);
-
-    }
+    ShoppingListArrayAdapter(Context context, ArrayList<ShoppingList> lists){super(context, 0, lists); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
@@ -33,13 +30,15 @@ public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_layout, parent, false);
         }
         //Lookup view for data population
-        ImageView listIcon = (ImageView) convertView.findViewById(R.id.listIcon);
-        TextView listName = (TextView) convertView.findViewById(R.id.listName);
-        TextView listLocation = (TextView) convertView.findViewById(R.id.listLocation);
+        ImageView listIcon = convertView.findViewById(R.id.listIcon);
+        TextView listName = convertView.findViewById(R.id.listName);
+        TextView listLocation = convertView.findViewById(R.id.listLocation);
+
         //populate the data into the template view using the data object
         listIcon.setImageResource(list.getIcon());
         listName.setText(list.getName());
         listLocation.setText(list.getLocation());
+
         // Return the completed view to render on screen
         return convertView;
     }
