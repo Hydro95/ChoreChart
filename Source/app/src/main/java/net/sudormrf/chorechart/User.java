@@ -16,6 +16,7 @@ public class User
   private String name;
   private int points;
   private int icon;
+  private String id;
 
   //User Associations
   private List<Allocation> allocations;
@@ -31,6 +32,7 @@ public class User
     name = aName;
     points = 0;
     icon = 0;
+    id = Facade.getInstance().getUserRef().push().getKey();
     allocations = new ArrayList<Allocation>();
     boolean didAddHome = setHome(aHome);
     if (!didAddHome)
@@ -72,6 +74,14 @@ public class User
     return wasSet;
   }
 
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getName()
   {
     return name;
@@ -85,6 +95,11 @@ public class User
   public int getIcon()
   {
     return icon;
+  }
+
+  public String getId()
+  {
+    return id;
   }
 
   public Allocation getAllocation(int index)
@@ -260,7 +275,8 @@ public class User
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
             "points" + ":" + getPoints()+ "," +
-            "icon" + ":" + getIcon()+ "]" + System.getProperties().getProperty("line.separator") +
+            "icon" + ":" + getIcon()+ "," +
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "home = "+(getHome()!=null?Integer.toHexString(System.identityHashCode(getHome())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
      + outputString;
