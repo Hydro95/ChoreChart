@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Josh on 2017-11-24.
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 //at link: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 public class UserArrayAdapter extends ArrayAdapter<User> {
 
-    UserArrayAdapter(Context context, ArrayList<User> users) {
+    UserArrayAdapter(Context context, List<User> users) {
         super(context, 0, users);
     }
 

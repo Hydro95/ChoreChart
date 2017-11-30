@@ -2,9 +2,17 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import android.content.Intent;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.*;
 
-// line 91 "../../../class.ump"
+// line 100 "../../../class.ump"
 public class Facade
 {
 
@@ -131,9 +139,6 @@ public class Facade
     return taskRef;
   }
 
-  /**
-   * END OF DATABASE ZONE//
-   */
   public Home getCurrentHome()
   {
     return currentHome;
@@ -580,7 +585,8 @@ public class Facade
   /**
    * Listeners
    */
-  // line 101 "../../../class.ump"
+
+  // line 110 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -588,7 +594,21 @@ public class Facade
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-					User user = userSnapshot.getValue(User.class);
+				    String name = (String) userSnapshot.child("name").getValue();
+
+				    int points = 0;
+				    int icon = R.drawable.ic_logo_mil;
+
+                    String id = userSnapshot.getKey();
+
+                    Home home = Facade.getInstance().getCurrentHome();
+
+					User user = new User(name, home, Facade.getInstance());
+
+					user.setIcon(icon);
+					user.setPoints(points);
+					user.setId(id);
+
 					users.add(user);
 				}
 			}
@@ -634,45 +654,66 @@ public class Facade
 		});
   }
 
-  // line 155 "../../../class.ump"
+  // line 177 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
-			userRef.child(user.getId()).setValue(user);
+			DatabaseReference ref = this.getUserRef().child(user.getId());
+
+			ref.child("name").setValue(user.getName());
+			ref.child("icon").setValue(user.getIcon());
+			ref.child("points").setValue(user.getPoints());
+
+			DatabaseReference allocRef = ref.child("allocations");
+			for (Allocation alloc : user.getAllocations()) {
+				allocRef.child(alloc.getId()).setValue(alloc.getId());
+			}
+
+
+
 		}
   }
 
-  // line 161 "../../../class.ump"
+  // line 195 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
-			taskRef.child(task.getId()).setValue(task);
+			this.getTaskRef().child(task.getId()).setValue(task);
 		}
   }
 
-  // line 167 "../../../class.ump"
+  // line 201 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
-			shoppingRef.child(list.getId()).setValue(list);
+			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
-  // line 178 "../../../class.ump"
+
+  /**
+   * END OF DATABASE ZONE//
+   */
+  // line 209 "../../../class.ump"
+  public String getAllocationId(Allocation alloc){
+    return alloc.getId();
+  }
+
+  // line 216 "../../../class.ump"
   public void createNewAccount(String name){
     currentHome.addUser(name, this);
   }
 
-  // line 182 "../../../class.ump"
+  // line 220 "../../../class.ump"
   public void allocateTask(User user, Task task){
     new Allocation(task, user);
   }
 
-  // line 186 "../../../class.ump"
+  // line 224 "../../../class.ump"
   public boolean markCompleted(Task task){
     if(currentUser == task.getUser())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 192 "../../../class.ump"
+  // line 230 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
   }
@@ -681,7 +722,8 @@ public class Facade
   /**
    * Figure out if you can deel with this (automatically using currentX)
    */
-  // line 198 "../../../class.ump"
+  
+  // line 236 "../../../class.ump"
   public User addUser(String aName, int icon){
     User user = new User(aName, currentHome, this);
 		user.setIcon(icon);
