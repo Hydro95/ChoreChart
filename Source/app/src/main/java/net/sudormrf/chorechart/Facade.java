@@ -10,7 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.*;
 
-// line 101 "../../../class.ump"
+// line 108 "../../../class.ump"
 public class Facade
 {
 
@@ -137,6 +137,9 @@ public class Facade
     return taskRef;
   }
 
+  /**
+   * END OF DATABASE ZONE//
+   */
   public Home getCurrentHome()
   {
     return currentHome;
@@ -272,9 +275,9 @@ public class Facade
     return 0;
   }
 
-  public User addUser(String aName, Home aHome)
+  public User addUser(String aName)
   {
-    return new User(aName, aHome, this);
+    return new User(aName, this);
   }
 
   public boolean addUser(User aUser)
@@ -344,9 +347,9 @@ public class Facade
     return 0;
   }
 
-  public Task addTask(String aName, String aDeadline)
+  public Task addTask(String aName, String aDeadline, String aUserId)
   {
-    return new Task(aName, aDeadline, this);
+    return new Task(aName, aDeadline, aUserId, this);
   }
 
   public boolean addTask(Task aTask)
@@ -583,7 +586,7 @@ public class Facade
   /**
    * Listeners
    */
-  // line 111 "../../../class.ump"
+  // line 118 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -591,21 +594,34 @@ public class Facade
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-				    String name = userSnapshot.child("name").getValue(String.class);
+				    /*String name = userSnapshot.child("name").getValue(String.class);
 				    int points = (userSnapshot.child("points").getValue(Long.class)).intValue();
 				    int icon = (userSnapshot.child("icon").getValue(Long.class)).intValue();
 
-                    String id = userSnapshot.getKey();
+						String id = userSnapshot.getKey();
 
-                    Home home = Facade.getInstance().getCurrentHome();
+						Home home = Facade.getInstance().getCurrentHome();
+						User user = new User(name, home, Facade.getInstance());
 
-					User user = new User(name, home, Facade.getInstance());
+						//tasks
+						user.getTasks().clear();
 
-					user.setIcon(icon);
-					user.setPoints(points);
-					user.setId(id);
+						String tasksID = userSnapshot.getTasks().getId();
 
-					users.add(user);
+						for (DataSnapshot task : taskRef.child(tasksID).getChildren()) {
+							user.addTask(task.getValue())
+						}
+							//store the allocations list in the db with the same key as the user
+							user.addAllocation(alloc);
+
+						user.setIcon(icon);
+						user.setPoints(points);
+						user.setId(id);
+						*/
+						User user = dataSnapshot.getValue(User.class);
+
+						//users.add(user);
+						Facade.getInstance().addUser(user);
 				}
 			}
 
@@ -638,9 +654,36 @@ public class Facade
 				tasks.clear();
 
 				for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-					Task task = taskSnapshot.getValue(Task.class);
+					/*
+					String name = taskSnapshot.child("name").getValue(String.class);
+					String deadline = taskSnapshot.child("deadline").getValue(String.class);
+					String duration = taskSnapshot.child("duration").getValue(String.class);
+					String comment = taskSnapshot.child("comment").getValue(String.class);
+					boolean completed = taskSnapshot.child("completed").getValue(Boolean.class);
+					Repeat frequency = (Repeat) taskSnapshot.child("frequency").getValue(Integer.class);
+
+					String id = taskSnapshot.getKey();
+
+					User task = new Task(name, deadline, Facade.getInstance());
+
+					//add allocation support here
+
+					//
+
+					task.setDuration(duration);
+					task.setComment(comment);
+					task.setCompleted(completed);
+					task.setFrequency(frequency);
+					task.setId(id);
+
+
+					*/
+
+					Task task = dataSnapshot.getValue(Task.class);
+
 					tasks.add(task);
 				}
+
 			}
 
 			@Override
@@ -650,66 +693,86 @@ public class Facade
 		});
   }
 
-  // line 178 "../../../class.ump"
+  // line 224 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
+			/*
 			DatabaseReference ref = this.getUserRef().child(user.getId());
 
 			ref.child("name").setValue(user.getName());
 			ref.child("icon").setValue(user.getIcon());
 			ref.child("points").setValue(user.getPoints());
 
-			DatabaseReference allocRef = ref.child("allocations");
 			for (Allocation alloc : user.getAllocations()) {
-				allocRef.child(alloc.getId()).setValue(alloc.getId());
+				ref.child("allocations").child(alloc.getId()).setValue(alloc.getId());
 			}
+			*/
 
-
-
+			this.getUserRef().child(user.getId()).setValue(user);
 		}
   }
 
-  // line 196 "../../../class.ump"
+  // line 242 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
 			this.getTaskRef().child(task.getId()).setValue(task);
 		}
+		/*
+		for (Task task : tasks) {
+			DatabaseReference ref = this.getTaskRef().child(task.getId());
+
+			ref.child("name").setValue(task.getName());
+			ref.child("deadline").setValue(task.getDeadline());
+			ref.child("duration").setValue(task.getDuration());
+			ref.child("comment").setValue(task.getComment());
+			ref.child("completed").setValue(task.getCompleted());
+			ref.child("frequency").setValue((int) task.getFrequency());
+
+			ref.child("allocation").setValue(task.getAllocation().getId());
+		}
+		*/
   }
 
-  // line 202 "../../../class.ump"
+  // line 262 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
 			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
-
-  /**
-   * END OF DATABASE ZONE//
-   */
-  // line 210 "../../../class.ump"
-  public String getAllocationId(Allocation alloc){
-    return alloc.getId();
+  // line 268 "../../../class.ump"
+  public User getUser(String id){
+    for (User user : users) {
+      if (user.getId() == id) {
+        return user;
+      }
+    }
+    return null;
   }
 
-  // line 217 "../../../class.ump"
-  public void createNewAccount(String name){
-    currentHome.addUser(name, this);
+  // line 277 "../../../class.ump"
+  public Task getTask(String id){
+    for (Task task : tasks) {
+      if (task.getId() == id) {
+        return task;
+      }
+    }
+    return null;
   }
 
-  // line 221 "../../../class.ump"
+  // line 291 "../../../class.ump"
   public void allocateTask(User user, Task task){
-    new Allocation(task, user);
+    task.setUserId(user.getId());
   }
 
-  // line 225 "../../../class.ump"
+  // line 295 "../../../class.ump"
   public boolean markCompleted(Task task){
-    if(currentUser == task.getUser())
+    if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 231 "../../../class.ump"
+  // line 301 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
   }
@@ -718,9 +781,9 @@ public class Facade
   /**
    * Figure out if you can deel with this (automatically using currentX)
    */
-  // line 237 "../../../class.ump"
+  // line 307 "../../../class.ump"
   public User addUser(String aName, int icon){
-    User user = new User(aName, currentHome, this);
+    User user = new User(aName, this);
 		user.setIcon(icon);
 		return user;
   }

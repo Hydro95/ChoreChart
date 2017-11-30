@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 94 "../../../class.ump"
+// line 101 "../../../class.ump"
 public class Home
 {
 
@@ -14,9 +14,7 @@ public class Home
 
   //Home Attributes
   private String name;
-
-  //Home Associations
-  private List<User> users;
+  private List<String> userIds;
 
   //------------------------
   // CONSTRUCTOR
@@ -25,7 +23,7 @@ public class Home
   public Home(String aName)
   {
     name = aName;
-    users = new ArrayList<User>();
+    userIds = new ArrayList<String>();
   }
 
   //------------------------
@@ -40,124 +38,57 @@ public class Home
     return wasSet;
   }
 
+  public boolean addUserId(String aUserId)
+  {
+    boolean wasAdded = false;
+    wasAdded = userIds.add(aUserId);
+    return wasAdded;
+  }
+
+  public boolean removeUserId(String aUserId)
+  {
+    boolean wasRemoved = false;
+    wasRemoved = userIds.remove(aUserId);
+    return wasRemoved;
+  }
+
   public String getName()
   {
     return name;
   }
 
-  public User getUser(int index)
+  public String getUserId(int index)
   {
-    User aUser = users.get(index);
-    return aUser;
+    String aUserId = userIds.get(index);
+    return aUserId;
   }
 
-  /**
-   * 1 -- 1..* Parent;
-   */
-  public List<User> getUsers()
+  public String[] getUserIds()
   {
-    List<User> newUsers = Collections.unmodifiableList(users);
-    return newUsers;
+    String[] newUserIds = userIds.toArray(new String[userIds.size()]);
+    return newUserIds;
   }
 
-  public int numberOfUsers()
+  public int numberOfUserIds()
   {
-    int number = users.size();
+    int number = userIds.size();
     return number;
   }
 
-  public boolean hasUsers()
+  public boolean hasUserIds()
   {
-    boolean has = users.size() > 0;
+    boolean has = userIds.size() > 0;
     return has;
   }
 
-  public int indexOfUser(User aUser)
+  public int indexOfUserId(String aUserId)
   {
-    int index = users.indexOf(aUser);
+    int index = userIds.indexOf(aUserId);
     return index;
   }
 
-  public static int minimumNumberOfUsers()
-  {
-    return 0;
-  }
-
-  public User addUser(String aName, Facade aFacade)
-  {
-    return new User(aName, this, aFacade);
-  }
-
-  public boolean addUser(User aUser)
-  {
-    boolean wasAdded = false;
-    if (users.contains(aUser)) { return false; }
-    Home existingHome = aUser.getHome();
-    boolean isNewHome = existingHome != null && !this.equals(existingHome);
-    if (isNewHome)
-    {
-      aUser.setHome(this);
-    }
-    else
-    {
-      users.add(aUser);
-    }
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeUser(User aUser)
-  {
-    boolean wasRemoved = false;
-    //Unable to remove aUser, as it must always have a home
-    if (!this.equals(aUser.getHome()))
-    {
-      users.remove(aUser);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-
-  public boolean addUserAt(User aUser, int index)
-  {  
-    boolean wasAdded = false;
-    if(addUser(aUser))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfUsers()) { index = numberOfUsers() - 1; }
-      users.remove(aUser);
-      users.add(index, aUser);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveUserAt(User aUser, int index)
-  {
-    boolean wasAdded = false;
-    if(users.contains(aUser))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfUsers()) { index = numberOfUsers() - 1; }
-      users.remove(aUser);
-      users.add(index, aUser);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addUserAt(aUser, index);
-    }
-    return wasAdded;
-  }
-
   public void delete()
-  {
-    for(int i=users.size(); i > 0; i--)
-    {
-      User aUser = users.get(i - 1);
-      aUser.delete();
-    }
-  }
+  {}
 
 
   public String toString()

@@ -28,7 +28,7 @@ public class TasksFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tasks, container, false);
         ArrayList<Task> tasks = new ArrayList<Task>();
         for (int i = 0; i < 10; i++) {
-            tasks.add(Facade.getInstance().addTask("Clean Car", "Now"));
+            tasks.add(Facade.getInstance().addTask("Clean Car", "Now", null));
         }
 
         TaskArrayAdapter adapter = new TaskArrayAdapter(getActivity(), tasks);

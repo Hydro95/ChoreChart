@@ -33,9 +33,9 @@ public class PeopleFragment extends Fragment {
             User nextUser = Facade.getInstance().addUser(name, R.drawable.ic_logo_mil);
             nextUser.setPoints((int)Math.round(Math.random() * 99));
         }
-        */
 
         Facade.getInstance().publishUsers();
+        */
 
 
 
