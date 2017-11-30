@@ -40,18 +40,20 @@ public class UserModifierActivity extends AppCompatActivity {
 
         int index = getIntent().getIntExtra("index",-1);
 
-        if (index == -1)
-            return;
+        if (index != -1) {
+            user = Facade.getInstance().getUser(index);
 
-        user = Facade.getInstance().getUser(index);
+            ImageView icon = findViewById(R.id.userIcon);
+            EditText name = findViewById(R.id.userName);
+            TextView points = findViewById(R.id.points);
 
-        ImageView icon = findViewById(R.id.userIcon);
-        TextView name = findViewById(R.id.userName);
-        TextView points = findViewById(R.id.userPoints);
-
-        icon.setImageResource(user.getIcon());
-        name.setText(user.getName());
-        points.setText(String.valueOf(user.getPoints()));
+            icon.setImageResource(user.getIcon());
+            name.setText(user.getName());
+            points.setText("Points: " + String.valueOf(user.getPoints()));
+        }
+        else {
+            Facade.getInstance().addUser(new User());
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -68,24 +70,10 @@ public class UserModifierActivity extends AppCompatActivity {
         TextView points = findViewById(R.id.points);
 
         //TODO: Set icon should be base64 string of icon.
-        //TODO: Add icon switching functionality
         user.setName(name.getText().toString());
-        user.setPoints(Integer.parseInt(points.getText().toString()));
-        Log.d("test", "in onSaveButtonClick");
-        Log.d("test", user.getName());
-        Log.d("test", Facade.getInstance().getUser(0).getName());
-
-//        User user = new User();
-//        user.setName(name.getText().toString());
-//        user.setPoints(0);
-//        user.setIcon(userImg.getByteCount());
-//        Facade.getInstance().addUser(user);
-//        finish();
+        user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
+        finish();
     }
-
-
-
-
 
 
     //Launching an intent to get a image from gallery based on
