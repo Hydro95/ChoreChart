@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 /**
  * Created by ryanc on 2017-11-24.
  */
@@ -21,6 +23,16 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
+        ArrayList<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
+
+        //ShoppingList testShoppingList = new ShoppingList("test Name", "soup Store", 1, null);
+
+        /*for (int i = 0; i < 10; i++) {
+            shoppingLists.add(Facade.getInstance().addShoppingList(testShoppingList));
+        }
+
+        Facade.getInstance().publishShoppingLists(); */
+
 
         //Facade.getInstance().publishShoppingLists();
 

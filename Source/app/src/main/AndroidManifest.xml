@@ -46,9 +46,13 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".AboutActivity"/>
+        <activity android:name=".add_list" />
+        <activity android:name=".add_item" />
 
         <!-- Android-Image-Cropper activity -->
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
+
     </application>
+
 </manifest>
