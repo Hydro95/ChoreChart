@@ -18,6 +18,16 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    private enum Page {
+        Tasks(0),
+        ShoppingList(1),
+        Users(2);
+
+        private int value;
+        Page(int input) { value = input; }
+        int getValue() { return value; }
+    }
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -81,9 +91,18 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.action_add) {
-            Intent intent = new Intent(this, EditTaskActivity.class);
-            startActivity(intent);
-            System.out.println("hi 2");
+            TabLayout t = (TabLayout) findViewById(R.id.tabs);
+            int y = t.getSelectedTabPosition();
+            System.out.println(y);
+            if(y == Page.Tasks.getValue()) {
+                Intent intent = new Intent(this, EditTaskActivity.class);
+                startActivity(intent);
+            }
+            else if(y == Page.Users.getValue()) {
+                Intent intent = new Intent(this, UserModifierActivity.class);
+                startActivity(intent);
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
