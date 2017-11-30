@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jon on 24/11/17.
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 //at link: https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
 public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
-    TaskArrayAdapter(Context context, ArrayList<Task> tasks) {
+    TaskArrayAdapter(Context context, List<Task> tasks) {
         super(context, 0, tasks);
     }
 
@@ -32,14 +33,16 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.task_layout, parent, false);
         }
         // Lookup view for data population
-        ImageView icon = (ImageView) convertView.findViewById(R.id.taskIcon);
-        TextView name = (TextView) convertView.findViewById(R.id.taskName);
-        TextView deadline = (TextView) convertView.findViewById(R.id.deadline);
+        ImageView icon = convertView.findViewById(R.id.taskIcon);
+        TextView name = convertView.findViewById(R.id.taskName);
+        TextView deadline = convertView.findViewById(R.id.deadline);
+
         // Populate the data into the template view using the data object
         if(task.hasAllocation())
             icon.setImageResource(task.getUser().getIcon());
         else
             icon.setImageResource(R.drawable.add_new);
+
         name.setText(task.getName());
         deadline.setText("Deadline:" + task.getDeadline().toString());
         // Return the completed view to render on screen
