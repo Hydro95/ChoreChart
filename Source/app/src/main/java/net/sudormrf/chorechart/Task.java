@@ -302,6 +302,7 @@ public class Task
     int index = tools.indexOf(aTool);
     return index;
   }
+
   @Exclude
   public Facade getFacade()
   {

@@ -10,7 +10,7 @@ import java.util.*;
  * every time you recompile you must:
  * 
  * manually add imports in android studio
- * add @Exclude above User.getFacade()
+ * add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
  * Remove the umple gen'd getter for User.getTaskIds()
  */
 // line 12 "../../../class.ump"

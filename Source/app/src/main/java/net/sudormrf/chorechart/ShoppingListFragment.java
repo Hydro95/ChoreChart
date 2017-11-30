@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 /**
  * Created by ryanc on 2017-11-24.
  */
@@ -22,12 +20,13 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_shopping_list, container, false);
-        ArrayList<ShoppingList> lists = new ArrayList<ShoppingList>();
+        View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
 
-        ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), lists);
+        Facade.getInstance().publishShoppingLists();
 
-        ListView listView = (ListView) view.findViewById(R.id.taskList);
+        ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), Facade.getInstance().getShoppingLists());
+
+        ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);
 
         return view;
