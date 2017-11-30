@@ -2,6 +2,7 @@ package net.sudormrf.chorechart;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,15 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         TextView name = convertView.findViewById(R.id.listName);
         TextView deadline = convertView.findViewById(R.id.listInfo);
 
-        // Populate the data into the template view using the data object
-        if(task.hasAllocation())
-            icon.setImageResource(task.getUser().getIcon());
-        else
-            icon.setImageResource(R.drawable.add_new);
+        RoundedBitmapDrawable rDrawable;
+        if(task.hasAllocation()) {
+            rDrawable = RoundIcon.roundedImage(getContext().getResources(), task.getUser().getIcon());
+        }
+        else {
+            rDrawable = RoundIcon.roundedImage(getContext().getResources(), R.drawable.add_new);
+        }
+
+        icon.setImageDrawable(rDrawable);
 
         name.setText(task.getName());
         deadline.setText("Deadline: " + ((task.getDeadline() == null) ? "N/A" : task.getDeadline()));
