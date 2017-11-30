@@ -47,7 +47,7 @@ public class PeopleFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
                 Intent intent = new Intent(getContext(), UserModifierActivity.class);
-                intent.putExtra("index", index); //Optional parameters
+                intent.putExtra("index", index);
                 startActivity(intent);
             }
 

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -31,17 +32,22 @@ public class UserModifierActivity extends AppCompatActivity {
     private Uri mImageUri;
     private Bitmap userImg;
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("test", "in onCreate");
         setContentView(R.layout.activity_modify_user);
 
         int index = getIntent().getIntExtra("index",-1);
 
+        Log.d("test", String.valueOf(index));
         if (index == -1)
             return;
 
-        User user = Facade.getInstance().getUser(index);
+        user = Facade.getInstance().getUser(index);
+        //Log.d("test", user.getName());
 
         ImageView icon = findViewById(R.id.userIcon);
         TextView name = findViewById(R.id.userName);
@@ -59,19 +65,32 @@ public class UserModifierActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onSaveButtonClick(View view)
-    {
-        //Get relevant UI components.
-        EditText name = (EditText) findViewById(R.id.userName);
+    public void onSaveButtonClick(View view) {
+
+        ImageView icon = findViewById(R.id.userIcon);
+        EditText name = findViewById(R.id.userName);
+        TextView points = findViewById(R.id.points);
 
         //TODO: Set icon should be base64 string of icon.
-        User user = new User();
-        user.setName(name.getText().toString());
-        user.setPoints(0);
-        user.setIcon(userImg.getByteCount());
-        Facade.getInstance().addUser(user);
-        finish();
+        //TODO: Add icon switching functionality
+        boolean value = user.setName(name.getText().toString());
+        user.setPoints(Integer.parseInt(points.getText().toString()));
+        Log.d("test", "in onSaveButtonClick");
+        Log.d("test", user.getName());
+        Log.d("test", Facade.getInstance().getUser(0).getName());
+
+//        User user = new User();
+//        user.setName(name.getText().toString());
+//        user.setPoints(0);
+//        user.setIcon(userImg.getByteCount());
+//        Facade.getInstance().addUser(user);
+//        finish();
     }
+
+
+
+
+
 
     //Launching an intent to get a image from gallery based on
     //https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
