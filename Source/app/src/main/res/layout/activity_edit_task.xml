@@ -80,8 +80,9 @@
     <ImageView
         android:id="@+id/task_image"
         android:layout_width="128sp"
-        android:layout_height="wrap_content"
+        android:layout_height="128sp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:onClick="onIconClick"
         android:src="@drawable/ic_logo_empty"

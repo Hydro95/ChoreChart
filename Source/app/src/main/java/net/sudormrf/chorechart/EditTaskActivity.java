@@ -1,8 +1,12 @@
 package net.sudormrf.chorechart;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.Manifest;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -13,7 +17,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.theartofdev.edmodo.cropper.CropImage;
+
+import java.io.IOException;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.Calendar;
@@ -24,15 +32,15 @@ public class EditTaskActivity extends AppCompatActivity implements
         DatePickerFragment.OnDateSetListener,
         TimePickerFragment.OnTimeSetListener {
 
-    private static final int PICK_IMAGE = 1;
-    private static final int CROP_IMAGE = 2;
-
     //Date stored as variable to facilitate getting data from the fragment.
     private Calendar deadline;
 
     private boolean dateSet;
     private boolean timeSet;
     private boolean isNewTask;
+
+    private Uri mImageUri;
+    private Bitmap taskImg;
 
     @Override
     //TODO: Add a way to tell this activity,whether its a new task or an existing one.
@@ -93,39 +101,64 @@ public class EditTaskActivity extends AppCompatActivity implements
     {
         //TODO: Implement db sync.
         //TODO: Bitmap to Base64.
+        Task task = new Task();
+        //Facade.getInstance().addTask(task);
         finish();
     }
 
-    //Launching an intent to get a image from gallery based on
-    //https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
     public void onIconClick(View view)
     {
-        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        getIntent.setType("image/*");
-
-        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickIntent.setType("image/*");
-
-        //Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        //chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
-
-        startActivityForResult(pickIntent, PICK_IMAGE);
+        CropImage.startPickImageActivity(this);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    //Android 6 requires runtime permissions for certain things.
+    //https://github.com/ArthurHub/Android-Image-Cropper/wiki/Pick-image-for-cropping-from-Camera-or-Gallery
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults)
     {
-        if (requestCode == PICK_IMAGE) {
-            //TODO: action
-            if(resultCode == RESULT_OK) {
-                cropImage(data.getData());
+        if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
+            if (mImageUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // required permissions granted, start crop image activity
+                cropImage(mImageUri);
+            } else {
+                Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show();
             }
         }
-        else if(requestCode == CROP_IMAGE) {
-            if(resultCode == RESULT_OK) {
-                ImageView img = (ImageView) findViewById(R.id.task_image);
-                Bundle imgData = data.getExtras();
-                Bitmap stuff = imgData.getParcelable("data");
-                img.setImageBitmap(stuff);
+    }
+
+    //See https://github.com/ArthurHub/Android-Image-Cropper/wiki/Pick-image-for-cropping-from-Camera-or-Gallery
+    //for more details.
+    //SuppressLint required due to some issues.
+    @Override
+    @SuppressLint("NewApi")
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if(resultCode == RESULT_OK) {
+            if(requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE) {
+                Uri imageUri = CropImage.getPickImageResultUri(this, data);
+
+                // For API >= 23 we need to check specifically that we have permissions to read external storage.
+                if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
+                    // request permissions and handle the result in onRequestPermissionsResult()
+                    mImageUri = imageUri;
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE} , CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE);
+                } else {
+                    // no permissions required or already granted, can start crop image activity
+                    cropImage(imageUri);
+                }
+            }
+            else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                Uri img = result.getUri();
+                ImageView icon = (ImageView) findViewById(R.id.task_image);
+                try {
+                    Bitmap btm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), img);
+                    taskImg = btm;
+                    icon.setImageBitmap(btm);
+                }
+                catch(IOException e) {
+                    System.out.println("Cannot open: " + img.toString());
+                }
+                icon.setImageURI(img);
             }
         }
     }
@@ -157,20 +190,13 @@ public class EditTaskActivity extends AppCompatActivity implements
         }
     }
 
-    //Image cropping intent based off of:
-    //https://code.tutsplus.com/tutorials/capture-and-crop-an-image-with-the-device-camera--mobile-11458
     private void cropImage(Uri imgUri)
     {
-        //Uri selImage = data.getData();
-        Intent cropIntent = new Intent("com.android.camera.action.CROP");
-        cropIntent.setDataAndType(imgUri, "image/*");
-        cropIntent.putExtra("crop", "true");
-        cropIntent.putExtra("aspectX", 1);
-        cropIntent.putExtra("aspectY", 1);
-        cropIntent.putExtra("outputX", 128);
-        cropIntent.putExtra("outputY", 128);
-        cropIntent.putExtra("return-data", true);
-        startActivityForResult(cropIntent, CROP_IMAGE);
+        CropImage.activity(imgUri)
+                .setFixAspectRatio(true)
+                .setAspectRatio(1,1)
+                .setMinCropResultSize(128,128)
+                .setMaxCropResultSize(512, 512)
+                .start(this);
     }
-
 }
