@@ -22,7 +22,7 @@ public class ShoppingListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
 
-        Facade.getInstance().publishShoppingLists();
+        //Facade.getInstance().publishShoppingLists();
 
         ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), Facade.getInstance().getShoppingLists());
       
