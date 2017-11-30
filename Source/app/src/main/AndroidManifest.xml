@@ -16,12 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- To quiet Gradle down.
+        <!--
+        To quiet Gradle down.
         <activity
             android:name=".Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar" />
         -->
+
 
         <!-- From https://developer.android.com/training/basics/firstapp/starting-activity.html -->
         <!-- Adds a back button to the menu bar -->
@@ -32,7 +34,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".EditTaskActivity"></activity>
+        <activity android:name=".EditTaskActivity" />
+        <activity android:name=".add_list" />
+        <activity android:name=".add_item"></activity>
     </application>
 
 </manifest>
