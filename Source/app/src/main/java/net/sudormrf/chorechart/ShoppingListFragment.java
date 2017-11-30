@@ -28,7 +28,7 @@ public class ShoppingListFragment extends Fragment {
         ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), lists);
 
         ListView listView = (ListView) view.findViewById(R.id.taskList);
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
         return view;
     }

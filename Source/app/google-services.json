@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "1068728564015",
-    "firebase_url": "https://chorechart-1b885.firebaseio.com",
-    "project_id": "chorechart-1b885",
-    "storage_bucket": "chorechart-1b885.appspot.com"
+    "project_number": "482930118139",
+    "firebase_url": "https://chorechart-mock-test.firebaseio.com",
+    "project_id": "chorechart-mock-test",
+    "storage_bucket": "chorechart-mock-test.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1068728564015:android:5b77c74c75ab62d5",
+        "mobilesdk_app_id": "1:482930118139:android:a32fd0fa6b5ed617",
         "android_client_info": {
-          "package_name": "net.sudormrf.chorechart"
+          "package_name": "net.sudormrf.chorechart.test"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1068728564015-jmbs8muauhnfgk089ld662eicm4cn9fp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "net.sudormrf.chorechart",
-            "certificate_hash": "52e05a1c121e86aeefe9e59817f6eeb876ef5d2b"
-          }
-        },
-        {
-          "client_id": "1068728564015-sv6m8no53puqtiudfmckc1nc8n3v2b9n.apps.googleusercontent.com",
+          "client_id": "482930118139-vmnbj7q46s08q60te8e6t95mrkuvroc9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAvZ97aj8iCVn4ivQsPFC0zniPUzOEl9d4"
+          "current_key": "AIzaSyAD9eYBmVZMx5M70LDnboEVdXH6Fw5hbV8"
         }
       ],
       "services": {
@@ -37,13 +29,39 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1068728564015-sv6m8no53puqtiudfmckc1nc8n3v2b9n.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482930118139:android:5b77c74c75ab62d5",
+        "android_client_info": {
+          "package_name": "net.sudormrf.chorechart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482930118139-vmnbj7q46s08q60te8e6t95mrkuvroc9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD9eYBmVZMx5M70LDnboEVdXH6Fw5hbV8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

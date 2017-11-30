@@ -22,6 +22,20 @@
     <string name="lbl_save">Save</string>
     <string name="label_name">Name</string>
 
+    <string-array name="repeat_choices">
+        <item>Never</item>
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+        <item>Yearly</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_fragment_date_time">Deadline</string>
+    <string name="title_datetime_default"><![CDATA[<Enter datetime>]]></string>
+    <string name="label_duration">Amount of time required</string>
+    <string name="lbl_repeat">Repeat this task:</string>
+    <string name="lbl_user">Assign task to:</string>
+    <string name="lbl_complete">Task Complete</string>
 </resources>
