@@ -25,7 +25,7 @@ public class ShoppingListFragment extends Fragment {
         Facade.getInstance().publishShoppingLists();
 
         ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), Facade.getInstance().getShoppingLists());
-
+      
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);
 

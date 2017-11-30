@@ -654,14 +654,14 @@ public class Facade
   // line 181 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
-			this.getTaskRef().child(task.getId()).setValue(task);
+			taskRef.child(task.getId()).setValue(task);
 		}
   }
 
   // line 187 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
-			this.getShoppingRef().child(list.getId()).setValue(list);
+			shoppingRef.child(list.getId()).setValue(list);
 		}
   }
 

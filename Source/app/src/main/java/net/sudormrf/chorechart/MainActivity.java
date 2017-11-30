@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         getMenuInflater().inflate(R.menu.menu_add, menu);
-        getMenuInflater().inflate(R.menu.menu_settings, menu);
+        getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -77,10 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            System.out.println("hi");
             return true;
         }
         else if(id == R.id.action_add) {
-            Toast.makeText(this, String.format("Add pressed, got %d.", mViewPager.getCurrentItem()), Toast.LENGTH_LONG);
+            Intent intent = new Intent(this, EditTaskActivity.class);
+            startActivity(intent);
+            System.out.println("hi 2");
         }
 
         return super.onOptionsItemSelected(item);
