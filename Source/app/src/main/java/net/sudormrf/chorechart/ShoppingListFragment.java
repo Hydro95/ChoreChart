@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * Created by ryanc on 2017-11-24.
@@ -17,9 +20,16 @@ public class ShoppingListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shopping_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_shopping_list, container, false);
+        ArrayList<ShoppingList> lists = new ArrayList<ShoppingList>();
+
+        ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), lists);
+
+        ListView listView = (ListView) view.findViewById(R.id.taskList);
+        listView.setAdapter(adapter);
+
+        return view;
     }
 }

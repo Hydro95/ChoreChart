@@ -78,8 +78,10 @@ class Tools {
 }
 
 class ShoppingList {
+	String name; // list name
 	String location; // example hardware or grocery store
 	String[] items;
+	int icon;
 
 	String id = Facade.getInstance().getShoppingRef().push().getKey();
 

@@ -13,8 +13,10 @@ public class ShoppingList
   //------------------------
 
   //ShoppingList Attributes
+  private String name;
   private String location;
   private List<String> items;
+  private int icon;
   private String id;
 
   //ShoppingList Associations
@@ -24,10 +26,12 @@ public class ShoppingList
   // CONSTRUCTOR
   //------------------------
 
-  public ShoppingList(String aLocation, Facade aFacade)
+  public ShoppingList(String aName, String aLocation, int aIcon, Facade aFacade)
   {
+    name = aName;
     location = aLocation;
     items = new ArrayList<String>();
+    icon = aIcon;
     id = Facade.getInstance().getShoppingRef().push().getKey();
     boolean didAddFacade = setFacade(aFacade);
     if (!didAddFacade)
@@ -39,6 +43,14 @@ public class ShoppingList
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setName(String aName)
+  {
+    boolean wasSet = false;
+    name = aName;
+    wasSet = true;
+    return wasSet;
+  }
 
   public boolean setLocation(String aLocation)
   {
@@ -62,12 +74,28 @@ public class ShoppingList
     return wasRemoved;
   }
 
+  public boolean setIcon(int aIcon)
+  {
+    boolean wasSet = false;
+    icon = aIcon;
+    wasSet = true;
+    return wasSet;
+  }
+
   public boolean setId(String aId)
   {
     boolean wasSet = false;
     id = aId;
     wasSet = true;
     return wasSet;
+  }
+
+  /**
+   * list name
+   */
+  public String getName()
+  {
+    return name;
   }
 
   /**
@@ -106,6 +134,11 @@ public class ShoppingList
   {
     int index = items.indexOf(aItem);
     return index;
+  }
+
+  public int getIcon()
+  {
+    return icon;
   }
 
   public String getId()
@@ -159,7 +192,9 @@ public class ShoppingList
   {
 	  String outputString = "";
     return super.toString() + "["+
+            "name" + ":" + getName()+ "," +
             "location" + ":" + getLocation()+ "," +
+            "icon" + ":" + getIcon()+ "," +
             "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
      + outputString;

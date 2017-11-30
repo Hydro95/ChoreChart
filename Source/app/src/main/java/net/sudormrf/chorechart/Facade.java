@@ -490,9 +490,9 @@ public class Facade
     return 0;
   }
 
-  public ShoppingList addShoppingList(String aLocation)
+  public ShoppingList addShoppingList(String aName, String aLocation, int aIcon)
   {
-    return new ShoppingList(aLocation, this);
+    return new ShoppingList(aName, aLocation, aIcon, this);
   }
 
   public boolean addShoppingList(ShoppingList aShoppingList)
@@ -585,6 +585,7 @@ public class Facade
   /**
    * Listeners
    */
+
   // line 110 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
@@ -721,6 +722,7 @@ public class Facade
   /**
    * Figure out if you can deel with this (automatically using currentX)
    */
+  
   // line 236 "../../../class.ump"
   public User addUser(String aName, int icon){
     User user = new User(aName, currentHome, this);
