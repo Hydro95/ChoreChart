@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,10 @@ import android.widget.Toast;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by Josh on 2017-11-27.
@@ -30,6 +35,21 @@ public class UserModifierActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_user);
+
+        int index = getIntent().getIntExtra("index",-1);
+
+        if (index == -1)
+            return;
+
+        User user = Facade.getInstance().getUser(index);
+
+        ImageView icon = findViewById(R.id.userIcon);
+        TextView name = findViewById(R.id.userName);
+        TextView points = findViewById(R.id.userPoints);
+
+        icon.setImageResource(user.getIcon());
+        name.setText(user.getName());
+        points.setText(String.valueOf(user.getPoints()));
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
