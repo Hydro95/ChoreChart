@@ -7,10 +7,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.*;
 
-// line 101 "../../../class.ump"
+// line 102 "../../../class.ump"
 public class Facade
 {
 
@@ -583,7 +582,7 @@ public class Facade
   /**
    * Listeners
    */
-  // line 111 "../../../class.ump"
+  // line 112 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -591,9 +590,9 @@ public class Facade
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-				    String name = userSnapshot.child("name").getValue(String.class);
-				    int points = (userSnapshot.child("points").getValue(Long.class)).intValue();
-				    int icon = (userSnapshot.child("icon").getValue(Long.class)).intValue();
+				    String name = (String) userSnapshot.child("name").getValue();
+						int icon = (Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue() != 0) ? Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue() : R.drawable.ic_logo_mil;
+						int points = (Long.valueOf((long)userSnapshot.child("points").getValue()).intValue() != 0) ? Long.valueOf((long)userSnapshot.child("points").getValue()).intValue() : 0;
 
                     String id = userSnapshot.getKey();
 

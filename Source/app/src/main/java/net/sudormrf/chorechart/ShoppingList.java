@@ -177,12 +177,12 @@ public class ShoppingList
     placeholderFacade.removeShoppingList(this);
   }
 
-  // line 87 "../../../class.ump"
+  // line 88 "../../../class.ump"
   public void add(String item){
     
   }
 
-  // line 88 "../../../class.ump"
+  // line 89 "../../../class.ump"
   public void delete(int index){
     
   }

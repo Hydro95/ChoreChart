@@ -4,10 +4,10 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.sudormrf.chorechart.MainActivity$PlaceholderFragment">
+    tools:context="net.sudormrf.chorechart.MainActivity">
 
     <ListView
-        android:id="@+id/taskList"
+        android:id="@+id/generic_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>
