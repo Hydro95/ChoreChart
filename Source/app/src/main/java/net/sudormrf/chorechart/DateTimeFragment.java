@@ -1,6 +1,5 @@
 package net.sudormrf.chorechart;
 
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,18 +8,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
+
+import java.util.Calendar;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link DateTimeFragment.OnFragmentInteractionListener} interface
+ * {@link DateTimeFragment.OnDateTimeSetListener} interface
  * to handle interaction events.
  * Use the {@link DateTimeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DateTimeFragment extends Fragment implements View.OnClickListener{
+public class DateTimeFragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +34,7 @@ public class DateTimeFragment extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnDateTimeSetListener mListener;
 
     public DateTimeFragment() {
         // Required empty public constructor
@@ -73,21 +77,14 @@ public class DateTimeFragment extends Fragment implements View.OnClickListener{
         return res;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnDateTimeSetListener) {
+            mListener = (OnDateTimeSetListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnDateTimeSetListener");
         }
     }
 
@@ -99,12 +96,27 @@ public class DateTimeFragment extends Fragment implements View.OnClickListener{
 
     public void onClick(View view)
     {
-        System.out.println("FA");
-        DialogFragment datepicker = new DatePickerFragment();
-        datepicker.show(getFragmentManager(), "datePicker");
-        System.out.println("FA");
         DialogFragment timepicker = new TimePickerFragment();
         timepicker.show(getFragmentManager(), "datePicker");
+        DialogFragment datepicker = new DatePickerFragment();
+        datepicker.show(getFragmentManager(), "datePicker");
+    }
+
+    public void updateDateTime(Calendar datetime)
+    {
+        buildDate(datetime);
+        mListener.onDateTimeSet(datetime);
+    }
+
+    private void buildDate(Calendar datetime)
+    {
+        TextView dateText = (TextView) getView().findViewById(R.id.datetime);
+        String newDate = String.format("%d-%d-%d %d:%d", datetime.get(Calendar.YEAR),
+                datetime.get(Calendar.MONTH),
+                datetime.get(Calendar.DAY_OF_MONTH),
+                datetime.get(Calendar.HOUR_OF_DAY),
+                datetime.get(Calendar.MINUTE));
+        dateText.setText(newDate);
     }
 
     /**
@@ -117,8 +129,7 @@ public class DateTimeFragment extends Fragment implements View.OnClickListener{
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    public interface OnDateTimeSetListener {
+        void onDateTimeSet(Calendar datetime);
     }
 }

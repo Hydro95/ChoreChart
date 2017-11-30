@@ -37,8 +37,6 @@ public class PeopleFragment extends Fragment {
 
         Facade.getInstance().publishUsers();
 
-
-
         UserArrayAdapter adapter = new UserArrayAdapter(getActivity(), Facade.getInstance().getUsers());
 
         GridView gridView = view.findViewById(R.id.peopleGrid);

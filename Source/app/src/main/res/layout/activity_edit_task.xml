@@ -50,7 +50,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/lbl_repeat"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/article_fragment" />
+        app:layout_constraintTop_toBottomOf="@+id/deadline" />
 
     <Spinner
         android:id="@+id/repeat"
@@ -112,13 +112,13 @@
         android:ems="10"
         android:hint="@string/label_duration"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/article_fragment"
+        app:layout_constraintBottom_toTopOf="@+id/deadline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/task_image"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
     <fragment
-        android:id="@+id/article_fragment"
+        android:id="@+id/deadline"
         android:name="net.sudormrf.chorechart.DateTimeFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
