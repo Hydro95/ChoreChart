@@ -7,9 +7,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import java.util.*;
 
-// line 102 "../../../class.ump"
+// line 108 "../../../class.ump"
 public class Facade
 {
 
@@ -274,9 +275,9 @@ public class Facade
     return 0;
   }
 
-  public User addUser(String aName, Home aHome)
+  public User addUser(String aName)
   {
-    return new User(aName, aHome, this);
+    return new User(aName, this);
   }
 
   public boolean addUser(User aUser)
@@ -346,9 +347,9 @@ public class Facade
     return 0;
   }
 
-  public Task addTask(String aName, String aDeadline)
+  public Task addTask(String aName, String aDeadline, String aUserId)
   {
-    return new Task(aName, aDeadline, this);
+    return new Task(aName, aDeadline, aUserId, this);
   }
 
   public boolean addTask(Task aTask)
@@ -585,7 +586,7 @@ public class Facade
   /**
    * Listeners
    */
-  // line 112 "../../../class.ump"
+  // line 118 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -593,7 +594,10 @@ public class Facade
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-					users.add(user);
+						User user = dataSnapshot.getValue(User.class);
+
+						//users.add(user);
+						Facade.getInstance().addUser(user);
 				}
 			}
 
@@ -626,9 +630,11 @@ public class Facade
 				tasks.clear();
 
 				for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-					Task task = taskSnapshot.getValue(Task.class);
+					Task task = dataSnapshot.getValue(Task.class);
+
 					tasks.add(task);
 				}
+
 			}
 
 			@Override
@@ -638,53 +644,60 @@ public class Facade
 		});
   }
 
-  // line 178 "../../../class.ump"
+  // line 175 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
-			userRef.child(user.getId()).setValue(user);
+			this.getUserRef().child(user.getId()).setValue(user);
 		}
   }
 
-  // line 196 "../../../class.ump"
+  // line 181 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
 			taskRef.child(task.getId()).setValue(task);
 		}
   }
 
-  // line 202 "../../../class.ump"
+  // line 187 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
 			shoppingRef.child(list.getId()).setValue(list);
 		}
   }
 
-  /**
-   * END OF DATABASE ZONE//
-   */
-  // line 210 "../../../class.ump"
-  public String getAllocationId(Allocation alloc){
-    return alloc.getId();
+  // line 193 "../../../class.ump"
+  public User getUser(String id){
+    for (User user : users) {
+      if (user.getId() == id) {
+        return user;
+      }
+    }
+    return null;
   }
 
-  // line 217 "../../../class.ump"
-  public void createNewAccount(String name){
-    currentHome.addUser(name, this);
+  // line 202 "../../../class.ump"
+  public Task getTask(String id){
+    for (Task task : tasks) {
+      if (task.getId() == id) {
+        return task;
+      }
+    }
+    return null;
   }
 
-  // line 221 "../../../class.ump"
+  // line 216 "../../../class.ump"
   public void allocateTask(User user, Task task){
-    new Allocation(task, user);
+    task.setUserId(user.getId());
   }
 
-  // line 225 "../../../class.ump"
+  // line 220 "../../../class.ump"
   public boolean markCompleted(Task task){
-    if(currentUser == task.getUser())
+    if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 231 "../../../class.ump"
+  // line 226 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
   }
@@ -693,9 +706,9 @@ public class Facade
   /**
    * Figure out if you can deel with this (automatically using currentX)
    */
-  // line 237 "../../../class.ump"
+  // line 232 "../../../class.ump"
   public User addUser(String aName, int icon){
-    User user = new User(aName, currentHome, this);
+    User user = new User(aName, this);
 		user.setIcon(icon);
 		return user;
   }

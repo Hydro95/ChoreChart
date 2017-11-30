@@ -4,6 +4,8 @@ namespace net.sudormrf.chorechart;
 every time you recompile you must:
 
 manually add imports in android studio
+add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
+Remove the umple gen'd getter for User.getTaskIds()
 
 */
 
@@ -12,7 +14,14 @@ class User {
 	int points = 0;
 	int icon = 0;
 	String id = Facade.getInstance().getUserRef().push().getKey();
+	String[] taskIds;
 
+	//default constructor for db
+	public User() {}
+
+	public List<String> getTaskIds() {
+    return taskIds;
+  }
 
 	//void allocateTask(Task task) {
 	//	allocations.add(new Allocation(task, this));
@@ -38,14 +47,22 @@ class Task {
 	Repeat frequency = Repeat.NEVER;
 
 	String id = Facade.getInstance().getTaskRef().push().getKey();
+	String userId;
 
-	User getUser() {
-		return allocation.getUser();
+	//default constructor for db
+	public Task() {}
+
+	public User getUser() {
+		return Facade.getInstance().getUser(userId);
+	}
+
+	public boolean hasAllocation() {
+		return userId != null;
 	}
 
 	status {
 		Unallocated {
-			setAllocation -> InProgress; //this should check if setAllocation returns true
+			setUserId -> InProgress; //this should check if setUser returns true
 			deadlinePassed -> Failed;
 		}
 		InProgress {
@@ -57,16 +74,6 @@ class Task {
 		Failed { extendDeadline -> Unallocated; }
 	}
 
-}
-
-class Allocation {
-
-	String id = Facade.getInstance().getDatabase().getReference("allocations").push().getKey();
-
-	void markCompleted() {}
-
-	0..1 -- 1 Task;
-	* -- 1 User;
 }
 
 
@@ -93,9 +100,9 @@ class ShoppingList {
 
 class Home {
 	String name;
+	String[] userIds;
 
 	//1 -- 1..* Parent;
-	1 -- * User;
 }
 
 class Facade {
@@ -114,21 +121,10 @@ class Facade {
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-				    String name = userSnapshot.child("name").getValue(String.class);
-				    int points = (userSnapshot.child("points").getValue(Long.class)).intValue();
-				    int icon = (userSnapshot.child("icon").getValue(Long.class)).intValue();
+						User user = dataSnapshot.getValue(User.class);
 
-                    String id = userSnapshot.getKey();
-
-                    Home home = Facade.getInstance().getCurrentHome();
-
-					User user = new User(name, home, Facade.getInstance());
-
-					user.setIcon(icon);
-					user.setPoints(points);
-					user.setId(id);
-
-					users.add(user);
+						//users.add(user);
+						Facade.getInstance().addUser(user);
 				}
 			}
 
@@ -161,9 +157,11 @@ class Facade {
 				tasks.clear();
 
 				for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-					Task task = taskSnapshot.getValue(Task.class);
+					Task task = dataSnapshot.getValue(Task.class);
+
 					tasks.add(task);
 				}
+
 			}
 
 			@Override
@@ -173,22 +171,9 @@ class Facade {
 		});
 	}
 
-
 	void publishUsers() {
 		for (User user : users) {
-			DatabaseReference ref = this.getUserRef().child(user.getId());
-
-			ref.child("name").setValue(user.getName());
-			ref.child("icon").setValue(user.getIcon());
-			ref.child("points").setValue(user.getPoints());
-
-			DatabaseReference allocRef = ref.child("allocations");
-			for (Allocation alloc : user.getAllocations()) {
-				allocRef.child(alloc.getId()).setValue(alloc.getId());
-			}
-
-
-
+			this.getUserRef().child(user.getId()).setValue(user);
 		}
 	}
 
@@ -204,25 +189,35 @@ class Facade {
 		}
 	}
 
-	//END OF DATABASE ZONE//
+	User getUser(String id){
+    for (User user : users) {
+      if (user.getId() == id) {
+        return user;
+      }
+    }
+    return null;
+  }
 
-	String getAllocationId(Allocation alloc) {
-		return alloc.getId();
-	}
+	Task getTask(String id){
+    for (Task task : tasks) {
+      if (task.getId() == id) {
+        return task;
+      }
+    }
+    return null;
+  }
+
+	//END OF DATABASE ZONE//
 
 	Home currentHome = new Home("Test Home");
 	User currentUser = null;
 
-	void createNewAccount(String name) {
-		currentHome.addUser(name, this);
-	}
-
 	void allocateTask(User user, Task task) {
-		new Allocation(task, user);
+		task.setUserId(user.getId());
 	}
 
 	boolean markCompleted(Task task) {
-		if(currentUser == task.getUser())
+		if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
 	}
@@ -234,7 +229,7 @@ class Facade {
 
 //Figure out if you can deel with this (automatically using currentX)
 	User addUser(String aName, int icon) {
-		User user = new User(aName, currentHome, this);
+		User user = new User(aName, this);
 		user.setIcon(icon);
 		return user;
 	}
