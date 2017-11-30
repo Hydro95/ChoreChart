@@ -48,7 +48,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/listLocation"
+                android:id="@+id/listInfo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

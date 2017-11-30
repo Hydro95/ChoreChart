@@ -30,12 +30,12 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         Task task = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.task_layout, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_layout, parent, false);
         }
         // Lookup view for data population
-        ImageView icon = convertView.findViewById(R.id.taskIcon);
-        TextView name = convertView.findViewById(R.id.taskName);
-        TextView deadline = convertView.findViewById(R.id.deadline);
+        ImageView icon = convertView.findViewById(R.id.listIcon);
+        TextView name = convertView.findViewById(R.id.listName);
+        TextView deadline = convertView.findViewById(R.id.listInfo);
 
         // Populate the data into the template view using the data object
         if(task.hasAllocation())
