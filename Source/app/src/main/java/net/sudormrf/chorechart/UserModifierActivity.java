@@ -19,7 +19,6 @@ import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,17 +36,14 @@ public class UserModifierActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("test", "in onCreate");
         setContentView(R.layout.activity_modify_user);
 
         int index = getIntent().getIntExtra("index",-1);
 
-        Log.d("test", String.valueOf(index));
         if (index == -1)
             return;
 
         user = Facade.getInstance().getUser(index);
-        //Log.d("test", user.getName());
 
         ImageView icon = findViewById(R.id.userIcon);
         TextView name = findViewById(R.id.userName);
@@ -73,7 +69,7 @@ public class UserModifierActivity extends AppCompatActivity {
 
         //TODO: Set icon should be base64 string of icon.
         //TODO: Add icon switching functionality
-        boolean value = user.setName(name.getText().toString());
+        user.setName(name.getText().toString());
         user.setPoints(Integer.parseInt(points.getText().toString()));
         Log.d("test", "in onSaveButtonClick");
         Log.d("test", user.getName());
