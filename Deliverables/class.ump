@@ -4,7 +4,6 @@ namespace net.sudormrf.chorechart;
 every time you recompile you must:
 
 manually add imports in android studio
-@Exclude the getters for complex objects
 
 */
 
@@ -115,9 +114,10 @@ class Facade {
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-				    String name = (String) userSnapshot.child("name").getValue();
-						int icon = (Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue() != 0) ? Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue() : R.drawable.ic_logo_mil;
-						int points = (Long.valueOf((long)userSnapshot.child("points").getValue()).intValue() != 0) ? Long.valueOf((long)userSnapshot.child("points").getValue()).intValue() : 0;
+				    String name = userSnapshot.child("name").getValue(String.class);
+				    int points = (userSnapshot.child("points").getValue(Long.class)).intValue();
+				    int icon = (userSnapshot.child("icon").getValue(Long.class)).intValue();
+
                     String id = userSnapshot.getKey();
 
                     Home home = Facade.getInstance().getCurrentHome();

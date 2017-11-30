@@ -593,6 +593,7 @@ public class Facade
 				    String name = (String) userSnapshot.child("name").getValue();
 						int icon = (Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue() != 0) ? Long.valueOf((long)userSnapshot.child("icon").getValue()).intValue() : R.drawable.ic_logo_mil;
 						int points = (Long.valueOf((long)userSnapshot.child("points").getValue()).intValue() != 0) ? Long.valueOf((long)userSnapshot.child("points").getValue()).intValue() : 0;
+
                     String id = userSnapshot.getKey();
 
                     Home home = Facade.getInstance().getCurrentHome();
