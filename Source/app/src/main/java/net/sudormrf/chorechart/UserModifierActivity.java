@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,10 @@ import android.widget.Toast;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by Josh on 2017-11-27.
@@ -26,10 +31,29 @@ public class UserModifierActivity extends AppCompatActivity {
     private Uri mImageUri;
     private Bitmap userImg;
 
+    User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modify_user);
+
+        int index = getIntent().getIntExtra("index",-1);
+
+        if (index != -1) {
+            user = Facade.getInstance().getUser(index);
+
+            ImageView icon = findViewById(R.id.userIcon);
+            EditText name = findViewById(R.id.userName);
+            TextView points = findViewById(R.id.points);
+
+            icon.setImageResource(user.getIcon());
+            name.setText(user.getName());
+            points.setText("Points: " + String.valueOf(user.getPoints()));
+        }
+        else {
+            Facade.getInstance().addUser(new User());
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -39,19 +63,18 @@ public class UserModifierActivity extends AppCompatActivity {
         return true;
     }
 
-    public void onSaveButtonClick(View view)
-    {
-        //Get relevant UI components.
-        EditText name = (EditText) findViewById(R.id.userName);
+    public void onSaveButtonClick(View view) {
+
+        ImageView icon = findViewById(R.id.userIcon);
+        EditText name = findViewById(R.id.userName);
+        TextView points = findViewById(R.id.points);
 
         //TODO: Set icon should be base64 string of icon.
-        User user = new User();
         user.setName(name.getText().toString());
-        user.setPoints(0);
-        user.setIcon(userImg.getByteCount());
-        Facade.getInstance().addUser(user);
+        user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
         finish();
     }
+
 
     //Launching an intent to get a image from gallery based on
     //https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery

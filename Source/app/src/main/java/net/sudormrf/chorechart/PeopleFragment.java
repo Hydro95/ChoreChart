@@ -1,10 +1,12 @@
 package net.sudormrf.chorechart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListView;
 
@@ -39,6 +41,17 @@ public class PeopleFragment extends Fragment {
 
         GridView gridView = view.findViewById(R.id.peopleGrid);
         gridView.setAdapter(adapter);
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
+                Intent intent = new Intent(getContext(), UserModifierActivity.class);
+                intent.putExtra("index", index);
+                startActivity(intent);
+            }
+
+        });
 
         return view;
     }

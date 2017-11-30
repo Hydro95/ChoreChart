@@ -1,6 +1,7 @@
 package net.sudormrf.chorechart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,7 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         User user = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
@@ -45,6 +46,7 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
         name.setText(user.getName());
         points.setText(Integer.toString(user.getPoints()));
         // Return the completed view to render on screen
+
         return convertView;
     }
 }

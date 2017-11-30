@@ -1,0 +1,1 @@
+C:/Program\ Files/Git/usr/bin/sh.exe ./linux_compile_umple.sh
