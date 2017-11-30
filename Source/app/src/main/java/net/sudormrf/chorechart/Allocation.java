@@ -3,13 +3,16 @@
 
 package net.sudormrf.chorechart;
 
-// line 54 "../../../class.ump"
+// line 63 "../../../class.ump"
 public class Allocation
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
+
+  //Allocation Attributes
+  private String id;
 
   //Allocation Associations
   private Task task;
@@ -21,6 +24,7 @@ public class Allocation
 
   public Allocation(Task aTask, User aUser)
   {
+    id = Facade.getInstance().getDatabase().getReference("allocations").push().getKey();
     boolean didAddTask = setTask(aTask);
     if (!didAddTask)
     {
@@ -36,6 +40,19 @@ public class Allocation
   //------------------------
   // INTERFACE
   //------------------------
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    id = aId;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public String getId()
+  {
+    return id;
+  }
 
   public Task getTask()
   {
@@ -107,9 +124,19 @@ public class Allocation
     placeholderUser.removeAllocation(this);
   }
 
-  // line 56 "../../../class.ump"
+  // line 67 "../../../class.ump"
   public void markCompleted(){
     
   }
 
+
+  public String toString()
+  {
+	  String outputString = "";
+    return super.toString() + "["+
+            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "task = "+(getTask()!=null?Integer.toHexString(System.identityHashCode(getTask())):"null") + System.getProperties().getProperty("line.separator") +
+            "  " + "user = "+(getUser()!=null?Integer.toHexString(System.identityHashCode(getUser())):"null")
+     + outputString;
+  }
 }
