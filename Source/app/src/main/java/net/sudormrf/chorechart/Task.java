@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.Exclude;
+
 import java.util.*;
 
-// line 29 "../../../class.ump"
+// line 38 "../../../class.ump"
 public class Task
 {
 
@@ -20,13 +22,13 @@ public class Task
   private boolean completed;
   private Repeat frequency;
   private String id;
+  private String userId;
 
   //Task State Machines
   enum Status { Unallocated, InProgress, Completed, Failed }
   private Status status;
 
   //Task Associations
-  private Allocation allocation;
   private List<Tools> tools;
   private Facade facade;
 
@@ -34,7 +36,7 @@ public class Task
   // CONSTRUCTOR
   //------------------------
 
-  public Task(String aName, String aDeadline, Facade aFacade)
+  public Task(String aName, String aDeadline, String aUserId, Facade aFacade)
   {
     name = aName;
     deadline = aDeadline;
@@ -43,6 +45,7 @@ public class Task
     completed = false;
     frequency = Repeat.NEVER;
     id = Facade.getInstance().getTaskRef().push().getKey();
+    userId = aUserId;
     tools = new ArrayList<Tools>();
     boolean didAddFacade = setFacade(aFacade);
     if (!didAddFacade)
@@ -112,6 +115,14 @@ public class Task
     return wasSet;
   }
 
+  public boolean setUserId(String aUserId)
+  {
+    boolean wasSet = false;
+    userId = aUserId;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getName()
   {
     return name;
@@ -147,6 +158,11 @@ public class Task
     return id;
   }
 
+  public String getUserId()
+  {
+    return userId;
+  }
+
   public String getStatusFullName()
   {
     String answer = status.toString();
@@ -158,7 +174,7 @@ public class Task
     return status;
   }
 
-  public boolean setAllocation()
+  public boolean setUserId()
   {
     boolean wasEventProcessed = false;
     
@@ -257,17 +273,6 @@ public class Task
     status = aStatus;
   }
 
-  public Allocation getAllocation()
-  {
-    return allocation;
-  }
-
-  public boolean hasAllocation()
-  {
-    boolean has = allocation != null;
-    return has;
-  }
-
   public Tools getTool(int index)
   {
     Tools aTool = tools.get(index);
@@ -298,36 +303,10 @@ public class Task
     return index;
   }
 
+  @Exclude
   public Facade getFacade()
   {
     return facade;
-  }
-
-  public boolean setAllocation(Allocation aNewAllocation)
-  {
-    boolean wasSet = false;
-    if (allocation != null && !allocation.equals(aNewAllocation) && equals(allocation.getTask()))
-    {
-      //Unable to setAllocation, as existing allocation would become an orphan
-      return wasSet;
-    }
-
-    allocation = aNewAllocation;
-    Task anOldTask = aNewAllocation != null ? aNewAllocation.getTask() : null;
-
-    if (!this.equals(anOldTask))
-    {
-      if (anOldTask != null)
-      {
-        anOldTask.allocation = null;
-      }
-      if (allocation != null)
-      {
-        allocation.setTask(this);
-      }
-    }
-    wasSet = true;
-    return wasSet;
   }
 
   public static int minimumNumberOfTools()
@@ -433,12 +412,6 @@ public class Task
 
   public void delete()
   {
-    Allocation existingAllocation = allocation;
-    allocation = null;
-    if (existingAllocation != null)
-    {
-      existingAllocation.delete();
-    }
     ArrayList<Tools> copyOfTools = new ArrayList<Tools>(tools);
     tools.clear();
     for(Tools aTool : copyOfTools)
@@ -450,9 +423,23 @@ public class Task
     placeholderFacade.removeTask(this);
   }
 
-  // line 43 "../../../class.ump"
-  public User getUser(){
-    return allocation.getUser();
+
+  /**
+   * default constructor for db
+   */
+  // line 53 "../../../class.ump"
+   public  Task(){
+    
+  }
+
+  // line 56 "../../../class.ump"
+   public User getUser(){
+    return Facade.getInstance().getUser(userId);
+  }
+
+  // line 60 "../../../class.ump"
+   public boolean hasAllocation(){
+    return userId != null;
   }
 
 
@@ -465,9 +452,9 @@ public class Task
             "duration" + ":" + getDuration()+ "," +
             "comment" + ":" + getComment()+ "," +
             "completed" + ":" + getCompleted()+ "," +
-            "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
+            "id" + ":" + getId()+ "," +
+            "userId" + ":" + getUserId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "frequency" + "=" + (getFrequency() != null ? !getFrequency().equals(this)  ? getFrequency().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "allocation = "+(getAllocation()!=null?Integer.toHexString(System.identityHashCode(getAllocation())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
      + outputString;
   }  
@@ -475,7 +462,7 @@ public class Task
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 31 ../../../class.ump
+  // line 40 ../../../class.ump
   public enum Repeat 
   {
     NEVER, DAILY, WEEKLY, MONTHY, YEARLY
