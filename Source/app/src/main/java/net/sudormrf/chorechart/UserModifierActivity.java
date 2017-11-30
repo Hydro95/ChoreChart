@@ -43,7 +43,6 @@ public class UserModifierActivity extends AppCompatActivity {
     {
         //Get relevant UI components.
         EditText name = (EditText) findViewById(R.id.userName);
-        ImageView icon = (ImageView) findViewById(R.id.userIcon);
 
         //TODO: Set icon should be base64 string of icon.
         User user = new User();
