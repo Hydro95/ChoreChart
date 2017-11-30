@@ -5,11 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-
-import java.sql.Date;
-import java.util.ArrayList;
 
 /**
  * Created by jon on 24/11/17.
@@ -25,15 +21,13 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_tasks, container, false);
-        ArrayList<Task> tasks = new ArrayList<Task>();
-        for (int i = 0; i < 10; i++) {
-            tasks.add(Facade.getInstance().addTask("Clean Car", "Now"));
-        }
+        View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
 
-        TaskArrayAdapter adapter = new TaskArrayAdapter(getActivity(), tasks);
+        Facade.getInstance().publishTasks();
 
-        ListView listView = (ListView) view.findViewById(R.id.taskList);
+        TaskArrayAdapter adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
+
+        ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);
 
         return view;

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ryanc on 2017-11-29.
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
 
-    ShoppingListArrayAdapter(Context context, ArrayList<ShoppingList> lists){super(context, 0, lists); }
+    ShoppingListArrayAdapter(Context context, List<ShoppingList> lists){super(context, 0, lists); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
@@ -32,7 +33,7 @@ public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
         //Lookup view for data population
         ImageView listIcon = convertView.findViewById(R.id.listIcon);
         TextView listName = convertView.findViewById(R.id.listName);
-        TextView listLocation = convertView.findViewById(R.id.listLocation);
+        TextView listLocation = convertView.findViewById(R.id.listInfo);
 
         //populate the data into the template view using the data object
         listIcon.setImageResource(list.getIcon());

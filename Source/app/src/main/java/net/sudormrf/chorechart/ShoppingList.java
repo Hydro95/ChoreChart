@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 80 "../../../class.ump"
+// line 79 "../../../class.ump"
 public class ShoppingList
 {
 
@@ -177,12 +177,12 @@ public class ShoppingList
     placeholderFacade.removeShoppingList(this);
   }
 
-  // line 86 "../../../class.ump"
+  // line 88 "../../../class.ump"
   public void add(String item){
     
   }
 
-  // line 87 "../../../class.ump"
+  // line 89 "../../../class.ump"
   public void delete(int index){
     
   }
