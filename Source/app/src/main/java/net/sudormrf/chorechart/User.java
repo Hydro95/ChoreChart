@@ -6,6 +6,12 @@ import com.google.firebase.database.Exclude;
 
 import java.util.*;
 
+/**
+ * every time you recompile you must:
+ * 
+ * add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
+ * Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
+ */
 // line 11 "../../../class.ump"
 public class User
 {
@@ -168,28 +174,30 @@ public class User
     placeholderFacade.removeUser(this);
   }
 
-  // line 22 "../../../class.ump"
-  public List<String> getTaskIds(){
-    return taskIds;
-  }
 
   /**
    * default constructor for db
    */
   // line 19 "../../../class.ump"
-  public  User(){
-
+   public  User(){
+    
   }
+
+  // line 22 "../../../class.ump"
+   public List<String> getTaskIds(){
+    return taskIds;
+  }
+
 
   public String toString()
   {
-    String outputString = "";
+	  String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
             "points" + ":" + getPoints()+ "," +
             "icon" + ":" + getIcon()+ "," +
             "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
-            + outputString;
+     + outputString;
   }
 }

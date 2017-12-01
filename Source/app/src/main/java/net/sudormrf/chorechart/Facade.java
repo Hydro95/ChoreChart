@@ -346,9 +346,9 @@ public class Facade
     return 0;
   }
 
-  public Task addTask(String aName, String aDeadline, String aUserId)
+  public Task addTask()
   {
-    return new Task(aName, aDeadline, aUserId, this);
+    return new Task(this);
   }
 
   public boolean addTask(Task aTask)
@@ -698,6 +698,7 @@ public class Facade
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
   }
+
 
   public String toString()
   {
