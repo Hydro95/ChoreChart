@@ -92,6 +92,8 @@ class ShoppingList {
 
 	String id = Facade.getInstance().getShoppingRef().push().getKey();
 
+	public ShoppingList(){}
+
 	void add(String item) {}
 	void delete(int index) {}
 	//void createList(String name, Home home, String[] items) {}

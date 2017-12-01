@@ -35,7 +35,6 @@ public class AddList extends AppCompatActivity {
 
         int index = getIntent().getIntExtra("index",-1);
 
-        //need to find problem, crashes app if run
         if (index != -1) {
             shoppingList = Facade.getInstance().getShoppingList(index);
 
@@ -48,7 +47,8 @@ public class AddList extends AppCompatActivity {
             location.setText(String.valueOf(shoppingList.getLocation()));
         }
         else {
-            Facade.getInstance().addShoppingList(new ShoppingList(null, null, 1, Facade.getInstance()));
+            shoppingList = new ShoppingList();
+            Facade.getInstance().addShoppingList(shoppingList);
         }
     }
 
@@ -65,13 +65,32 @@ public class AddList extends AppCompatActivity {
         EditText name = findViewById(R.id.listName);
         TextView location = findViewById(R.id.listStore);
 
+        System.out.println(shoppingList);
+
         //TODO: Set icon should be base64 string of icon.
-        //shoppingList.setName(name.getText().toString());
-        //shoppingList.setLocation(location.getText().toString());
+        shoppingList.setName("Clothes");
+        shoppingList.setLocation("Soup Store");
 
         //Facade.getInstance().addShoppingList(shoppingList);
-        Facade.getInstance().publishShoppingLists();
-        finish();
+        //Facade.getInstance().publishShoppingLists();
+        //finish();
+
+        //this handles whether or not the thing is new, if so, assign it a new id. else, edit the existing one
+        if (shoppingList.getId() == null) {
+            shoppingList.setId(Facade.getInstance().getUserRef().push().getKey());
+        }
+
+        try {
+            Facade.getInstance().publishShoppingLists();
+            finish();
+        }
+        catch (Exception e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Incorrect information. Please check all fields for missing data.")
+                    .setNeutralButton("Okay", null)
+                    .show();
+        }
     }
 
     public void onDeleteButtonClick(View view) {
