@@ -27,8 +27,7 @@ public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
     public View getView(int position, View convertView, ViewGroup parent){
         //Get the data item for this position
         ShoppingList list = getItem(position);
-
-        System.out.println("HEY THIS IS THE LIST I WANT TO PRINT" + list);
+        
         //Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_layout, parent, false);
