@@ -179,9 +179,7 @@ public class User
    * default constructor for db
    */
   // line 19 "../../../class.ump"
-   public  User(){
-    
-  }
+   public  User() {}
 
   // line 22 "../../../class.ump"
    public List<String> getTaskIds(){
