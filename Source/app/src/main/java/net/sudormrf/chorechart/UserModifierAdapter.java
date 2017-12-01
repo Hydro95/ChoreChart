@@ -37,7 +37,7 @@ public class UserModifierAdapter extends ArrayAdapter<User> {
         TextView points = convertView.findViewById(R.id.userPoints);
 
         //create rounded versions of the stored profile images
-        RoundedBitmapDrawable rDrawable = RoundIcon.roundedImage(getContext().getResources(), user.getIcon());
+        RoundedBitmapDrawable rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), user.getIcon());
 
         // Populate the data into the template view using the data object
         icon.setImageDrawable(rDrawable);

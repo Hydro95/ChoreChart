@@ -1,7 +1,6 @@
 package net.sudormrf.chorechart;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,10 +38,10 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
         RoundedBitmapDrawable rDrawable;
         if(task.hasAllocation()) {
-            rDrawable = RoundIcon.roundedImage(getContext().getResources(), task.getUser().getIcon());
+            rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), task.getUser().getIcon());
         }
         else {
-            rDrawable = RoundIcon.roundedImage(getContext().getResources(), R.drawable.add_new);
+            rDrawable = ImageHelper.roundedImage(getContext().getResources(), R.drawable.add_new);
         }
 
         icon.setImageDrawable(rDrawable);
