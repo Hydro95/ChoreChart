@@ -1,6 +1,7 @@
 package net.sudormrf.chorechart;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
@@ -26,6 +28,8 @@ import android.widget.TextView;
 /**
  * Created by Josh on 2017-11-27.
  */
+
+//confirmation dialog help from https://stackoverflow.com/questions/2257963/how-to-show-a-dialog-to-confirm-that-the-user-wishes-to-exit-an-android-activity#2258147
 
 public class UserModifierActivity extends AppCompatActivity {
     private Uri mImageUri;
@@ -83,6 +87,23 @@ public class UserModifierActivity extends AppCompatActivity {
         Facade.getInstance().publishUsers();
 
         finish();
+    }
+
+    public void onDeleteButtonClick(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete User")
+                .setMessage("Are you sure you want to delete this user?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Facade.getInstance().getUserRef().child(user.getId()).removeValue();
+                        Facade.getInstance().removeUser(user);
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
 
