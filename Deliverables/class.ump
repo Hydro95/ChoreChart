@@ -11,7 +11,7 @@ Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
 class User {
 	String name;
 	int points = 0;
-	int icon = 0;
+	String icon = "";
 	String id = Facade.getInstance().getUserRef().push().getKey();
 	String[] taskIds;
 
@@ -47,8 +47,6 @@ class Task {
 
 	String id = Facade.getInstance().getTaskRef().push().getKey();
 	String userId = "";
-
-	facade = Facade.getInstance();
 
 	//default constructor for db
 	public Task() {}
@@ -223,14 +221,6 @@ class Facade {
 
 	void addToShopping(ShoppingList list, String item) {
 		list.add(item);
-	}
-
-
-//Figure out if you can deel with this (automatically using currentX)
-	User addUser(String aName, int icon) {
-		User user = new User(aName, this);
-		user.setIcon(icon);
-		return user;
 	}
 
 	1 -- * User;

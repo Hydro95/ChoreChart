@@ -3,9 +3,9 @@
     package="net.sudormrf.chorechart">
 
     <!-- For Android-Image-Cropper library -->
+    <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -21,14 +21,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-        To quiet Gradle down.
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        -->
-
 
         <!-- From https://developer.android.com/training/basics/firstapp/starting-activity.html -->
         <!-- Adds a back button to the menu bar -->

@@ -64,3 +64,12 @@ Thumbs.db
 #NDK
 obj/
 .externalNativeBuild
+
+#umple compiled files
+Source/app/src/main/java/net/sudormrf/chorechart/User.java
+Source/app/src/main/java/net/sudormrf/chorechart/Parent.java
+Source/app/src/main/java/net/sudormrf/chorechart/Task.java
+Source/app/src/main/java/net/sudormrf/chorechart/Tools.java
+Source/app/src/main/java/net/sudormrf/chorechart/ShoppingList.java
+Source/app/src/main/java/net/sudormrf/chorechart/Home.java
+Source/app/src/main/java/net/sudormrf/chorechart/Facade.java

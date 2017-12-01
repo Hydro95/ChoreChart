@@ -2,6 +2,8 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.Exclude;
+
 import java.util.*;
 
 /**
@@ -21,7 +23,7 @@ public class User
   //User Attributes
   private String name;
   private int points;
-  private int icon;
+  private String icon;
   private String id;
   private List<String> taskIds;
 
@@ -36,7 +38,7 @@ public class User
   {
     name = aName;
     points = 0;
-    icon = 0;
+    icon = "";
     id = Facade.getInstance().getUserRef().push().getKey();
     taskIds = new ArrayList<String>();
     boolean didAddFacade = setFacade(aFacade);
@@ -66,7 +68,7 @@ public class User
     return wasSet;
   }
 
-  public boolean setIcon(int aIcon)
+  public boolean setIcon(String aIcon)
   {
     boolean wasSet = false;
     icon = aIcon;
@@ -106,7 +108,7 @@ public class User
     return points;
   }
 
-  public int getIcon()
+  public String getIcon()
   {
     return icon;
   }
@@ -140,6 +142,7 @@ public class User
     return index;
   }
 
+  @Exclude
   public Facade getFacade()
   {
     return facade;

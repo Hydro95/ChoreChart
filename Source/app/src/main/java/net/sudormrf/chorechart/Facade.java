@@ -346,9 +346,9 @@ public class Facade
     return 0;
   }
 
-  public Task addTask(String aName, String aDeadline, String aUserId)
+  public Task addTask()
   {
-    return new Task(aName, aDeadline, aUserId, this);
+    return new Task(this);
   }
 
   public boolean addTask(Task aTask)
@@ -697,17 +697,6 @@ public class Facade
   // line 223 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
-  }
-
-
-  /**
-   * Figure out if you can deel with this (automatically using currentX)
-   */
-  // line 229 "../../../class.ump"
-  public User addUser(String aName, int icon){
-    User user = new User(aName, this);
-		user.setIcon(icon);
-		return user;
   }
 
 
