@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 34 "../../../class.ump"
+// line 35 "../../../class.ump"
 public class Task
 {
 
@@ -387,12 +387,12 @@ public class Task
     }
   }
 
-  // line 49 "../../../class.ump"
+  // line 50 "../../../class.ump"
    public User getUser(){
     return Facade.getInstance().getUser(userId);
   }
 
-  // line 53 "../../../class.ump"
+  // line 54 "../../../class.ump"
    public boolean hasAllocation(){
     return userId != "";
   }
@@ -416,7 +416,7 @@ public class Task
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 36 ../../../class.ump
+  // line 37 ../../../class.ump
   public enum Repeat 
   {
     NEVER, DAILY, WEEKLY, MONTHY, YEARLY

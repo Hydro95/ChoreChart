@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 79 "../../../class.ump"
+// line 80 "../../../class.ump"
 public class ShoppingList
 {
 
@@ -15,9 +15,9 @@ public class ShoppingList
   //ShoppingList Attributes
   private String name;
   private String location;
-  private List<String> items;
   private String icon;
   private String id;
+  private List<String> items;
 
   //------------------------
   // CONSTRUCTOR
@@ -27,9 +27,9 @@ public class ShoppingList
   {
     name = "";
     location = "";
-    items = new ArrayList<String>();
     icon = "";
     id = Facade.getInstance().getShoppingRef().push().getKey();
+    items = new ArrayList<String>();
   }
 
   //------------------------
@@ -52,20 +52,6 @@ public class ShoppingList
     return wasSet;
   }
 
-  public boolean addItem(String aItem)
-  {
-    boolean wasAdded = false;
-    wasAdded = items.add(aItem);
-    return wasAdded;
-  }
-
-  public boolean removeItem(String aItem)
-  {
-    boolean wasRemoved = false;
-    wasRemoved = items.remove(aItem);
-    return wasRemoved;
-  }
-
   public boolean setIcon(String aIcon)
   {
     boolean wasSet = false;
@@ -80,6 +66,20 @@ public class ShoppingList
     id = aId;
     wasSet = true;
     return wasSet;
+  }
+
+  public boolean addItem(String aItem)
+  {
+    boolean wasAdded = false;
+    wasAdded = items.add(aItem);
+    return wasAdded;
+  }
+
+  public boolean removeItem(String aItem)
+  {
+    boolean wasRemoved = false;
+    wasRemoved = items.remove(aItem);
+    return wasRemoved;
   }
 
   /**
@@ -98,15 +98,20 @@ public class ShoppingList
     return location;
   }
 
+  public String getIcon()
+  {
+    return icon;
+  }
+
+  public String getId()
+  {
+    return id;
+  }
+
   public String getItem(int index)
   {
     String aItem = items.get(index);
     return aItem;
-  }
-
-  public List<String> getItems()
-  {
-    return items;
   }
 
   public int numberOfItems()
@@ -127,19 +132,12 @@ public class ShoppingList
     return index;
   }
 
-  public String getIcon()
-  {
-    return icon;
-  }
-
-  public String getId()
-  {
-    return id;
-  }
-
   public void delete()
   {}
 
+  public List<String> getItems() {
+    return items;
+  }
 
   public String toString()
   {
