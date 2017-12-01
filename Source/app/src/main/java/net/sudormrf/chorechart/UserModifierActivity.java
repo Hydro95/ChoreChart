@@ -19,13 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
-
-import android.widget.TextView;
 
 /**
  * Created by Josh on 2017-11-27.
