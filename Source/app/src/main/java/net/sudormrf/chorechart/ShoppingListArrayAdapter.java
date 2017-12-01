@@ -1,6 +1,7 @@
 package net.sudormrf.chorechart;
 
 import android.content.Context;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,7 @@ public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
         TextView listLocation = convertView.findViewById(R.id.listInfo);
 
         //populate the data into the template view using the data object
-        //listIcon.setImageResource(list.getIcon());
+
         listName.setText(list.getName());
         listLocation.setText(list.getLocation());
 

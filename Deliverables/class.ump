@@ -80,7 +80,7 @@ class ShoppingList {
 	String name = ""; // list name
 	String location = ""; // example hardware or grocery store
 	String[] items = new String[10];
-	int icon = 0;
+	String icon = "";
 
 	String id = Facade.getInstance().getShoppingRef().push().getKey();
 

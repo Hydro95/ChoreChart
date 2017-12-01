@@ -16,7 +16,7 @@ public class ShoppingList
   private String name;
   private String location;
   private List<String> items;
-  private int icon;
+  private String icon;
   private String id;
 
   //------------------------
@@ -28,7 +28,7 @@ public class ShoppingList
     name = "";
     location = "";
     items = new ArrayList<String>();
-    icon = 0;
+    icon = "";
     id = Facade.getInstance().getShoppingRef().push().getKey();
   }
 
@@ -66,7 +66,7 @@ public class ShoppingList
     return wasRemoved;
   }
 
-  public boolean setIcon(int aIcon)
+  public boolean setIcon(String aIcon)
   {
     boolean wasSet = false;
     icon = aIcon;
@@ -127,7 +127,7 @@ public class ShoppingList
     return index;
   }
 
-  public int getIcon()
+  public String getIcon()
   {
     return icon;
   }
