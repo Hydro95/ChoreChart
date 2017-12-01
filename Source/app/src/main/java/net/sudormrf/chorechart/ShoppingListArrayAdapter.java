@@ -36,7 +36,7 @@ public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
         TextView listLocation = convertView.findViewById(R.id.listInfo);
 
         //populate the data into the template view using the data object
-        listIcon.setImageResource(list.getIcon());
+        //listIcon.setImageResource(list.getIcon());
         listName.setText(list.getName());
         listLocation.setText(list.getLocation());
 
