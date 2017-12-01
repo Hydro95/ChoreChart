@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -111,12 +112,8 @@ public class DateTimeFragment extends Fragment implements View.OnClickListener {
     private void buildDate(Calendar datetime)
     {
         TextView dateText = (TextView) getView().findViewById(R.id.datetime);
-        String newDate = String.format("%d-%d-%d %d:%d", datetime.get(Calendar.YEAR),
-                datetime.get(Calendar.MONTH),
-                datetime.get(Calendar.DAY_OF_MONTH),
-                datetime.get(Calendar.HOUR_OF_DAY),
-                datetime.get(Calendar.MINUTE));
-        dateText.setText(newDate);
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+        dateText.setText(fmt.format(datetime.getTime()));
     }
 
     /**

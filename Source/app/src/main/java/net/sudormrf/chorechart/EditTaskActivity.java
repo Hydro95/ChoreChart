@@ -1,6 +1,8 @@
 package net.sudormrf.chorechart;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -34,36 +37,6 @@ public class EditTaskActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
 
-        int index = getIntent().getIntExtra("index", -1);
-
-        if(index != -1) {
-            task = Facade.getInstance().getTask(index);
-
-            CheckBox checkBox2 = findViewById(R.id.complete);
-            //TODO: figure out how spinner works (select user)
-            //TODO: select REPEAT
-            EditText name = findViewById(R.id.name);
-            EditText duration = findViewById(R.id.duration);
-            //TODO: figure out how to set datetime
-            EditText comment = findViewById(R.id.comment);
-
-            checkBox2.setChecked(task.getCompleted());
-            //user goes here
-            //repeat goes here
-
-            name.setText(task.getName());
-            duration.setText(task.getDuration());
-            //datetime goes here
-            comment.setText(task.getComment());
-
-            isNewTask = false;
-        }
-        else {
-            task = new Task();
-            Facade.getInstance().addTask(task);
-            isNewTask = true;
-        }
-
         //Setup repeat menu (based from https://developer.android.com/guide/topics/ui/controls/spinner.html)
         Spinner repeat = (Spinner) findViewById(R.id.repeat);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -75,13 +48,59 @@ public class EditTaskActivity extends AppCompatActivity implements
 
         //Setup users menu
         Spinner users = (Spinner) findViewById(R.id.user);
-        List<User> userList = Facade.getInstance().getUsers();
+        List<User> userList = new ArrayList(Facade.getInstance().getUsers());
+
+        //Add dummy user value for no allocation.
+        User nullUser = new User();
+        nullUser.setName("Select a User");
+        Bitmap nullUserIcon = BitmapFactory.decodeResource(getResources(),R.drawable.ic_logo_empty);
+        nullUser.setIcon(ImageHelper.bitmapToBase64(nullUserIcon));
+        userList.add(0,nullUser);
+
         UserSpinnerAdapter uAdapter = new UserSpinnerAdapter(this, userList);
         users.setAdapter(uAdapter);
 
         deadline = Calendar.getInstance();
         dateSet = false;
         timeSet = false;
+
+        int index = getIntent().getIntExtra("index", -1);
+
+        if(index != -1) {
+            task = Facade.getInstance().getTask(index);
+            deadline.setTimeInMillis(Long.parseLong(task.getDeadline()));
+
+            CheckBox checkBox2 = findViewById(R.id.complete);
+            EditText name = findViewById(R.id.name);
+            EditText duration = findViewById(R.id.duration);
+            EditText comment = findViewById(R.id.comment);
+            DateTimeFragment dtf = (DateTimeFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.deadline);
+
+            name.setText(task.getName());
+            duration.setText(task.getDuration());
+            comment.setText(task.getComment());
+            dtf.updateDateTime(deadline);
+            checkBox2.setChecked(task.getCompleted());
+
+            //User select
+            for(int i = 0; i < userList.size(); i++) {
+                User user = userList.get(i);
+                if(user.getId().equals(task.getUserId())) {
+                    users.setSelection(i);
+                }
+            }
+
+            //Repeat
+            repeat.setSelection(repeatToInt(task.getFrequency()));
+
+            isNewTask = false;
+        }
+        else {
+            task = new Task();
+            Facade.getInstance().addTask(task);
+            isNewTask = true;
+        }
     }
 
     @Override
@@ -134,11 +153,21 @@ public class EditTaskActivity extends AppCompatActivity implements
         EditText comment = findViewById(R.id.comment);
         CheckBox checkbox = findViewById(R.id.complete);
 
+        //Get unix time stamp(in milliseconds), then set time in task.
+        long time = deadline.getTimeInMillis();
+        task.setDeadline(Long.toString(time));
+
+        //Get User
+        if(user.getSelectedItemPosition() == 0) {
+            task.setUserId("");
+        }
+        else {
+            task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()-1).getId());
+        }
+
         task.setName(name.getText().toString());
         task.setDuration(duration.getText().toString());
-        task.setDeadline(deadline.toString());
         task.setFrequency(Task.Repeat.values()[repeat.getSelectedItemPosition()]);
-        task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()).getId());
         task.setComment(comment.getText().toString());
         task.setCompleted(checkbox.isChecked());
 
@@ -147,7 +176,6 @@ public class EditTaskActivity extends AppCompatActivity implements
             task.setId(Facade.getInstance().getUserRef().push().getKey());
         }
 
-        //TODO: Why won't sync properly?
         try {
             Facade.getInstance().publishTasks();
             finish();
@@ -158,8 +186,6 @@ public class EditTaskActivity extends AppCompatActivity implements
                     .setMessage("Incorrect information. Please check all fields for missing data.")
                     .setNeutralButton("Okay", null)
                     .show();
-
-            e.printStackTrace();
         }
     }
 
@@ -191,4 +217,14 @@ public class EditTaskActivity extends AppCompatActivity implements
         }
     }
 
+    private int repeatToInt(Task.Repeat in)
+    {
+        for(int i = 0; i < Task.Repeat.values().length; i++) {
+            if(Task.Repeat.values()[i].equals(in)) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
 }
