@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -38,17 +40,31 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         TextView deadline = convertView.findViewById(R.id.listInfo);
 
         RoundedBitmapDrawable rDrawable;
-        if(task.hasAllocation()) {
+        //TODO: Remove when hasAllocation() gets patched.
+        if(task.hasAllocation() && !(task.getUserId().equals(""))) {
             rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), task.getUser().getIcon());
         }
         else {
-            rDrawable = ImageHelper.roundedImage(getContext().getResources(), R.drawable.add_new);
+            rDrawable = ImageHelper.roundedImage(getContext().getResources(), R.drawable.ic_logo_empty);
         }
 
         icon.setImageDrawable(rDrawable);
 
         name.setText(task.getName());
-        deadline.setText("Deadline: " + ((task.getDeadline() == null) ? "N/A" : task.getDeadline()));
+
+        //Drawing date properly
+        String strDeadline = "Deadline: ";
+        if(task.getDeadline() == null) {
+            strDeadline += "N/A";
+        }
+        else {
+            Calendar tmp = Calendar.getInstance();
+            tmp.setTimeInMillis(Long.parseLong(task.getDeadline()));
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd kk:mm");
+            strDeadline += fmt.format(tmp.getTime());
+        }
+
+        deadline.setText(strDeadline);
         // Return the completed view to render on screen
         return convertView;
     }
