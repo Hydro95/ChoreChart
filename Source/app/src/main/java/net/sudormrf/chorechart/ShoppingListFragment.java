@@ -1,10 +1,12 @@
 package net.sudormrf.chorechart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -25,21 +27,21 @@ public class ShoppingListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
         ArrayList<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
 
-        //ShoppingList testShoppingList = new ShoppingList("test Name", "soup Store", 1, null);
-
-        /*for (int i = 0; i < 10; i++) {
-            shoppingLists.add(Facade.getInstance().addShoppingList(testShoppingList));
-        }
-
-        Facade.getInstance().publishShoppingLists(); */
-
-
-        //Facade.getInstance().publishShoppingLists();
-
         ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), Facade.getInstance().getShoppingLists());
       
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
+                Intent intent = new Intent(getContext(), AddList.class);
+                intent.putExtra("index", index);
+                startActivity(intent);
+            }
+
+        });
 
         return view;
     }
