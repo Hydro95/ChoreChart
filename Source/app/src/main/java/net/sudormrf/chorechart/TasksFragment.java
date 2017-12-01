@@ -26,7 +26,6 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
-        ArrayList<Task> tasks = new ArrayList<Task>();
 
         TaskArrayAdapter adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
 
