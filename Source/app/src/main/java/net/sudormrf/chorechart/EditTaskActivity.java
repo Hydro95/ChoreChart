@@ -8,6 +8,7 @@ import android.Manifest;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -138,27 +139,48 @@ public class EditTaskActivity extends AppCompatActivity implements
     public void onSaveButtonClick(View view)
     {
         //TODO: Bitmap to Base64.
-        //Facade.getInstance().addTask(task);
-        finish();
 
-        /*
-        ImageView icon = findViewById(R.id.task_image);
+
+        //ImageView icon = findViewById(R.id.task_image);
         EditText name = findViewById(R.id.name);
+        EditText duration = findViewById(R.id.duration);
+        TextView deadline = findViewById(R.id.deadline).findViewById(R.id.datetime);
+        Spinner repeat = findViewById(R.id.repeat);
+        Spinner user = findViewById(R.id.user);
+        EditText comment = findViewById(R.id.comment);
+        CheckBox checkbox = findViewById(R.id.checkBox2);
+
+
 
         //TODO: Set icon should be base64 string of icon.
-        user.setIcon(R.drawable.ic_logo_empty);
-        user.setName(name.getText().toString());
-        user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
-        if (user.getId() == null) {
-            user.setId(Facade.getInstance().getUserRef().push().getKey());
+        //task.setIcon(R.drawable.ic_logo_empty);
+        task.setName(name.getText().toString());
+        task.setDuration(duration.getText().toString());
+        task.setDeadline(deadline.getText().toString());
+        task.setFrequency(Task.Repeat.values()[repeat.getSelectedItemPosition()]);
+        task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()).getId());
+        task.setComment(comment.getText().toString());
+        task.setCompleted(checkbox.isChecked());
+
+
+        //this handles whether or not the thing is new, if so, assign it a new id. else, edit the existing one
+        if (task.getId() == null) {
+            task.setId(Facade.getInstance().getUserRef().push().getKey());
         }
 
-        System.out.println(user);
-        Facade.getInstance().publishUsers();
+        try {
+            Facade.getInstance().publishTasks();
+            finish();
+        }
+        catch(Exception e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Incorrect information. Please check all fields for missing data.")
+                    .setNeutralButton("Okay", null)
+                    .show();
+        }
 
-        */
 
-        finish();
     }
 
     public void onIconClick(View view)

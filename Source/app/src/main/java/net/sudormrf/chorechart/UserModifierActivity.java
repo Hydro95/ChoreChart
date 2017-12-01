@@ -89,14 +89,23 @@ public class UserModifierActivity extends AppCompatActivity {
         user.setIcon(encodedPic);
         user.setName(name.getText().toString());
         user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
+
+        //this handles whether or not the thing is new, if so, assign it a new id. else, edit the existing one
         if (user.getId() == null) {
             user.setId(Facade.getInstance().getUserRef().push().getKey());
         }
 
-        System.out.println(user);
-        Facade.getInstance().publishUsers();
-
-        finish();
+        try {
+            Facade.getInstance().publishUsers();
+            finish();
+        }
+        catch (Exception e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Incorrect information. Please check all fields for missing data.")
+                    .setNeutralButton("Okay", null)
+                    .show();
+        }
     }
 
     public void onDeleteButtonClick(View view) {
