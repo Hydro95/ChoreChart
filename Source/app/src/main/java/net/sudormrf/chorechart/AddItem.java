@@ -15,7 +15,11 @@ public class AddItem extends AppCompatActivity {
     private Uri mImageUri;
     private Bitmap listImg;
 
+
+    ShoppingList shoppingList;
+
     String item;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,7 @@ public class AddItem extends AppCompatActivity {
 
     public void onSaveButtonClick(View view) {
 
+
         EditText name = findViewById(R.id.itemName);
         EditText quantity = findViewById(R.id.itemQuantity);
 
@@ -41,7 +46,6 @@ public class AddItem extends AppCompatActivity {
         item = itemQuantity + "x " + itemName;
 
         finish();
-
     }
 
 
