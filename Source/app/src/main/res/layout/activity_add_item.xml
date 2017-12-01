@@ -28,25 +28,12 @@
             android:layout_height="10dp" />
 
         <EditText
-            android:id="@+id/itemDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/description" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <EditText
             android:id="@+id/itemQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textNumberSigned"
             android:text="@string/quantity" />
 
         <Button
