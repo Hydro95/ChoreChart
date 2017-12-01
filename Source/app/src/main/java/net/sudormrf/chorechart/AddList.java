@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -71,16 +72,21 @@ public class AddList extends AppCompatActivity {
         shoppingList.setName("Clothes");
         shoppingList.setLocation("Soup Store");
 
-        //Facade.getInstance().addShoppingList(shoppingList);
-        //Facade.getInstance().publishShoppingLists();
-        //finish();
+        if (shoppingList.getId() == null) {
+            shoppingList.setId(Facade.getInstance().getShoppingRef().push().getKey());
+        }
+
+        Facade.getInstance().addShoppingList(shoppingList);
+        Facade.getInstance().publishShoppingLists();
+        finish();
 
         //this handles whether or not the thing is new, if so, assign it a new id. else, edit the existing one
-        if (shoppingList.getId() == null) {
+        /* if (shoppingList.getId() == null) {
             shoppingList.setId(Facade.getInstance().getUserRef().push().getKey());
         }
 
         try {
+            Facade.getInstance().addShoppingList(shoppingList);
             Facade.getInstance().publishShoppingLists();
             finish();
         }
@@ -90,7 +96,7 @@ public class AddList extends AppCompatActivity {
                     .setMessage("Incorrect information. Please check all fields for missing data.")
                     .setNeutralButton("Okay", null)
                     .show();
-        }
+        } */
     }
 
     public void onDeleteButtonClick(View view) {

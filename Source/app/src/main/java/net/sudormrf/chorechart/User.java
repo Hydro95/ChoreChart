@@ -124,6 +124,12 @@ public class User
     return aTaskId;
   }
 
+  public String[] getTaskIds()
+  {
+    String[] newTaskIds = taskIds.toArray(new String[taskIds.size()]);
+    return newTaskIds;
+  }
+
   public int numberOfTaskIds()
   {
     int number = taskIds.size();
@@ -184,9 +190,9 @@ public class User
   }
 
   // line 22 "../../../class.ump"
-   public List<String> getTaskIds(){
+   /*public List<String> getTaskIds(){
     return taskIds;
-  }
+  } */
 
 
   public String toString()
