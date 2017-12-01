@@ -39,12 +39,9 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
         RoundedBitmapDrawable rDrawable;
         if(task.hasAllocation()) {
-            Log.d("test", "has allocation true");
-            Log.d("test", String.valueOf(task.getUser()));
             rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), task.getUser().getIcon());
         }
         else {
-            Log.d("test", "has allocation false");
             rDrawable = ImageHelper.roundedImage(getContext().getResources(), R.drawable.add_new);
         }
 
