@@ -2,6 +2,7 @@ package net.sudormrf.chorechart;
 
 import android.content.Context;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +39,12 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
 
         RoundedBitmapDrawable rDrawable;
         if(task.hasAllocation()) {
+            Log.d("test", "has allocation true");
+            Log.d("test", String.valueOf(task.getUser()));
             rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), task.getUser().getIcon());
         }
         else {
+            Log.d("test", "has allocation false");
             rDrawable = ImageHelper.roundedImage(getContext().getResources(), R.drawable.add_new);
         }
 

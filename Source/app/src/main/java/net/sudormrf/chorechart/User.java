@@ -4,13 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-/**
- * every time you recompile you must:
- * 
- * add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
- * Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
- */
-// line 11 "../../../class.ump"
+// line 15 "../../../class.ump"
 public class User
 {
 
@@ -135,7 +129,7 @@ public class User
   public void delete()
   {}
 
-  // line 19 "../../../class.ump"
+  // line 23 "../../../class.ump"
    public List<String> getTaskIds(){
     return taskIds;
   }

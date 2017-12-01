@@ -394,7 +394,7 @@ public class Task
 
   // line 53 "../../../class.ump"
    public boolean hasAllocation(){
-    return userId != null;
+    return userId != "";
   }
 
 
