@@ -573,10 +573,6 @@ public class Facade
 
   // line 173 "../../../class.ump"
   public void publishTasks(){
-    //TODO: REMOVE THIS DEBUG STATEMENT!!!
-    Task tmp = tasks.get(tasks.size() -1);
-    tasks.add(0, tmp);
-    //TODO: END REMOVE THIS DEBUG STATEMENT!!!
     for (Task task : tasks) {
 			this.getTaskRef().child(task.getId()).setValue(task);
 		}

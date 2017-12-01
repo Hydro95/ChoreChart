@@ -7,10 +7,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -43,7 +43,10 @@ public class AddList extends AppCompatActivity {
             EditText name = findViewById(R.id.listName);
             TextView location = findViewById(R.id.listStore);
 
-            icon.setImageResource(shoppingList.getIcon());
+            RoundedBitmapDrawable rDrawable;
+            rDrawable = ImageHelper.roundedImageFromBase64(getResources(), shoppingList.getIcon());
+
+            icon.setImageDrawable(rDrawable);
             name.setText(shoppingList.getName());
             location.setText(String.valueOf(shoppingList.getLocation()));
         }
@@ -68,9 +71,16 @@ public class AddList extends AppCompatActivity {
 
         System.out.println(shoppingList);
 
+        String encodedPic = ImageHelper.bitmapToBase64(listImg, Bitmap.CompressFormat.WEBP, 90);
+
         //TODO: Set icon should be base64 string of icon.
-        shoppingList.setName("Clothes");
-        shoppingList.setLocation("Soup Store");
+
+        //shoppingList.setIcon(encodedPic);
+        shoppingList.setName(name.getText().toString());
+        shoppingList.setLocation(location.getText().toString());
+
+        //shoppingList.setName("Clothes");
+        //shoppingList.setLocation("Soup Store");
 
         if (shoppingList.getId() == null) {
             shoppingList.setId(Facade.getInstance().getShoppingRef().push().getKey());
