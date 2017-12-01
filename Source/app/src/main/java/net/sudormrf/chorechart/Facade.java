@@ -7,10 +7,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.*;
 
-// line 108 "../../../class.ump"
+// line 107 "../../../class.ump"
 public class Facade
 {
 
@@ -586,7 +585,7 @@ public class Facade
   /**
    * Listeners
    */
-  // line 118 "../../../class.ump"
+  // line 117 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -594,9 +593,7 @@ public class Facade
 				users.clear();
 
 				for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-						User user = dataSnapshot.getValue(User.class);
-
-						//users.add(user);
+						User user = userSnapshot.getValue(User.class);
 						Facade.getInstance().addUser(user);
 				}
 			}
@@ -614,7 +611,7 @@ public class Facade
 
 				for (DataSnapshot shoppingListSnapshot : dataSnapshot.getChildren()) {
 					ShoppingList list = shoppingListSnapshot.getValue(ShoppingList.class);
-					shoppingLists.add(list);
+					Facade.getInstance().addShoppingList(list);
 				}
 			}
 
@@ -630,9 +627,8 @@ public class Facade
 				tasks.clear();
 
 				for (DataSnapshot taskSnapshot : dataSnapshot.getChildren()) {
-					Task task = dataSnapshot.getValue(Task.class);
-
-					tasks.add(task);
+					Task task = taskSnapshot.getValue(Task.class);
+					Facade.getInstance().addTask(task);
 				}
 
 			}
@@ -644,28 +640,28 @@ public class Facade
 		});
   }
 
-  // line 175 "../../../class.ump"
+  // line 171 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
 			this.getUserRef().child(user.getId()).setValue(user);
 		}
   }
 
-  // line 181 "../../../class.ump"
+  // line 177 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
-			taskRef.child(task.getId()).setValue(task);
+			this.getTaskRef().child(task.getId()).setValue(task);
 		}
   }
 
-  // line 187 "../../../class.ump"
+  // line 183 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
-			shoppingRef.child(list.getId()).setValue(list);
+			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
-  // line 193 "../../../class.ump"
+  // line 189 "../../../class.ump"
   public User getUser(String id){
     for (User user : users) {
       if (user.getId() == id) {
@@ -675,7 +671,7 @@ public class Facade
     return null;
   }
 
-  // line 202 "../../../class.ump"
+  // line 198 "../../../class.ump"
   public Task getTask(String id){
     for (Task task : tasks) {
       if (task.getId() == id) {
@@ -685,19 +681,20 @@ public class Facade
     return null;
   }
 
-  // line 216 "../../../class.ump"
+  // line 212 "../../../class.ump"
   public void allocateTask(User user, Task task){
     task.setUserId(user.getId());
+		user.addTaskId(task.getId());
   }
 
-  // line 220 "../../../class.ump"
+  // line 217 "../../../class.ump"
   public boolean markCompleted(Task task){
     if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 226 "../../../class.ump"
+  // line 223 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.add(item);
   }
@@ -706,7 +703,7 @@ public class Facade
   /**
    * Figure out if you can deel with this (automatically using currentX)
    */
-  // line 232 "../../../class.ump"
+  // line 229 "../../../class.ump"
   public User addUser(String aName, int icon){
     User user = new User(aName, this);
 		user.setIcon(icon);

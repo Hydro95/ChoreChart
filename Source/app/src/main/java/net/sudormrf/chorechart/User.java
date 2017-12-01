@@ -9,11 +9,10 @@ import java.util.*;
 /**
  * every time you recompile you must:
  * 
- * manually add imports in android studio
  * add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
- * Remove the umple gen'd getter for User.getTaskIds()
+ * Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
  */
-// line 12 "../../../class.ump"
+// line 11 "../../../class.ump"
 public class User
 {
 
@@ -179,12 +178,12 @@ public class User
   /**
    * default constructor for db
    */
-  // line 20 "../../../class.ump"
+  // line 19 "../../../class.ump"
    public  User(){
     
   }
 
-  // line 23 "../../../class.ump"
+  // line 22 "../../../class.ump"
    public List<String> getTaskIds(){
     return taskIds;
   }
