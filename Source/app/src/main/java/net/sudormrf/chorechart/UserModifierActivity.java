@@ -47,12 +47,14 @@ public class UserModifierActivity extends AppCompatActivity {
             EditText name = findViewById(R.id.userName);
             TextView points = findViewById(R.id.points);
 
-            icon.setImageResource(user.getIcon());
+            //icon.setImageResource(user.getIcon());
+            icon.setImageResource(R.drawable.ic_logo_empty);
             name.setText(user.getName());
             points.setText("Points: " + String.valueOf(user.getPoints()));
         }
         else {
-            Facade.getInstance().addUser(new User());
+            user = new User();
+            Facade.getInstance().addUser(user);
         }
     }
 
@@ -72,6 +74,10 @@ public class UserModifierActivity extends AppCompatActivity {
         //TODO: Set icon should be base64 string of icon.
         user.setName(name.getText().toString());
         user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
+
+        Facade.getInstance().addUser(user);
+        Facade.getInstance().publishUsers();
+
         finish();
     }
 
