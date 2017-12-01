@@ -39,16 +39,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/list_name" />
+                android:hint="Name"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/listStore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/store_name" />
+                android:hint="Location"
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/okButton"

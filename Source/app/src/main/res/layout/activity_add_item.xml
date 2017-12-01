@@ -20,8 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/item_name" />
+            android:hint="Name"
+            android:inputType="textPersonName" />
 
         <Space
             android:layout_width="match_parent"
@@ -33,13 +33,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/quantity" />
+            android:hint="Quantity"
+            android:inputType="number" />
 
         <Button
             android:id="@+id/saveItemChanges"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="onSaveButtonClick"
             android:text="@string/save_changes" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
