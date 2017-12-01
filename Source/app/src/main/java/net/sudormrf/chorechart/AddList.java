@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -15,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +31,7 @@ public class AddList extends AppCompatActivity {
 
     private Uri mImageUri;
     private Bitmap listImg;
+    private boolean isNewList;
 
     private final int CAMERA_PERMISSIONS = 1;
 
@@ -54,10 +57,13 @@ public class AddList extends AppCompatActivity {
             icon.setImageDrawable(rDrawable);
             name.setText(shoppingList.getName());
             location.setText(String.valueOf(shoppingList.getLocation()));
+
+            isNewList = false;
         }
         else {
             shoppingList = new ShoppingList();
             Facade.getInstance().addShoppingList(shoppingList);
+            isNewList = true;
         }
     }
 
@@ -66,6 +72,32 @@ public class AddList extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_delete, menu);
         return true;
+    }
+
+    public void onAddListClick(View view)
+    {
+        Bundle bundle = new Bundle();
+        bundle.putInt("index", Facade.getInstance().indexOfShoppingList(shoppingList));
+        Intent intent = new Intent(this,ItemList.class);
+        intent.putExtra("index", Facade.getInstance().indexOfShoppingList(shoppingList));
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(isNewList) {
+            Facade.getInstance().removeShoppingList(shoppingList);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onSaveButtonClick(View view) {
@@ -85,7 +117,7 @@ public class AddList extends AppCompatActivity {
             shoppingList.setId(Facade.getInstance().getShoppingRef().push().getKey());
         }
 
-        Facade.getInstance().addShoppingList(shoppingList);
+
         Facade.getInstance().publishShoppingLists();
         finish();
 
