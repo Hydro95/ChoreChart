@@ -113,7 +113,6 @@ public class EditTaskActivity extends AppCompatActivity implements
         }
         else {
             task = new Task();
-            Facade.getInstance().addTask(task);
             isNewTask = true;
         }
     }
@@ -199,6 +198,7 @@ public class EditTaskActivity extends AppCompatActivity implements
         }
 
         try {
+            Facade.getInstance().addTask(task);
             Facade.getInstance().publishTasks();
             finish();
         }
