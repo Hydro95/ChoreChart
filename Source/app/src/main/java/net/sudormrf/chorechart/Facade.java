@@ -592,7 +592,7 @@ public class Facade
   // line 185 "../../../class.ump"
   public User getUser(String id){
     for (User user : users) {
-      if (user.getId() == id) {
+      if (user.getId().equals(id)) {
         return user;
       }
     }
@@ -602,7 +602,7 @@ public class Facade
   // line 194 "../../../class.ump"
   public Task getTask(String id){
     for (Task task : tasks) {
-      if (task.getId() == id) {
+      if (task.getId().equals(id)) {
         return task;
       }
     }
