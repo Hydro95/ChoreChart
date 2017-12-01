@@ -29,6 +29,10 @@ public class ImageHelper {
     public static RoundedBitmapDrawable roundedImageFromBase64(Resources res, String encodedData)
     {
         Bitmap img = bitmapFromBase64(encodedData);
+        if(img == null) {
+            return null;
+        }
+
         RoundedBitmapDrawable result = RoundedBitmapDrawableFactory.create(res, img);
         result.setCircular(true);
 
@@ -37,6 +41,11 @@ public class ImageHelper {
 
     public static Bitmap bitmapFromBase64(String encodedData)
     {
+        //Return an empty bitmap/default image if encodedData is empty.
+        if(encodedData.isEmpty()) {
+            return null;
+        }
+
         byte[] data = Base64.decode(encodedData, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(data, 0, data.length);
     }
@@ -45,6 +54,10 @@ public class ImageHelper {
     //https://stackoverflow.com/questions/4989182/converting-java-bitmap-to-byte-array
     public static String bitmapToBase64(Bitmap btm)
     {
+        if(btm == null) {
+            return "";
+        }
+
         int size = btm.getRowBytes() * btm.getHeight();
         ByteBuffer byteBuffer = ByteBuffer.allocate(size);
         btm.copyPixelsToBuffer(byteBuffer);
@@ -53,6 +66,10 @@ public class ImageHelper {
 
     public static String bitmapToBase64(Bitmap btm, Bitmap.CompressFormat compression, int quality)
     {
+        if(btm == null) {
+            return "";
+        }
+
         ByteArrayOutputStream compressPicOut = new ByteArrayOutputStream();
         btm.compress(compression, quality, compressPicOut);
         return Base64.encodeToString(compressPicOut.toByteArray(), Base64.DEFAULT);

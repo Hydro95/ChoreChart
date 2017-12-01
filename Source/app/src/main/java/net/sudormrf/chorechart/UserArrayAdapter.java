@@ -32,7 +32,7 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_card_layout, parent, false);
         }
         // Lookup view for data population
-        ImageView icon = convertView.findViewById(R.id.userIcon);
+        ImageView icon = convertView.findViewById(R.id.rowUserIcon);
         TextView name = convertView.findViewById(R.id.userName);
         TextView points = convertView.findViewById(R.id.userPoints);
 

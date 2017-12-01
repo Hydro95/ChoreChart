@@ -14,8 +14,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,9 +23,7 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 
 import android.widget.TextView;
 
@@ -38,6 +36,7 @@ import android.widget.TextView;
 public class UserModifierActivity extends AppCompatActivity {
     private Uri mImageUri;
     private Bitmap userImg;
+    private boolean isNewUser;
 
     private User user;
 
@@ -53,42 +52,51 @@ public class UserModifierActivity extends AppCompatActivity {
         if (index != -1) {
             user = Facade.getInstance().getUser(index);
 
-            ImageView icon = findViewById(R.id.userIcon);
+            ImageView icon = findViewById(R.id.rowUserIcon);
             EditText name = findViewById(R.id.userName);
             TextView points = findViewById(R.id.points);
 
             //Decode from Base64 string.
-            byte[] data = Base64.decode(user.getIcon(), Base64.DEFAULT);
-            userImg = BitmapFactory.decodeByteArray(data, 0 , data.length);
+            userImg = ImageHelper.bitmapFromBase64(user.getIcon());
             icon.setImageBitmap(userImg);
+
             name.setText(user.getName());
             points.setText("Points: " + String.valueOf(user.getPoints()));
+
+            isNewUser = false;
         }
         else {
             user = new User();
             Facade.getInstance().addUser(user);
+            isNewUser = true;
         }
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        if(!isNewUser) {
+            getMenuInflater().inflate(R.menu.menu_delete, menu);
+        }
+
         return true;
     }
 
     public void onSaveButtonClick(View view) {
 
-        ImageView icon = findViewById(R.id.userIcon);
+        ImageView icon = findViewById(R.id.rowUserIcon);
         EditText name = findViewById(R.id.userName);
-        TextView points = findViewById(R.id.points);
+
+        //TODO: Maybe a robust system for default image.
+        if(userImg == null) {
+            userImg = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_empty);
+        }
 
         //Calculate Base64 string.
         String encodedPic = ImageHelper.bitmapToBase64(userImg, Bitmap.CompressFormat.WEBP, 90);
 
         user.setIcon(encodedPic);
         user.setName(name.getText().toString());
-        user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
 
         //this handles whether or not the thing is new, if so, assign it a new id. else, edit the existing one
         if (user.getId() == null) {
@@ -108,23 +116,6 @@ public class UserModifierActivity extends AppCompatActivity {
         }
     }
 
-    public void onDeleteButtonClick(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete User")
-                .setMessage("Are you sure you want to delete this user?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Facade.getInstance().getUserRef().child(user.getId()).removeValue();
-                        Facade.getInstance().removeUser(user);
-                        finish();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
     //Request permission to use the camera, then fire off the event to get an image.
     public void onIconClick(View view)
     {
@@ -136,6 +127,30 @@ public class UserModifierActivity extends AppCompatActivity {
         else {
             pickImage();
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_delete) {
+            //Ask the user for deletion.
+            new AlertDialog.Builder(this)
+                    .setTitle("Delete User")
+                    .setMessage("Are you sure you want to delete this user?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Facade.getInstance().getUserRef().child(user.getId()).removeValue();
+                            Facade.getInstance().removeUser(user);
+                            finish();
+                        }
+
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
+        }
+
+        return true;
     }
 
     //Android 6 requires runtime permissions for certain things.
@@ -183,7 +198,7 @@ public class UserModifierActivity extends AppCompatActivity {
             else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 Uri img = result.getUri();
-                ImageView icon = (ImageView) findViewById(R.id.userIcon);
+                ImageView icon = (ImageView) findViewById(R.id.rowUserIcon);
                 try {
                     Bitmap btm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), img);
                     userImg = btm;
