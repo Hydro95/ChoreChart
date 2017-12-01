@@ -1,35 +1,17 @@
 package net.sudormrf.chorechart;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.Manifest;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.theartofdev.edmodo.cropper.CropImage;
-
-import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
 import java.util.Calendar;
 import java.util.List;
 
@@ -57,7 +39,7 @@ public class EditTaskActivity extends AppCompatActivity implements
         if(index != -1) {
             task = Facade.getInstance().getTask(index);
 
-            CheckBox checkBox2 = findViewById(R.id.checkBox2);
+            CheckBox checkBox2 = findViewById(R.id.complete);
             //TODO: figure out how spinner works (select user)
             //TODO: select REPEAT
             EditText name = findViewById(R.id.name);
@@ -150,7 +132,7 @@ public class EditTaskActivity extends AppCompatActivity implements
         Spinner repeat = findViewById(R.id.repeat);
         Spinner user = findViewById(R.id.user);
         EditText comment = findViewById(R.id.comment);
-        CheckBox checkbox = findViewById(R.id.checkBox2);
+        CheckBox checkbox = findViewById(R.id.complete);
 
         task.setName(name.getText().toString());
         task.setDuration(duration.getText().toString());
