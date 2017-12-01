@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class EditTaskActivity extends AppCompatActivity implements
 
         //Setup users menu
         Spinner users = (Spinner) findViewById(R.id.user);
-        List<User> userList = Facade.getInstance().getUsers();
+        List<User> userList = new ArrayList(Facade.getInstance().getUsers());
 
         //Add dummy user value for no allocation.
         User nullUser = new User();
@@ -161,7 +162,7 @@ public class EditTaskActivity extends AppCompatActivity implements
             task.setUserId("");
         }
         else {
-            task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()).getId());
+            task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()-1).getId());
         }
 
         task.setName(name.getText().toString());
