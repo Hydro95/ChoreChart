@@ -10,6 +10,8 @@ described bellow (don't know why it compiles the one for Shopping list
 but it's ok for User)
 */
 
+strictness expect 1006;
+
 class User {
 	String name = "";
 	int points = 0;
@@ -20,10 +22,6 @@ class User {
 	public List<String> getTaskIds() {
     	return taskIds;
   }
-
-	//void allocateTask(Task task) {
-	//	allocations.add(new Allocation(task, this));
-	//}
 }
 
 class Parent {
@@ -52,7 +50,7 @@ class Task {
 	}
 
 	public boolean hasAllocation() {
-		return userId != null;
+		return userId != "";
 	}
 
 	status {
@@ -218,7 +216,7 @@ class Facade {
 	}
 
 	void addToShopping(ShoppingList list, String item) {
-		list.add(item);
+		list.addItem(item);
 	}
 
 	0..1 -> * User;
