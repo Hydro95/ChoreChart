@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="net.sudormrf.chorechart.add_list">
+    tools:context="net.sudormrf.chorechart.AddList">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
                 android:id="@+id/listIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onIconClick"
                 app:srcCompat="@drawable/ic_logo_empty" />
 
             <ImageView

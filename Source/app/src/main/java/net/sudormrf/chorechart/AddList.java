@@ -1,61 +1,52 @@
 package net.sudormrf.chorechart;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.io.IOException;
-import android.widget.TextView;
 
-/**
- * Created by Josh on 2017-11-27.
- */
+public class AddList extends AppCompatActivity {
 
-//confirmation dialog help from https://stackoverflow.com/questions/2257963/how-to-show-a-dialog-to-confirm-that-the-user-wishes-to-exit-an-android-activity#2258147
-
-public class UserModifierActivity extends AppCompatActivity {
     private Uri mImageUri;
-    private Bitmap userImg;
+    private Bitmap listImg;
 
-    private User user;
+    ShoppingList shoppingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_user);
+        setContentView(R.layout.activity_add_list);
 
         int index = getIntent().getIntExtra("index",-1);
 
-        if (index != -1) {
-            user = Facade.getInstance().getUser(index);
+        /* if (index != -1) {
+            shoppingList = Facade.getInstance().getShoppingList(index);
 
-            ImageView icon = findViewById(R.id.userIcon);
-            EditText name = findViewById(R.id.userName);
-            TextView points = findViewById(R.id.points);
+            ImageView icon = findViewById(R.id.listIcon);
+            EditText name = findViewById(R.id.listName);
+            TextView location = findViewById(R.id.listInfo);
 
-            //icon.setImageResource(user.getIcon());
-            icon.setImageResource(R.drawable.ic_logo_empty);
-            name.setText(user.getName());
-            points.setText("Points: " + String.valueOf(user.getPoints()));
+            icon.setImageResource(shoppingList.getIcon());
+            name.setText(shoppingList.getName());
+            location.setText(String.valueOf(shoppingList.getLocation()));
         }
         else {
-            user = new User();
-            Facade.getInstance().addUser(user);
-        }
+            Facade.getInstance().addShoppingList(new ShoppingList(null, null, 1, null));
+        } */
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -67,41 +58,15 @@ public class UserModifierActivity extends AppCompatActivity {
 
     public void onSaveButtonClick(View view) {
 
-        ImageView icon = findViewById(R.id.userIcon);
-        EditText name = findViewById(R.id.userName);
-        TextView points = findViewById(R.id.points);
+        ImageView icon = findViewById(R.id.listIcon);
+        EditText name = findViewById(R.id.listName);
+        TextView location = findViewById(R.id.listInfo);
 
         //TODO: Set icon should be base64 string of icon.
-        user.setIcon(R.drawable.ic_logo_empty);
-        user.setName(name.getText().toString());
-        user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
-        if (user.getId() == null) {
-            user.setId(Facade.getInstance().getUserRef().push().getKey());
-        }
-
-        System.out.println(user);
-        Facade.getInstance().publishUsers();
-
+        shoppingList.setName(name.getText().toString());
+        shoppingList.setLocation(location.getText().toString());
         finish();
     }
-
-    public void onDeleteButtonClick(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete User")
-                .setMessage("Are you sure you want to delete this user?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Facade.getInstance().getUserRef().child(user.getId()).removeValue();
-                        Facade.getInstance().removeUser(user);
-                        finish();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
 
     //Launching an intent to get a image from gallery based on
     //https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
@@ -148,10 +113,10 @@ public class UserModifierActivity extends AppCompatActivity {
             else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 Uri img = result.getUri();
-                ImageView icon = (ImageView) findViewById(R.id.userIcon);
+                ImageView icon = (ImageView) findViewById(R.id.listIcon);
                 try {
                     Bitmap btm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), img);
-                    userImg = btm;
+                    listImg = btm;
                     icon.setImageBitmap(btm);
                 }
                 catch(IOException e) {

@@ -2,9 +2,11 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.Exclude;
+
 import java.util.*;
 
-// line 86 "../../../class.ump"
+// line 85 "../../../class.ump"
 public class ShoppingList
 {
 
@@ -145,7 +147,7 @@ public class ShoppingList
   {
     return id;
   }
-
+  @Exclude
   public Facade getFacade()
   {
     return facade;
@@ -177,12 +179,12 @@ public class ShoppingList
     placeholderFacade.removeShoppingList(this);
   }
 
-  // line 94 "../../../class.ump"
+  // line 93 "../../../class.ump"
   public void add(String item){
     
   }
 
-  // line 95 "../../../class.ump"
+  // line 94 "../../../class.ump"
   public void delete(int index){
     
   }
