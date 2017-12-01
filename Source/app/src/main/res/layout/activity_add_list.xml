@@ -23,6 +23,7 @@
                 android:id="@+id/listIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onIconClick"
                 app:srcCompat="@drawable/ic_logo_empty" />
 
             <ImageView
