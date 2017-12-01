@@ -66,7 +66,6 @@ public class UserModifierActivity extends AppCompatActivity {
         }
         else {
             user = new User();
-            Facade.getInstance().addUser(user);
             isNewUser = true;
         }
     }
@@ -103,6 +102,7 @@ public class UserModifierActivity extends AppCompatActivity {
         }
 
         try {
+            Facade.getInstance().addUser(user);
             Facade.getInstance().publishUsers();
             finish();
         }
@@ -149,7 +149,7 @@ public class UserModifierActivity extends AppCompatActivity {
                     .show();
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 
     //Android 6 requires runtime permissions for certain things.
