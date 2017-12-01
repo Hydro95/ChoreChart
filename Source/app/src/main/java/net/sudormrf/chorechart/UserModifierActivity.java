@@ -72,10 +72,14 @@ public class UserModifierActivity extends AppCompatActivity {
         TextView points = findViewById(R.id.points);
 
         //TODO: Set icon should be base64 string of icon.
+        user.setIcon(R.drawable.ic_logo_empty);
         user.setName(name.getText().toString());
         user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
+        if (user.getId() == null) {
+            user.setId(Facade.getInstance().getUserRef().push().getKey());
+        }
 
-        Facade.getInstance().addUser(user);
+        System.out.println(user);
         Facade.getInstance().publishUsers();
 
         finish();
