@@ -38,15 +38,17 @@ class Task {
 
 	public enum Repeat {NEVER, DAILY, WEEKLY, MONTHY, YEARLY}
 
-	String name;
-	String deadline;
+	String name = "";
+	String deadline = "";
 	String duration = "Unknown";
 	String comment = "";
 	boolean completed = false;
 	Repeat frequency = Repeat.NEVER;
 
 	String id = Facade.getInstance().getTaskRef().push().getKey();
-	String userId;
+	String userId = "";
+
+	facade = Facade.getInstance();
 
 	//default constructor for db
 	public Task() {}

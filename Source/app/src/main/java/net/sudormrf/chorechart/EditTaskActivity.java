@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,11 +44,41 @@ public class EditTaskActivity extends AppCompatActivity implements
     private Uri mImageUri;
     private Bitmap taskImg;
 
+    private Task task;
+
     @Override
     //TODO: Add a way to tell this activity,whether its a new task or an existing one.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
+
+        int index = getIntent().getIntExtra("index", -1);
+
+        if(index != -1) {
+            task = Facade.getInstance().getTask(index);
+
+            CheckBox checkBox2 = findViewById(R.id.checkBox2);
+            //TODO: figure out how spinner works (select user)
+            //TODO: select REPEAT
+            ImageView icon = findViewById(R.id.task_image); //TODO: change to x64 stirng
+            EditText name = findViewById(R.id.name);
+            EditText duration = findViewById(R.id.duration);
+            //TODO: figure out how to set datetime
+            EditText comment = findViewById(R.id.comment);
+
+            checkBox2.setChecked(task.getCompleted());
+            //user goes herer
+            //repeat goes here
+            if (task.hasAllocation())
+                icon.setImageResource(task.getUser().getIcon());
+            name.setText(task.getName());
+            duration.setText(task.getDuration());
+            //datetime goes here
+            comment.setText(task.getComment());
+        }
+        else {
+            task = Facade.getInstance().addTask()
+        }
 
         //Setup repeat menu (based from https://developer.android.com/guide/topics/ui/controls/spinner.html)
         Spinner repeat = (Spinner) findViewById(R.id.repeat);
