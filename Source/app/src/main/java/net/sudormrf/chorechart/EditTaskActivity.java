@@ -19,6 +19,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -77,7 +78,8 @@ public class EditTaskActivity extends AppCompatActivity implements
             comment.setText(task.getComment());
         }
         else {
-            task = Facade.getInstance().addTask()
+            task = new Task();
+            Facade.getInstance().addTask(task);
         }
 
         //Setup repeat menu (based from https://developer.android.com/guide/topics/ui/controls/spinner.html)
@@ -131,10 +133,27 @@ public class EditTaskActivity extends AppCompatActivity implements
 
     public void onSaveButtonClick(View view)
     {
-        //TODO: Implement db sync.
         //TODO: Bitmap to Base64.
-        Task task = new Task();
         //Facade.getInstance().addTask(task);
+        finish();
+
+        /*
+        ImageView icon = findViewById(R.id.task_image);
+        EditText name = findViewById(R.id.name);
+
+        //TODO: Set icon should be base64 string of icon.
+        user.setIcon(R.drawable.ic_logo_empty);
+        user.setName(name.getText().toString());
+        user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
+        if (user.getId() == null) {
+            user.setId(Facade.getInstance().getUserRef().push().getKey());
+        }
+
+        System.out.println(user);
+        Facade.getInstance().publishUsers();
+
+        */
+
         finish();
     }
 
