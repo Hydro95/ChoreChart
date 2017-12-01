@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.content.Intent;
 import android.view.MenuItem;
+<<<<<<< 6c28d3fc6dbd4d89a13c505afb3dcdf89f52e32b
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ListView;
 
 import java.util.List;
+=======
+import android.widget.ListView;
+>>>>>>> pretty sure I fixed the ItemAdapter
 
 public class ItemList extends AppCompatActivity {
 
@@ -28,6 +32,7 @@ public class ItemList extends AppCompatActivity {
 
         shoppingList = Facade.getInstance().getShoppingList(index);
 
+<<<<<<< 6c28d3fc6dbd4d89a13c505afb3dcdf89f52e32b
         /*
         Item test = new Item();
         test.setName("Test");
@@ -43,6 +48,12 @@ public class ItemList extends AppCompatActivity {
 
         listView.setAdapter(adapter);
 
+=======
+        ItemAdapter adapter = new ItemAdapter(this, shoppingList.getItems());
+
+        ListView listView = (ListView) findViewById(R.id.itemList);
+        listView.setAdapter(adapter);
+>>>>>>> pretty sure I fixed the ItemAdapter
     }
 
 
