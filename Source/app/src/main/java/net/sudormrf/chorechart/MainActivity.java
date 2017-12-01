@@ -11,10 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import android.widget.Toast;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -93,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         else if(id == R.id.action_add) {
             TabLayout t = (TabLayout) findViewById(R.id.tabs);
             int y = t.getSelectedTabPosition();
-            System.out.println(y);
+
             if(y == Page.Tasks.getValue()) {
                 Intent intent = new Intent(this, EditTaskActivity.class);
                 startActivity(intent);
@@ -106,21 +102,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AddList.class);
                 startActivity(intent);
             }
-
         }
         else if(id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
 
-
         return super.onOptionsItemSelected(item);
-    }
-
-    //handle switching to the user modifier activity
-    public void modifyUser(View view) {
-        Intent intent = new Intent(this, UserModifierActivity.class);
-        startActivity(intent);
     }
 
     /**
