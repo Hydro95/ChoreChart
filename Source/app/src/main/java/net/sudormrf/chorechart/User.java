@@ -2,8 +2,6 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
-import com.google.firebase.database.Exclude;
-
 import java.util.*;
 
 /**
@@ -125,6 +123,12 @@ public class User
     return aTaskId;
   }
 
+  public String[] getTaskIds()
+  {
+    String[] newTaskIds = taskIds.toArray(new String[taskIds.size()]);
+    return newTaskIds;
+  }
+
   public int numberOfTaskIds()
   {
     int number = taskIds.size();
@@ -143,7 +147,6 @@ public class User
     return index;
   }
 
-  @Exclude
   public Facade getFacade()
   {
     return facade;

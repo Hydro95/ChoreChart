@@ -3,7 +3,7 @@ package net.sudormrf.chorechart;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class add_list extends AppCompatActivity {
+public class AddList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
