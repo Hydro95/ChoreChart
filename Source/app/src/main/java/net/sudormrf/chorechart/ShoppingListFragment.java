@@ -36,7 +36,7 @@ public class ShoppingListFragment extends Fragment {
 
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
-                Intent intent = new Intent(getContext(), AddList.class);
+                Intent intent = new Intent(getContext(), ItemList.class);
                 intent.putExtra("index", index);
                 startActivity(intent);
             }
