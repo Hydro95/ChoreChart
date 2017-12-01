@@ -3,23 +3,22 @@ namespace net.sudormrf.chorechart;
 /*
 every time you recompile you must:
 
-add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
 Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
 
+Fix replace umple gen'd getter for ShoppingList.getItems with the one 
+described bellow (don't know why it compiles the one for Shopping list
+but it's ok for User)
 */
 
 class User {
-	String name;
+	String name = "";
 	int points = 0;
 	String icon = "";
 	String id = Facade.getInstance().getUserRef().push().getKey();
 	String[] taskIds;
 
-	//default constructor for db
-	public User() {}
-
 	public List<String> getTaskIds() {
-    return taskIds;
+    	return taskIds;
   }
 
 	//void allocateTask(Task task) {
@@ -47,9 +46,6 @@ class Task {
 
 	String id = Facade.getInstance().getTaskRef().push().getKey();
 	String userId = "";
-
-	//default constructor for db
-	public Task() {}
 
 	public User getUser() {
 		return Facade.getInstance().getUser(userId);
@@ -83,15 +79,17 @@ class Tools {
 }
 
 class ShoppingList {
-	String name; // list name
-	String location; // example hardware or grocery store
-	String[] items;
-	int icon;
+	String name = ""; // list name
+	String location = ""; // example hardware or grocery store
+	String[] items = new String[10];
+	int icon = 0;
 
 	String id = Facade.getInstance().getShoppingRef().push().getKey();
 
-	void add(String item) {}
-	void delete(int index) {}
+	public List<String> getItems() {
+    	return taskIds;
+  }
+
 	//void createList(String name, Home home, String[] items) {}
 
 	//1 -- 0..1 Task;
@@ -223,8 +221,8 @@ class Facade {
 		list.add(item);
 	}
 
-	1 -- * User;
-	1 -- * Task;
-	1 -- * Tools;
-	1 -- * ShoppingList;
+	0..1 -> * User;
+	0..1 -> * Task;
+	0..1 -> * Tools;
+	0..1 -> * ShoppingList;
 }

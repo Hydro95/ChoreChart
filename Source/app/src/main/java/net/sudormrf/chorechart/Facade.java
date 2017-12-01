@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.*;
 
-// line 107 "../../../class.ump"
+// line 103 "../../../class.ump"
 public class Facade
 {
 
@@ -274,25 +274,11 @@ public class Facade
     return 0;
   }
 
-  public User addUser(String aName)
-  {
-    return new User(aName, this);
-  }
-
   public boolean addUser(User aUser)
   {
     boolean wasAdded = false;
     if (users.contains(aUser)) { return false; }
-    Facade existingFacade = aUser.getFacade();
-    boolean isNewFacade = existingFacade != null && !this.equals(existingFacade);
-    if (isNewFacade)
-    {
-      aUser.setFacade(this);
-    }
-    else
-    {
-      users.add(aUser);
-    }
+    users.add(aUser);
     wasAdded = true;
     return wasAdded;
   }
@@ -300,8 +286,7 @@ public class Facade
   public boolean removeUser(User aUser)
   {
     boolean wasRemoved = false;
-    //Unable to remove aUser, as it must always have a facade
-    if (!this.equals(aUser.getFacade()))
+    if (users.contains(aUser))
     {
       users.remove(aUser);
       wasRemoved = true;
@@ -346,25 +331,11 @@ public class Facade
     return 0;
   }
 
-  public Task addTask()
-  {
-    return new Task(this);
-  }
-
   public boolean addTask(Task aTask)
   {
     boolean wasAdded = false;
     if (tasks.contains(aTask)) { return false; }
-    Facade existingFacade = aTask.getFacade();
-    boolean isNewFacade = existingFacade != null && !this.equals(existingFacade);
-    if (isNewFacade)
-    {
-      aTask.setFacade(this);
-    }
-    else
-    {
-      tasks.add(aTask);
-    }
+    tasks.add(aTask);
     wasAdded = true;
     return wasAdded;
   }
@@ -372,8 +343,7 @@ public class Facade
   public boolean removeTask(Task aTask)
   {
     boolean wasRemoved = false;
-    //Unable to remove aTask, as it must always have a facade
-    if (!this.equals(aTask.getFacade()))
+    if (tasks.contains(aTask))
     {
       tasks.remove(aTask);
       wasRemoved = true;
@@ -418,25 +388,11 @@ public class Facade
     return 0;
   }
 
-  public Tools addTool(String aName)
-  {
-    return new Tools(aName, this);
-  }
-
   public boolean addTool(Tools aTool)
   {
     boolean wasAdded = false;
     if (tools.contains(aTool)) { return false; }
-    Facade existingFacade = aTool.getFacade();
-    boolean isNewFacade = existingFacade != null && !this.equals(existingFacade);
-    if (isNewFacade)
-    {
-      aTool.setFacade(this);
-    }
-    else
-    {
-      tools.add(aTool);
-    }
+    tools.add(aTool);
     wasAdded = true;
     return wasAdded;
   }
@@ -444,8 +400,7 @@ public class Facade
   public boolean removeTool(Tools aTool)
   {
     boolean wasRemoved = false;
-    //Unable to remove aTool, as it must always have a facade
-    if (!this.equals(aTool.getFacade()))
+    if (tools.contains(aTool))
     {
       tools.remove(aTool);
       wasRemoved = true;
@@ -490,25 +445,11 @@ public class Facade
     return 0;
   }
 
-  public ShoppingList addShoppingList(String aName, String aLocation, int aIcon)
-  {
-    return new ShoppingList(aName, aLocation, aIcon, this);
-  }
-
   public boolean addShoppingList(ShoppingList aShoppingList)
   {
     boolean wasAdded = false;
     if (shoppingLists.contains(aShoppingList)) { return false; }
-    Facade existingFacade = aShoppingList.getFacade();
-    boolean isNewFacade = existingFacade != null && !this.equals(existingFacade);
-    if (isNewFacade)
-    {
-      aShoppingList.setFacade(this);
-    }
-    else
-    {
-      shoppingLists.add(aShoppingList);
-    }
+    shoppingLists.add(aShoppingList);
     wasAdded = true;
     return wasAdded;
   }
@@ -516,8 +457,7 @@ public class Facade
   public boolean removeShoppingList(ShoppingList aShoppingList)
   {
     boolean wasRemoved = false;
-    //Unable to remove aShoppingList, as it must always have a facade
-    if (!this.equals(aShoppingList.getFacade()))
+    if (shoppingLists.contains(aShoppingList))
     {
       shoppingLists.remove(aShoppingList);
       wasRemoved = true;
@@ -559,33 +499,17 @@ public class Facade
 
   public void delete()
   {
-    for(int i=users.size(); i > 0; i--)
-    {
-      User aUser = users.get(i - 1);
-      aUser.delete();
-    }
-    for(int i=tasks.size(); i > 0; i--)
-    {
-      Task aTask = tasks.get(i - 1);
-      aTask.delete();
-    }
-    for(int i=tools.size(); i > 0; i--)
-    {
-      Tools aTool = tools.get(i - 1);
-      aTool.delete();
-    }
-    for(int i=shoppingLists.size(); i > 0; i--)
-    {
-      ShoppingList aShoppingList = shoppingLists.get(i - 1);
-      aShoppingList.delete();
-    }
+    users.clear();
+    tasks.clear();
+    tools.clear();
+    shoppingLists.clear();
   }
 
 
   /**
    * Listeners
    */
-  // line 117 "../../../class.ump"
+  // line 113 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -640,14 +564,14 @@ public class Facade
 		});
   }
 
-  // line 171 "../../../class.ump"
+  // line 167 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
 			this.getUserRef().child(user.getId()).setValue(user);
 		}
   }
 
-  // line 177 "../../../class.ump"
+  // line 173 "../../../class.ump"
   public void publishTasks(){
     //TODO: REMOVE THIS DEBUG STATEMENT!!!
     Task tmp = tasks.get(tasks.size() -1);
@@ -658,14 +582,14 @@ public class Facade
 		}
   }
 
-  // line 183 "../../../class.ump"
+  // line 179 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
 			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
-  // line 189 "../../../class.ump"
+  // line 185 "../../../class.ump"
   public User getUser(String id){
     for (User user : users) {
       if (user.getId() == id) {
@@ -675,7 +599,7 @@ public class Facade
     return null;
   }
 
-  // line 198 "../../../class.ump"
+  // line 194 "../../../class.ump"
   public Task getTask(String id){
     for (Task task : tasks) {
       if (task.getId() == id) {
@@ -685,22 +609,22 @@ public class Facade
     return null;
   }
 
-  // line 212 "../../../class.ump"
+  // line 208 "../../../class.ump"
   public void allocateTask(User user, Task task){
     task.setUserId(user.getId());
 		user.addTaskId(task.getId());
   }
 
-  // line 217 "../../../class.ump"
+  // line 213 "../../../class.ump"
   public boolean markCompleted(Task task){
     if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 223 "../../../class.ump"
+  // line 219 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
-    list.add(item);
+    list.addItem(item);
   }
 
 
