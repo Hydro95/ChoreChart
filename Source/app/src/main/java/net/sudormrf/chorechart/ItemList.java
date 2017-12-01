@@ -1,59 +1,32 @@
 package net.sudormrf.chorechart;
 
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.content.Intent;
 import android.view.MenuItem;
-<<<<<<< 6c28d3fc6dbd4d89a13c505afb3dcdf89f52e32b
 import android.view.View;
-import android.widget.Adapter;
+import android.widget.EditText;
 import android.widget.ListView;
-
-import java.util.List;
-=======
-import android.widget.ListView;
->>>>>>> pretty sure I fixed the ItemAdapter
 
 public class ItemList extends AppCompatActivity {
 
     ShoppingList shoppingList;
-    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        index = getIntent().getIntExtra("index", -1);
-
+        int index = getIntent().getIntExtra("index", -1);
 
         shoppingList = Facade.getInstance().getShoppingList(index);
 
-<<<<<<< 6c28d3fc6dbd4d89a13c505afb3dcdf89f52e32b
-        /*
-        Item test = new Item();
-        test.setName("Test");
-        test.setBought(true);
-        shoppingList.addItem(test);
-        */
-
-
-        List<Item> listOfItems = shoppingList.getItems();
-
-        ItemAdapter adapter = new ItemAdapter(this, listOfItems);
-        ListView listView = findViewById(R.id.itemList);
-
-        listView.setAdapter(adapter);
-
-=======
         ItemAdapter adapter = new ItemAdapter(this, shoppingList.getItems());
 
         ListView listView = (ListView) findViewById(R.id.itemList);
         listView.setAdapter(adapter);
->>>>>>> pretty sure I fixed the ItemAdapter
     }
 
 
@@ -70,11 +43,18 @@ public class ItemList extends AppCompatActivity {
 
         if(id == R.id.action_add) {
             Intent intent = new Intent(this, AddItem.class);
-            intent.putExtra("index", index);
             startActivity(intent);
         }
 
         return true;
     }
 
+    public void onAddButtonClick(View view) {
+
+        EditText item = findViewById(R.id.itemName);
+
+        shoppingList.addItem(item.getText().toString());
+
+        Facade.getInstance().publishShoppingLists();
+    }
 }
