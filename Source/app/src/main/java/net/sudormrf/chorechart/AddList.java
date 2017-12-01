@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,7 +36,6 @@ public class AddList extends AppCompatActivity {
 
         int index = getIntent().getIntExtra("index",-1);
 
-        //need to find problem, crashes app if run
         if (index != -1) {
             shoppingList = Facade.getInstance().getShoppingList(index);
 
@@ -43,12 +43,16 @@ public class AddList extends AppCompatActivity {
             EditText name = findViewById(R.id.listName);
             TextView location = findViewById(R.id.listStore);
 
-            icon.setImageResource(shoppingList.getIcon());
+            RoundedBitmapDrawable rDrawable;
+            rDrawable = ImageHelper.roundedImageFromBase64(getResources(), shoppingList.getIcon());
+
+            icon.setImageDrawable(rDrawable);
             name.setText(shoppingList.getName());
             location.setText(String.valueOf(shoppingList.getLocation()));
         }
         else {
-            Facade.getInstance().addShoppingList(new ShoppingList(null, null, 1, Facade.getInstance()));
+            shoppingList = new ShoppingList();
+            Facade.getInstance().addShoppingList(shoppingList);
         }
     }
 
@@ -65,13 +69,44 @@ public class AddList extends AppCompatActivity {
         EditText name = findViewById(R.id.listName);
         TextView location = findViewById(R.id.listStore);
 
-        //TODO: Set icon should be base64 string of icon.
-        //shoppingList.setName(name.getText().toString());
-        //shoppingList.setLocation(location.getText().toString());
+        System.out.println(shoppingList);
 
-        //Facade.getInstance().addShoppingList(shoppingList);
+        String encodedPic = ImageHelper.bitmapToBase64(listImg, Bitmap.CompressFormat.WEBP, 90);
+
+        //TODO: Set icon should be base64 string of icon.
+
+        //shoppingList.setIcon(encodedPic);
+        shoppingList.setName(name.getText().toString());
+        shoppingList.setLocation(location.getText().toString());
+
+        //shoppingList.setName("Clothes");
+        //shoppingList.setLocation("Soup Store");
+
+        if (shoppingList.getId() == null) {
+            shoppingList.setId(Facade.getInstance().getShoppingRef().push().getKey());
+        }
+
+        Facade.getInstance().addShoppingList(shoppingList);
         Facade.getInstance().publishShoppingLists();
         finish();
+
+        //this handles whether or not the thing is new, if so, assign it a new id. else, edit the existing one
+        /* if (shoppingList.getId() == null) {
+            shoppingList.setId(Facade.getInstance().getUserRef().push().getKey());
+        }
+
+        try {
+            Facade.getInstance().addShoppingList(shoppingList);
+            Facade.getInstance().publishShoppingLists();
+            finish();
+        }
+        catch (Exception e) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Error")
+                    .setMessage("Incorrect information. Please check all fields for missing data.")
+                    .setNeutralButton("Okay", null)
+                    .show();
+        } */
     }
 
     public void onDeleteButtonClick(View view) {

@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/userIcon"
+            android:id="@+id/rowUserIcon"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginBottom="2dp"

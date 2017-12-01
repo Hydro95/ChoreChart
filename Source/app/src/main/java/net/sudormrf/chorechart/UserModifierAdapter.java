@@ -32,7 +32,7 @@ public class UserModifierAdapter extends ArrayAdapter<User> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_modify_user, parent, false);
         }
         // Lookup view for data population
-        ImageView icon = convertView.findViewById(R.id.userIcon);
+        ImageView icon = convertView.findViewById(R.id.rowUserIcon);
         EditText name = convertView.findViewById(R.id.userName);
         TextView points = convertView.findViewById(R.id.userPoints);
 
