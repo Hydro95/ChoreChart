@@ -1,11 +1,13 @@
 package net.sudormrf.chorechart;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -33,20 +35,21 @@ public class AddList extends AppCompatActivity {
 
         int index = getIntent().getIntExtra("index",-1);
 
-        /* if (index != -1) {
+        //need to find problem, crashes app if run
+        if (index != -1) {
             shoppingList = Facade.getInstance().getShoppingList(index);
 
             ImageView icon = findViewById(R.id.listIcon);
             EditText name = findViewById(R.id.listName);
-            TextView location = findViewById(R.id.listInfo);
+            TextView location = findViewById(R.id.listStore);
 
             icon.setImageResource(shoppingList.getIcon());
             name.setText(shoppingList.getName());
             location.setText(String.valueOf(shoppingList.getLocation()));
         }
         else {
-            Facade.getInstance().addShoppingList(new ShoppingList(null, null, 1, null));
-        } */
+            Facade.getInstance().addShoppingList(new ShoppingList(null, null, 1, Facade.getInstance()));
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -60,12 +63,32 @@ public class AddList extends AppCompatActivity {
 
         ImageView icon = findViewById(R.id.listIcon);
         EditText name = findViewById(R.id.listName);
-        TextView location = findViewById(R.id.listInfo);
+        TextView location = findViewById(R.id.listStore);
 
         //TODO: Set icon should be base64 string of icon.
-        shoppingList.setName(name.getText().toString());
-        shoppingList.setLocation(location.getText().toString());
+        //shoppingList.setName(name.getText().toString());
+        //shoppingList.setLocation(location.getText().toString());
+
+        //Facade.getInstance().addShoppingList(shoppingList);
+        Facade.getInstance().publishShoppingLists();
         finish();
+    }
+
+    public void onDeleteButtonClick(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete User")
+                .setMessage("Are you sure you want to delete this user?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Facade.getInstance().getShoppingRef().child(shoppingList.getId()).removeValue();
+                        Facade.getInstance().removeShoppingList(shoppingList);
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     //Launching an intent to get a image from gallery based on
