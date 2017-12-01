@@ -8,8 +8,11 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -27,6 +30,42 @@ public class AddList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_list);
+
+        int index = getIntent().getIntExtra("index",-1);
+
+        /* if (index != -1) {
+            shoppingList = Facade.getInstance().getShoppingList(index);
+
+            ImageView icon = findViewById(R.id.listIcon);
+            EditText name = findViewById(R.id.listName);
+            TextView location = findViewById(R.id.listInfo);
+
+            icon.setImageResource(shoppingList.getIcon());
+            name.setText(shoppingList.getName());
+            location.setText(String.valueOf(shoppingList.getLocation()));
+        }
+        else {
+            Facade.getInstance().addShoppingList(new ShoppingList(null, null, 1, null));
+        } */
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_delete, menu);
+        return true;
+    }
+
+    public void onSaveButtonClick(View view) {
+
+        ImageView icon = findViewById(R.id.listIcon);
+        EditText name = findViewById(R.id.listName);
+        TextView location = findViewById(R.id.listInfo);
+
+        //TODO: Set icon should be base64 string of icon.
+        shoppingList.setName(name.getText().toString());
+        shoppingList.setLocation(location.getText().toString());
+        finish();
     }
 
     //Launching an intent to get a image from gallery based on
@@ -74,7 +113,7 @@ public class AddList extends AppCompatActivity {
             else if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 Uri img = result.getUri();
-                ImageView icon = (ImageView) findViewById(R.id.userIcon);
+                ImageView icon = (ImageView) findViewById(R.id.listIcon);
                 try {
                     Bitmap btm = MediaStore.Images.Media.getBitmap(this.getContentResolver(), img);
                     listImg = btm;
