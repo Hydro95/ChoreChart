@@ -68,9 +68,16 @@ public class AddList extends AppCompatActivity {
 
         System.out.println(shoppingList);
 
+        String encodedPic = ImageHelper.bitmapToBase64(listImg, Bitmap.CompressFormat.WEBP, 90);
+
         //TODO: Set icon should be base64 string of icon.
-        shoppingList.setName("Clothes");
-        shoppingList.setLocation("Soup Store");
+
+        //shoppingList.setIcon(encodedPic);
+        shoppingList.setName(name.getText().toString());
+        shoppingList.setLocation(location.getText().toString());
+
+        //shoppingList.setName("Clothes");
+        //shoppingList.setLocation("Soup Store");
 
         if (shoppingList.getId() == null) {
             shoppingList.setId(Facade.getInstance().getShoppingRef().push().getKey());
