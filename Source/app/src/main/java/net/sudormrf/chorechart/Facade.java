@@ -7,7 +7,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.*;
 
 // line 108 "../../../class.ump"
@@ -654,14 +653,14 @@ public class Facade
   // line 181 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
-			taskRef.child(task.getId()).setValue(task);
+			this.getTaskRef().child(task.getId()).setValue(task);
 		}
   }
 
   // line 187 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
-			shoppingRef.child(list.getId()).setValue(list);
+			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 

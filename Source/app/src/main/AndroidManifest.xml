@@ -45,9 +45,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".AboutActivity"/>
-        <activity android:name=".add_list" />
-        <activity android:name=".add_item" />
+        <activity android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".AddList" />
+        <activity android:name=".AddItem" />
 
         <!-- Android-Image-Cropper activity -->
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
