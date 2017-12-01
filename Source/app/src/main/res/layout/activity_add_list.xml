@@ -26,13 +26,6 @@
                 android:onClick="onIconClick"
                 app:srcCompat="@drawable/ic_logo_empty" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|right"
-                app:srcCompat="@drawable/modify_image" />
-
         </FrameLayout>
 
         <LinearLayout
@@ -46,16 +39,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/list_name" />
+                android:hint="Name"
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/listStore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@string/store_name" />
+                android:hint="Location"
+                android:inputType="textPersonName" />
 
             <Button
                 android:id="@+id/okButton"
