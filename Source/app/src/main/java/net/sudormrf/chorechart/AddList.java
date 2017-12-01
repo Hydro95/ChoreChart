@@ -1,5 +1,6 @@
 package net.sudormrf.chorechart;
 
+import android.*;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +29,8 @@ public class AddList extends AppCompatActivity {
 
     private Uri mImageUri;
     private Bitmap listImg;
+
+    private final int CAMERA_PERMISSIONS = 1;
 
     ShoppingList shoppingList;
 
@@ -64,18 +69,12 @@ public class AddList extends AppCompatActivity {
     }
 
     public void onSaveButtonClick(View view) {
-
-        ImageView icon = findViewById(R.id.listIcon);
         EditText name = findViewById(R.id.listName);
         TextView location = findViewById(R.id.listStore);
 
-        System.out.println(shoppingList);
-
         String encodedPic = ImageHelper.bitmapToBase64(listImg, Bitmap.CompressFormat.WEBP, 90);
 
-        //TODO: Set icon should be base64 string of icon.
-
-        //shoppingList.setIcon(encodedPic);
+        shoppingList.setIcon(encodedPic);
         shoppingList.setName(name.getText().toString());
         shoppingList.setLocation(location.getText().toString());
 
@@ -126,11 +125,17 @@ public class AddList extends AppCompatActivity {
                 .show();
     }
 
-    //Launching an intent to get a image from gallery based on
-    //https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+    //Request permission to use the camera, then fire off the event to get an image.
     public void onIconClick(View view)
     {
-        CropImage.startPickImageActivity(this);
+        int permissionCheck = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA);
+
+        if(permissionCheck == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_PERMISSIONS);
+        }
+        else {
+            pickImage();
+        }
     }
 
     //Android 6 requires runtime permissions for certain things.
@@ -144,6 +149,13 @@ public class AddList extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show();
             }
+        }
+        else if(requestCode == CAMERA_PERMISSIONS) {
+            if(grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, "Camera will not be used due to insufficient permission.", Toast.LENGTH_LONG).show();
+            }
+
+            pickImage();
         }
     }
 
@@ -192,8 +204,10 @@ public class AddList extends AppCompatActivity {
         CropImage.activity(imgUri)
                 .setFixAspectRatio(true)
                 .setAspectRatio(1,1)
-                .setMinCropResultSize(128,128)
-                .setMaxCropResultSize(512, 512)
+                .setMinCropResultSize(256,256)
+                .setMaxCropResultSize(1024, 1024)
                 .start(this);
     }
+
+    private void pickImage() { CropImage.startPickImageActivity(this); }
 }

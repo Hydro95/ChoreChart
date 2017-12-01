@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -60,6 +61,21 @@ public class EditTaskActivity extends AppCompatActivity implements
         UserSpinnerAdapter uAdapter = new UserSpinnerAdapter(this, userList);
         users.setAdapter(uAdapter);
 
+        //Setup complete checkbox
+        CheckBox checkBox2 = findViewById(R.id.complete);
+        checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+             @Override
+             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                 if(b == true) {
+                     System.out.println("checked");
+                     task.markCompleted();
+                 }
+                 else {
+                     System.out.println("not checked");
+                     System.out.println("fail the task?");
+                 }
+             }
+        });
         deadline = Calendar.getInstance();
         dateSet = false;
         timeSet = false;
@@ -70,7 +86,6 @@ public class EditTaskActivity extends AppCompatActivity implements
             task = Facade.getInstance().getTask(index);
             deadline.setTimeInMillis(Long.parseLong(task.getDeadline()));
 
-            CheckBox checkBox2 = findViewById(R.id.complete);
             EditText name = findViewById(R.id.name);
             EditText duration = findViewById(R.id.duration);
             EditText comment = findViewById(R.id.comment);
@@ -126,7 +141,7 @@ public class EditTaskActivity extends AppCompatActivity implements
         if(id == R.id.action_delete) {
             //Ask the user for deletion.
             new AlertDialog.Builder(this)
-                    .setTitle("Delete User")
+                    .setTitle("Delete Task")
                     .setMessage("Are you sure you want to delete this task?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
@@ -160,9 +175,16 @@ public class EditTaskActivity extends AppCompatActivity implements
         //Get User
         if(user.getSelectedItemPosition() == 0) {
             task.setUserId("");
+
+            //Umple state machine hook. (Status)
+            if(task.getStatus() == Task.Status.InProgress) {
+                task.release();
+            }
         }
         else {
             task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()-1).getId());
+            //Umple state machine hook. (Status)
+            task.setUserId();
         }
 
         task.setName(name.getText().toString());
