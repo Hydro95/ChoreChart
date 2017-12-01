@@ -56,6 +56,13 @@
                 android:inputType="textPersonName" />
 
             <Button
+                android:id="@+id/listAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onAddListClick"
+                android:text="@string/lbl_add_list_items" />
+
+            <Button
                 android:id="@+id/okButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
