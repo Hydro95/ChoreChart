@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd Deliverables/
+./linux_compile_umple.sh
