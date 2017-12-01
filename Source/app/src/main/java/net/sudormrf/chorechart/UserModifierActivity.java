@@ -108,23 +108,6 @@ public class UserModifierActivity extends AppCompatActivity {
         }
     }
 
-    public void onDeleteButtonClick(View view) {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete User")
-                .setMessage("Are you sure you want to delete this user?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Facade.getInstance().getUserRef().child(user.getId()).removeValue();
-                        Facade.getInstance().removeUser(user);
-                        finish();
-                    }
-
-                })
-                .setNegativeButton("No", null)
-                .show();
-    }
-
     //Request permission to use the camera, then fire off the event to get an image.
     public void onIconClick(View view)
     {
