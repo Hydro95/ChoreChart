@@ -699,18 +699,6 @@ public class Facade
     list.add(item);
   }
 
-
-  /**
-   * Figure out if you can deel with this (automatically using currentX)
-   */
-  // line 229 "../../../class.ump"
-  public User addUser(String aName, int icon){
-    User user = new User(aName, this);
-		user.setIcon(icon);
-		return user;
-  }
-
-
   public String toString()
   {
 	  String outputString = "";

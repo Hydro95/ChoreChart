@@ -2,14 +2,10 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.Exclude;
+
 import java.util.*;
 
-/**
- * every time you recompile you must:
- * 
- * add @Exclude above User.getFacade(), Task.getFacade(), ShoppingList.getFacade()
- * Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
- */
 // line 11 "../../../class.ump"
 public class User
 {
@@ -21,7 +17,7 @@ public class User
   //User Attributes
   private String name;
   private int points;
-  private int icon;
+  private String icon;
   private String id;
   private List<String> taskIds;
 
@@ -36,7 +32,7 @@ public class User
   {
     name = aName;
     points = 0;
-    icon = 0;
+    icon = "";
     id = Facade.getInstance().getUserRef().push().getKey();
     taskIds = new ArrayList<String>();
     boolean didAddFacade = setFacade(aFacade);
@@ -66,7 +62,7 @@ public class User
     return wasSet;
   }
 
-  public boolean setIcon(int aIcon)
+  public boolean setIcon(String aIcon)
   {
     boolean wasSet = false;
     icon = aIcon;
@@ -106,7 +102,7 @@ public class User
     return points;
   }
 
-  public int getIcon()
+  public String getIcon()
   {
     return icon;
   }
@@ -140,6 +136,7 @@ public class User
     return index;
   }
 
+  @Exclude
   public Facade getFacade()
   {
     return facade;
@@ -171,30 +168,28 @@ public class User
     placeholderFacade.removeUser(this);
   }
 
+  // line 22 "../../../class.ump"
+  public List<String> getTaskIds(){
+    return taskIds;
+  }
 
   /**
    * default constructor for db
    */
   // line 19 "../../../class.ump"
-   public  User(){
-    
-  }
+  public  User(){
 
-  // line 22 "../../../class.ump"
-   public List<String> getTaskIds(){
-    return taskIds;
   }
-
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
             "points" + ":" + getPoints()+ "," +
             "icon" + ":" + getIcon()+ "," +
             "id" + ":" + getId()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "facade = "+(getFacade()!=null?Integer.toHexString(System.identityHashCode(getFacade())):"null")
-     + outputString;
+            + outputString;
   }
 }

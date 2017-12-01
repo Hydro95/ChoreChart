@@ -1,7 +1,6 @@
 package net.sudormrf.chorechart;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +37,7 @@ public class UserArrayAdapter extends ArrayAdapter<User> {
         TextView points = convertView.findViewById(R.id.userPoints);
 
         //create rounded versions of the stored profile images
-        RoundedBitmapDrawable rDrawable = RoundIcon.roundedImage(getContext().getResources(), user.getIcon());
+        RoundedBitmapDrawable rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), user.getIcon());
 
         // Populate the data into the template view using the data object
         icon.setImageDrawable(rDrawable);

@@ -1,15 +1,20 @@
 package net.sudormrf.chorechart;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +23,10 @@ import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+
 import android.widget.TextView;
 
 /**
@@ -32,6 +40,8 @@ public class UserModifierActivity extends AppCompatActivity {
     private Bitmap userImg;
 
     private User user;
+
+    private final int CAMERA_PERMISSIONS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +57,10 @@ public class UserModifierActivity extends AppCompatActivity {
             EditText name = findViewById(R.id.userName);
             TextView points = findViewById(R.id.points);
 
-            //icon.setImageResource(user.getIcon());
-            icon.setImageResource(R.drawable.ic_logo_empty);
+            //Decode from Base64 string.
+            byte[] data = Base64.decode(user.getIcon(), Base64.DEFAULT);
+            userImg = BitmapFactory.decodeByteArray(data, 0 , data.length);
+            icon.setImageBitmap(userImg);
             name.setText(user.getName());
             points.setText("Points: " + String.valueOf(user.getPoints()));
         }
@@ -71,8 +83,10 @@ public class UserModifierActivity extends AppCompatActivity {
         EditText name = findViewById(R.id.userName);
         TextView points = findViewById(R.id.points);
 
-        //TODO: Set icon should be base64 string of icon.
-        user.setIcon(R.drawable.ic_logo_empty);
+        //Calculate Base64 string.
+        String encodedPic = ImageHelper.bitmapToBase64(userImg, Bitmap.CompressFormat.WEBP, 90);
+
+        user.setIcon(encodedPic);
         user.setName(name.getText().toString());
         user.setPoints(Integer.parseInt(points.getText().toString().substring(8)));
         if (user.getId() == null) {
@@ -102,12 +116,17 @@ public class UserModifierActivity extends AppCompatActivity {
                 .show();
     }
 
-
-    //Launching an intent to get a image from gallery based on
-    //https://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+    //Request permission to use the camera, then fire off the event to get an image.
     public void onIconClick(View view)
     {
-        CropImage.startPickImageActivity(this);
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
+
+        if(permissionCheck == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSIONS);
+        }
+        else {
+            pickImage();
+        }
     }
 
     //Android 6 requires runtime permissions for certain things.
@@ -121,6 +140,13 @@ public class UserModifierActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show();
             }
+        }
+        else if(requestCode == CAMERA_PERMISSIONS) {
+            if(grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                Toast.makeText(this, "Camera will not be used due to insufficient permission.", Toast.LENGTH_LONG).show();
+            }
+
+            pickImage();
         }
     }
 
@@ -169,8 +195,11 @@ public class UserModifierActivity extends AppCompatActivity {
         CropImage.activity(imgUri)
                 .setFixAspectRatio(true)
                 .setAspectRatio(1,1)
-                .setMinCropResultSize(128,128)
-                .setMaxCropResultSize(512, 512)
+                .setMinCropResultSize(256,256)
+                .setMaxCropResultSize(1024, 1024)
                 .start(this);
     }
+
+    private void pickImage() { CropImage.startPickImageActivity(this); }
+
 }
