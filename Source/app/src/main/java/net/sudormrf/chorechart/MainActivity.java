@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else if(y == Page.ShoppingList.getValue()) {
-                //TODO: Fill this area.
+                Intent intent = new Intent(this, AddList.class);
+                startActivity(intent);
             }
 
         }

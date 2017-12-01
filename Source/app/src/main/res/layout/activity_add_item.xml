@@ -15,7 +15,7 @@
         tools:layout_editor_absoluteX="67dp">
 
         <EditText
-            android:id="@+id/editText4"
+            android:id="@+id/itemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -28,7 +28,7 @@
             android:layout_height="10dp" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/itemDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -41,7 +41,7 @@
             android:layout_height="10dp" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/itemQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
