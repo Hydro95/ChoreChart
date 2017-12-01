@@ -60,7 +60,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         else {
             Calendar tmp = Calendar.getInstance();
             tmp.setTimeInMillis(Long.parseLong(task.getDeadline()));
-            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd kk:mm");
             strDeadline += fmt.format(tmp.getTime());
         }
 
