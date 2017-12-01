@@ -48,8 +48,6 @@ class Task {
 	String id = Facade.getInstance().getTaskRef().push().getKey();
 	String userId = "";
 
-	facade = Facade.getInstance();
-
 	//default constructor for db
 	public Task() {}
 
