@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.Manifest;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
@@ -69,10 +70,13 @@ public class EditTaskActivity extends AppCompatActivity implements
             EditText comment = findViewById(R.id.comment);
 
             checkBox2.setChecked(task.getCompleted());
-            //user goes herer
+            //user goes here
             //repeat goes here
-            if (task.hasAllocation())
-                icon.setImageResource(task.getUser().getIcon());
+            if (task.hasAllocation()) {
+                Bitmap userIcon = ImageHelper.bitmapFromBase64(task.getUser().getIcon());
+                icon.setImageBitmap(userIcon);
+            }
+
             name.setText(task.getName());
             duration.setText(task.getDuration());
             //datetime goes here
