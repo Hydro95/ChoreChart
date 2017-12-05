@@ -42,4 +42,5 @@
     <string name="save_changes">Save Changes</string>
     <string name="lbl_comment">Comment</string>
     <string name="lbl_group_name">sudo rm -rf /</string>
+    <string name="lbl_add_list_items">Manage shopping list items</string>
 </resources>

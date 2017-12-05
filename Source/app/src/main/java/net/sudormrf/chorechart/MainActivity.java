@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         getMenuInflater().inflate(R.menu.menu_add, menu);
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        //getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -81,12 +81,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         System.out.println(id);
 
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             System.out.println("hi");
             return true;
         }
-        else if(id == R.id.action_add) {
+        */
+        //else if(id == R.id.action_add) {
+        if(id == R.id.action_add) {
             TabLayout t = (TabLayout) findViewById(R.id.tabs);
             int y = t.getSelectedTabPosition();
 
