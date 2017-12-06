@@ -40,7 +40,7 @@ public class TaskArrayAdapter extends ArrayAdapter<Task> {
         TextView deadline = convertView.findViewById(R.id.listInfo);
 
         RoundedBitmapDrawable rDrawable;
-        if(task.hasAllocation()) {
+        if(task.hasAllocation() || task.getUser() != null) {
             rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), task.getUser().getIcon());
         }
         else {

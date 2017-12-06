@@ -63,6 +63,10 @@ public class Items
   public void delete()
   {}
 
+  // line 101 "../../../class.ump"
+  public boolean equals(Items other){
+    return this.name.equals(other.name) && this.bought == other.bought;
+  }
 
   public String toString()
   {

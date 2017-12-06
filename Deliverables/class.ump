@@ -96,7 +96,11 @@ class ShoppingList {
 class Items {
 	String name = "";
 	Boolean bought = false;
-
+	
+	public boolean equals(Items other) {
+		return this.name.equals(other.name) && this.bought == other.bought;
+	}
+	
 	//0..* -- 1 ShoppingList;
 }
 
