@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class ItemAdapter extends ArrayAdapter<String> {
         }
         //Lookup view for data population
 
-        TextView itemName = convertView.findViewById(R.id.itemStringName);
+        CheckBox itemName = convertView.findViewById(R.id.itemCheckBox);
 
         //populate the data into the template view using the data object
 
