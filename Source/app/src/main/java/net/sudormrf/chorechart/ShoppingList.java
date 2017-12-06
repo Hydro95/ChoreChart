@@ -15,9 +15,9 @@ public class ShoppingList
   //ShoppingList Attributes
   private String name;
   private String location;
-  private List<String> items;
   private String icon;
   private String id;
+  private List<String> items;
 
   //------------------------
   // CONSTRUCTOR
@@ -27,9 +27,9 @@ public class ShoppingList
   {
     name = "";
     location = "";
-    items = new ArrayList<String>();
     icon = "";
     id = Facade.getInstance().getShoppingRef().push().getKey();
+    items = new ArrayList<String>();
   }
 
   //------------------------
@@ -52,20 +52,6 @@ public class ShoppingList
     return wasSet;
   }
 
-  public boolean addItem(String aItem)
-  {
-    boolean wasAdded = false;
-    wasAdded = items.add(aItem);
-    return wasAdded;
-  }
-
-  public boolean removeItem(String aItem)
-  {
-    boolean wasRemoved = false;
-    wasRemoved = items.remove(aItem);
-    return wasRemoved;
-  }
-
   public boolean setIcon(String aIcon)
   {
     boolean wasSet = false;
@@ -82,6 +68,20 @@ public class ShoppingList
     return wasSet;
   }
 
+  public boolean addItem(String aItem)
+  {
+    boolean wasAdded = false;
+    wasAdded = items.add(aItem);
+    return wasAdded;
+  }
+
+  public boolean removeItem(String aItem)
+  {
+    boolean wasRemoved = false;
+    wasRemoved = items.remove(aItem);
+    return wasRemoved;
+  }
+
   /**
    * list name
    */
@@ -96,6 +96,16 @@ public class ShoppingList
   public String getLocation()
   {
     return location;
+  }
+
+  public String getIcon()
+  {
+    return icon;
+  }
+
+  public String getId()
+  {
+    return id;
   }
 
   public String getItem(int index)
@@ -126,16 +136,6 @@ public class ShoppingList
   {
     int index = items.indexOf(aItem);
     return index;
-  }
-
-  public String getIcon()
-  {
-    return icon;
-  }
-
-  public String getId()
-  {
-    return id;
   }
 
   public void delete()

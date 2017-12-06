@@ -17,6 +17,9 @@ import java.util.List;
  */
 
 public class TasksFragment extends Fragment {
+
+    TaskArrayAdapter adapter;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -26,9 +29,8 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
-        ArrayList<Task> tasks = new ArrayList<Task>();
 
-        TaskArrayAdapter adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
+        adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
 
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);

@@ -3,7 +3,7 @@
 
 package net.sudormrf.chorechart;
 
-// line 96 "../../../class.ump"
+// line 95 "../../../class.ump"
 public class Items
 {
 

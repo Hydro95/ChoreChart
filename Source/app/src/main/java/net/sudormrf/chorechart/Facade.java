@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.*;
 
-// line 110 "../../../class.ump"
+// line 109 "../../../class.ump"
 public class Facade
 {
 
@@ -505,12 +505,85 @@ public class Facade
     shoppingLists.clear();
   }
 
+  // line 175 "../../../class.ump"
+  public void publishUsers(){
+    for (User user : users) {
+			this.getUserRef().child(user.getId()).setValue(user);
+		}
+  }
 
-  /**
-   * Listeners
-   */
-  // line 120 "../../../class.ump"
-  public void createListeners(){
+  // line 181 "../../../class.ump"
+  public void publishTasks(){
+    for (Task task : tasks) {
+			this.getTaskRef().child(task.getId()).setValue(task);
+		}
+  }
+
+  // line 187 "../../../class.ump"
+  public void publishShoppingLists(){
+    for (ShoppingList list : shoppingLists) {
+			this.getShoppingRef().child(list.getId()).setValue(list);
+		}
+  }
+
+  // line 193 "../../../class.ump"
+  public User getUser(String id){
+    for (User user : users) {
+      if (user.getId().equals(id)) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+  // line 202 "../../../class.ump"
+  public Task getTask(String id){
+    for (Task task : tasks) {
+      if (task.getId().equals(id)) {
+        return task;
+      }
+    }
+    return null;
+  }
+
+  // line 216 "../../../class.ump"
+  public void allocateTask(User user, Task task){
+    task.setUserId(user.getId());
+		user.addTaskId(task.getId());
+  }
+
+  // line 221 "../../../class.ump"
+  public boolean markCompleted(Task task){
+    if(currentUser.getId() == task.getUserId())
+			return task.markCompleted();  // Not sure how to respond if task is not InProgress
+		return false;
+  }
+
+  // line 227 "../../../class.ump"
+  public void addToShopping(ShoppingList list, String item){
+    list.addItem(item);
+  }
+
+
+  public String toString()
+  {
+	  String outputString = "";
+    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
+            "  " + "database" + "=" + (getDatabase() != null ? !getDatabase().equals(this)  ? getDatabase().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "userRef" + "=" + (getUserRef() != null ? !getUserRef().equals(this)  ? getUserRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "shoppingRef" + "=" + (getShoppingRef() != null ? !getShoppingRef().equals(this)  ? getShoppingRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "taskRef" + "=" + (getTaskRef() != null ? !getTaskRef().equals(this)  ? getTaskRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "currentHome" + "=" + (getCurrentHome() != null ? !getCurrentHome().equals(this)  ? getCurrentHome().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
+            "  " + "currentUser" + "=" + (getCurrentUser() != null ? !getCurrentUser().equals(this)  ? getCurrentUser().toString().replaceAll("  ","    ") : "this" : "null")
+     + outputString;
+  }  
+  //------------------------
+  // DEVELOPER CODE - PROVIDED AS-IS
+  //------------------------
+  
+  // line 118 ../../../class.ump
+  void createListeners (final MainActivity.SectionsPagerAdapter sectionsPagerAdapter) 
+  {
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
@@ -520,6 +593,7 @@ public class Facade
 						User user = userSnapshot.getValue(User.class);
 						Facade.getInstance().addUser(user);
 				}
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -537,6 +611,7 @@ public class Facade
 					ShoppingList list = shoppingListSnapshot.getValue(ShoppingList.class);
 					Facade.getInstance().addShoppingList(list);
 				}
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -554,7 +629,7 @@ public class Facade
 					Task task = taskSnapshot.getValue(Task.class);
 					Facade.getInstance().addTask(task);
 				}
-
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -564,76 +639,5 @@ public class Facade
 		});
   }
 
-  // line 174 "../../../class.ump"
-  public void publishUsers(){
-    for (User user : users) {
-			this.getUserRef().child(user.getId()).setValue(user);
-		}
-  }
-
-  // line 180 "../../../class.ump"
-  public void publishTasks(){
-    for (Task task : tasks) {
-			this.getTaskRef().child(task.getId()).setValue(task);
-		}
-  }
-
-  // line 186 "../../../class.ump"
-  public void publishShoppingLists(){
-    for (ShoppingList list : shoppingLists) {
-			this.getShoppingRef().child(list.getId()).setValue(list);
-		}
-  }
-
-  // line 192 "../../../class.ump"
-  public User getUser(String id){
-    for (User user : users) {
-      if (user.getId().equals(id)) {
-        return user;
-      }
-    }
-    return null;
-  }
-
-  // line 201 "../../../class.ump"
-  public Task getTask(String id){
-    for (Task task : tasks) {
-      if (task.getId().equals(id)) {
-        return task;
-      }
-    }
-    return null;
-  }
-
-  // line 215 "../../../class.ump"
-  public void allocateTask(User user, Task task){
-    task.setUserId(user.getId());
-		user.addTaskId(task.getId());
-  }
-
-  // line 220 "../../../class.ump"
-  public boolean markCompleted(Task task){
-    if(currentUser.getId() == task.getUserId())
-			return task.markCompleted();  // Not sure how to respond if task is not InProgress
-		return false;
-  }
-
-  // line 226 "../../../class.ump"
-  public void addToShopping(ShoppingList list, String item){
-    list.addItem(item);
-  }
-
-
-  public String toString()
-  {
-	  String outputString = "";
-    return super.toString() + "["+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "database" + "=" + (getDatabase() != null ? !getDatabase().equals(this)  ? getDatabase().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "userRef" + "=" + (getUserRef() != null ? !getUserRef().equals(this)  ? getUserRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "shoppingRef" + "=" + (getShoppingRef() != null ? !getShoppingRef().equals(this)  ? getShoppingRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "taskRef" + "=" + (getTaskRef() != null ? !getTaskRef().equals(this)  ? getTaskRef().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "currentHome" + "=" + (getCurrentHome() != null ? !getCurrentHome().equals(this)  ? getCurrentHome().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "currentUser" + "=" + (getCurrentUser() != null ? !getCurrentUser().equals(this)  ? getCurrentUser().toString().replaceAll("  ","    ") : "this" : "null")
-     + outputString;
-  }
+  
 }
