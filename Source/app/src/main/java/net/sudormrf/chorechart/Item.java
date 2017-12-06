@@ -4,14 +4,14 @@
 package net.sudormrf.chorechart;
 
 // line 96 "../../../class.ump"
-public class Items
+public class Item
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Items Attributes
+  //Item Attributes
   private String name;
   private boolean bought;
 
@@ -19,7 +19,7 @@ public class Items
   // CONSTRUCTOR
   //------------------------
 
-  public Items()
+  public Item()
   {
     name = "";
     bought = false;

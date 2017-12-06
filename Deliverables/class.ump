@@ -79,25 +79,25 @@ class Tools {
 class ShoppingList {
 	String name = ""; // list name
 	String location = ""; // example hardware or grocery store
-	String[] items = new String[10];
 	String icon = "";
 
 	String id = Facade.getInstance().getShoppingRef().push().getKey();
 
-	public List<String> getItems() {
-    	return taskIds;
-  }
+	//public List<String> getItems() {
+    	//return taskIds;
+  //}
 
 	//void createList(String name, Home home, String[] items) {}
 
 	//1 -- 0..1 Task;
+	0..1 -> * Item;
 }
 
-class Items {
+class Item {
 	String name = "";
 	Boolean bought = false;
 
-	//0..* -- 1 ShoppingList;
+	
 }
 
 class Home {
@@ -222,7 +222,7 @@ class Facade {
 		return false;
 	}
 
-	void addToShopping(ShoppingList list, String item) {
+	void addToShopping(ShoppingList list, Item item) {
 		list.addItem(item);
 	}
 

@@ -15,9 +15,11 @@ public class ShoppingList
   //ShoppingList Attributes
   private String name;
   private String location;
-  private List<String> items;
   private String icon;
   private String id;
+
+  //ShoppingList Associations
+  private List<Item> items;
 
   //------------------------
   // CONSTRUCTOR
@@ -27,9 +29,9 @@ public class ShoppingList
   {
     name = "";
     location = "";
-    items = new ArrayList<String>();
     icon = "";
     id = Facade.getInstance().getShoppingRef().push().getKey();
+    items = new ArrayList<Item>();
   }
 
   //------------------------
@@ -50,20 +52,6 @@ public class ShoppingList
     location = aLocation;
     wasSet = true;
     return wasSet;
-  }
-
-  public boolean addItem(String aItem)
-  {
-    boolean wasAdded = false;
-    wasAdded = items.add(aItem);
-    return wasAdded;
-  }
-
-  public boolean removeItem(String aItem)
-  {
-    boolean wasRemoved = false;
-    wasRemoved = items.remove(aItem);
-    return wasRemoved;
   }
 
   public boolean setIcon(String aIcon)
@@ -98,15 +86,32 @@ public class ShoppingList
     return location;
   }
 
-  public String getItem(int index)
+  public String getIcon()
   {
-    String aItem = items.get(index);
+    return icon;
+  }
+
+  public String getId()
+  {
+    return id;
+  }
+
+  public Item getItem(int index)
+  {
+    Item aItem = items.get(index);
     return aItem;
   }
 
-  public String[] getItems()
+  /**
+   * public List<String> getItems() {
+   * return taskIds;
+   * }
+   * void createList(String name, Home home, String[] items) {}
+   * 1 -- 0..1 Task;
+   */
+  public List<Item> getItems()
   {
-    String[] newItems = items.toArray(new String[items.size()]);
+    List<Item> newItems = Collections.unmodifiableList(items);
     return newItems;
   }
 
@@ -122,24 +127,73 @@ public class ShoppingList
     return has;
   }
 
-  public int indexOfItem(String aItem)
+  public int indexOfItem(Item aItem)
   {
     int index = items.indexOf(aItem);
     return index;
   }
 
-  public String getIcon()
+  public static int minimumNumberOfItems()
   {
-    return icon;
+    return 0;
   }
 
-  public String getId()
+  public boolean addItem(Item aItem)
   {
-    return id;
+    boolean wasAdded = false;
+    if (items.contains(aItem)) { return false; }
+    items.add(aItem);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeItem(Item aItem)
+  {
+    boolean wasRemoved = false;
+    if (items.contains(aItem))
+    {
+      items.remove(aItem);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addItemAt(Item aItem, int index)
+  {  
+    boolean wasAdded = false;
+    if(addItem(aItem))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      items.remove(aItem);
+      items.add(index, aItem);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveItemAt(Item aItem, int index)
+  {
+    boolean wasAdded = false;
+    if(items.contains(aItem))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      items.remove(aItem);
+      items.add(index, aItem);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addItemAt(aItem, index);
+    }
+    return wasAdded;
   }
 
   public void delete()
-  {}
+  {
+    items.clear();
+  }
 
 
   public String toString()
