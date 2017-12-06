@@ -25,7 +25,7 @@ public class User
 
   public User()
   {
-    name = "";
+    name = "Anon";
     points = 0;
     icon = "";
     id = Facade.getInstance().getUserRef().push().getKey();
@@ -107,6 +107,7 @@ public class User
     String aTaskId = taskIds.get(index);
     return aTaskId;
   }
+  
 
   public int numberOfTaskIds()
   {

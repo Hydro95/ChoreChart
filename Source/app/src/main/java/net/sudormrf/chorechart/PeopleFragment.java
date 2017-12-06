@@ -17,6 +17,9 @@ import java.util.ArrayList;
  */
 
 public class PeopleFragment extends Fragment {
+
+    UserArrayAdapter adapter;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -28,7 +31,7 @@ public class PeopleFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_people, container, false);
 
-        UserArrayAdapter adapter = new UserArrayAdapter(getActivity(), Facade.getInstance().getUsers());
+        adapter = new UserArrayAdapter(getActivity(), Facade.getInstance().getUsers());
 
         GridView gridView = view.findViewById(R.id.peopleGrid);
         gridView.setAdapter(adapter);

@@ -103,9 +103,6 @@ public class ShoppingList
   }
 
   /**
-   * public List<String> getItems() {
-   * return taskIds;
-   * }
    * void createList(String name, Home home, String[] items) {}
    * 1 -- 0..1 Task;
    */
