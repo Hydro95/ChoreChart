@@ -1,0 +1,99 @@
+diff --git a/Deliverables/linux_compile_umple.sh b/Deliverables/linux_compile_umple.sh
+index 219e723..3b183b3 100755
+--- a/Deliverables/linux_compile_umple.sh
++++ b/Deliverables/linux_compile_umple.sh
+@@ -1,15 +1,28 @@
+ #bin/bash
+ 
+-java -jar umple_1.22.0.5146.jar class.ump && \
++repacement_lines=\
++"	public List<String> getTaskIds() {
++    	return taskIds;
++  }";
++
++if (java -jar umple_1.22.0.5146.jar class.ump)
++then
+ 
+ sed "4 a\
+ import com.google.firebase.database.DataSnapshot;\n\
+ import com.google.firebase.database.DatabaseError;\n\
+ import com.google.firebase.database.DatabaseReference;\n\
+ import com.google.firebase.database.FirebaseDatabase;\n\
+-import com.google.firebase.database.ValueEventListener;" net/sudormrf/chorechart/Facade.java > tmp.txt
++import com.google.firebase.database.ValueEventListener;" net/sudormrf/chorechart/Facade.java > Facade.tmp;
++mv Facade.tmp net/sudormrf/chorechart/Facade.java;
+ 
+-mv tmp.txt net/sudormrf/chorechart/Facade.java
++#these methods haven't worked perl has been the closest if someone wants to try
++# grep -vF "$removable_lines" net/sudormrf/chorechart/User.java > User.tmp;
++# awk '/public String\[\] getTaskIds\(\)/,/\}/' net/sudormrf/chorechart/User.java > User.tmp;
++# perl -i -pe 'BEGIN{undef $/;} s/public String\[\] getTaskIds\(\).*}/$repacement_lines/smg' net/sudormrf/chorechart/User.java;
++# mv User.tmp net/sudormrf/chorechart/User.java;
+ 
+ mv net/sudormrf/chorechart/*.java ../Source/app/src/main/java/net/sudormrf/chorechart/ && \
+-rm -r net
+\ No newline at end of file
++rm -r net;
++
++fi
+\ No newline at end of file
+diff --git a/Source/app/src/main/java/net/sudormrf/chorechart/ItemAdapter.java b/Source/app/src/main/java/net/sudormrf/chorechart/ItemAdapter.java
+index 550cc6f..990bbfc 100644
+--- a/Source/app/src/main/java/net/sudormrf/chorechart/ItemAdapter.java
++++ b/Source/app/src/main/java/net/sudormrf/chorechart/ItemAdapter.java
+@@ -20,7 +20,7 @@ public class ItemAdapter extends ArrayAdapter<String> {
+     ItemAdapter(Context context, List<String> lists){super(context, 0, lists); }
+ 
+     @Override
+-    public View getView(int position, View convertView, ViewGroup parent){
++    public View getView(int position, View convertView, ViewGroup parent) {
+         //Get the data item for this position
+         String item = getItem(position);
+         //Check if an existing view is being reused, otherwise inflate the view
+diff --git a/Source/app/src/main/java/net/sudormrf/chorechart/ItemList.java b/Source/app/src/main/java/net/sudormrf/chorechart/ItemList.java
+index 9c95f3f..d4b28f7 100644
+--- a/Source/app/src/main/java/net/sudormrf/chorechart/ItemList.java
++++ b/Source/app/src/main/java/net/sudormrf/chorechart/ItemList.java
+@@ -4,8 +4,17 @@ package net.sudormrf.chorechart;
+ import android.support.v7.app.AppCompatActivity;
+ import android.os.Bundle;
+ import android.view.Menu;
++import android.content.DialogInterface;
+ import android.content.Intent;
++import android.support.design.widget.TabLayout;
++import android.support.v7.app.AlertDialog;
++import android.support.v7.app.AppCompatActivity;
++import android.os.Bundle;
++import android.view.Menu;
+ import android.view.MenuItem;
++import android.view.View;
++import android.widget.EditText;
++import android.widget.ListView;
+ 
+ public class ItemList extends AppCompatActivity {
+ 
+@@ -19,6 +28,11 @@ public class ItemList extends AppCompatActivity {
+         int index = getIntent().getIntExtra("index", -1);
+ 
+         shoppingList = Facade.getInstance().getShoppingList(index);
++
++        ItemAdapter adapter = new ItemAdapter(this, shoppingList.getItems());
++
++        ListView listView = (ListView) findViewById(R.id.itemList);
++        listView.setAdapter(adapter);
+     }
+ 
+ 
+@@ -41,4 +55,12 @@ public class ItemList extends AppCompatActivity {
+         return true;
+     }
+ 
++    public void onAddButtonClick(View view) {
++
++        EditText item = findViewById(R.id.itemName);
++
++        shoppingList.addItem(item.getText().toString());
++
++        Facade.getInstance().publishShoppingLists();
++    }
+ }

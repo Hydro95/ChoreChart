@@ -22,7 +22,15 @@ class User {
 
 	public List<String> getTaskIds() {
     	return taskIds;
-  }
+    }
+
+    public List<Task> getTasks() {
+    	List<Task> list = new ArrayList<Task>();
+    	for(String taskid : taskIds)
+    	{
+    		list.add(Facade.getInstance().getTask(taskid));
+    	}
+    }
 }
 
 class Parent {

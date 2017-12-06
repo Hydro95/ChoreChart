@@ -25,7 +25,7 @@ public class User
 
   public User()
   {
-    name = "Anon";
+    name = "";
     points = 0;
     icon = "";
     id = Facade.getInstance().getUserRef().push().getKey();
@@ -132,6 +132,15 @@ public class User
   // line 24 "../../../class.ump"
    public List<String> getTaskIds(){
     return taskIds;
+  }
+
+  // line 27 "../../../class.ump"
+   public List<Task> getTasks(){
+    List<Task> list = new ArrayList<Task>();
+    	for(String taskid : taskIds)
+    	{
+    		list.add(Facade.getInstance().getTask(taskid));
+    	}
   }
 
 

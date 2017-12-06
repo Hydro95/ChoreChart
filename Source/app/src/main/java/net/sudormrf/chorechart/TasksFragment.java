@@ -18,7 +18,18 @@ import java.util.List;
 
 public class TasksFragment extends Fragment {
 
-    TaskArrayAdapter adapter;
+    private TaskArrayAdapter adapter;
+
+    public TasksFragment() {
+        super();
+        adapter = new TaskArrayAdapter((getActivity(), Facade.getInstance().getTasks()));
+    }
+
+    //TODO: remove constructor taking arguments replace with newInstance method (cause this will have unexpected behavior)
+    public TasksFragment(List<Task> list) {
+        super();
+        adapter = new TaskArrayAdapter(getActivity(), list);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -29,8 +40,7 @@ public class TasksFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
-
-        adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
+        ArrayList<Task> tasks = new ArrayList<Task>();
 
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);

@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 79 "../../../class.ump"
+// line 87 "../../../class.ump"
 public class ShoppingList
 {
 
