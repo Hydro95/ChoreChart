@@ -3,9 +3,9 @@ namespace net.sudormrf.chorechart;
 /*
 every time you recompile you must:
 
-Remove the umple gen'd getter for User.getTaskIds() (might be fixed)
+Remove the umple gen'd getter for User.getTaskIds()
 
-Fix replace umple gen'd getter for ShoppingList.getItems with the one 
+Fix replace umple gen'd getter for ShoppingList.getItems with the one
 described bellow (don't know why it compiles the one for Shopping list
 but it's ok for User)
 */
@@ -13,7 +13,7 @@ but it's ok for User)
 strictness expect 1006;
 
 class User {
-	String name = "";
+	String name = "Anon";
 	int points = 0;
 	String icon = "";
 	String id = Facade.getInstance().getUserRef().push().getKey();
@@ -79,13 +79,12 @@ class Tools {
 class ShoppingList {
 	String name = ""; // list name
 	String location = ""; // example hardware or grocery store
-	String[] items = new String[10];
 	String icon = "";
-
 	String id = Facade.getInstance().getShoppingRef().push().getKey();
+	String[] items;
 
 	public List<String> getItems() {
-    	return taskIds;
+    	return items;
   }
 
 	//void createList(String name, Home home, String[] items) {}
@@ -120,7 +119,7 @@ class Facade {
 	DatabaseReference taskRef = database.getReference("tasks");
 
 	// Listeners
-	void createListeners() {
+	void createListeners(final MainActivity.SectionsPagerAdapter sectionsPagerAdapter) {
 		userRef.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
@@ -130,6 +129,7 @@ class Facade {
 						User user = userSnapshot.getValue(User.class);
 						Facade.getInstance().addUser(user);
 				}
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -147,6 +147,7 @@ class Facade {
 					ShoppingList list = shoppingListSnapshot.getValue(ShoppingList.class);
 					Facade.getInstance().addShoppingList(list);
 				}
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -164,7 +165,7 @@ class Facade {
 					Task task = taskSnapshot.getValue(Task.class);
 					Facade.getInstance().addTask(task);
 				}
-
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override

@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 
 public class ShoppingListFragment extends Fragment {
+    ShoppingListArrayAdapter adapter;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -25,9 +27,8 @@ public class ShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
-        ArrayList<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
 
-        ShoppingListArrayAdapter adapter = new ShoppingListArrayAdapter(getActivity(), Facade.getInstance().getShoppingLists());
+        adapter = new ShoppingListArrayAdapter(getActivity(), Facade.getInstance().getShoppingLists());
       
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);
