@@ -104,9 +104,10 @@ public class ShoppingList
     return aItem;
   }
 
-  public List<String> getItems()
+  public String[] getItems()
   {
-    return items;
+    String[] newItems = items.toArray(new String[items.size()]);
+    return newItems;
   }
 
   public int numberOfItems()

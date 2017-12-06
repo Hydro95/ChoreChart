@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.*;
 
-// line 103 "../../../class.ump"
+// line 110 "../../../class.ump"
 public class Facade
 {
 
@@ -509,7 +509,7 @@ public class Facade
   /**
    * Listeners
    */
-  // line 113 "../../../class.ump"
+  // line 120 "../../../class.ump"
   public void createListeners(){
     userRef.addValueEventListener(new ValueEventListener() {
 			@Override
@@ -564,28 +564,28 @@ public class Facade
 		});
   }
 
-  // line 167 "../../../class.ump"
+  // line 174 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
 			this.getUserRef().child(user.getId()).setValue(user);
 		}
   }
 
-  // line 173 "../../../class.ump"
+  // line 180 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
 			this.getTaskRef().child(task.getId()).setValue(task);
 		}
   }
 
-  // line 179 "../../../class.ump"
+  // line 186 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
 			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
-  // line 185 "../../../class.ump"
+  // line 192 "../../../class.ump"
   public User getUser(String id){
     for (User user : users) {
       if (user.getId().equals(id)) {
@@ -595,7 +595,7 @@ public class Facade
     return null;
   }
 
-  // line 194 "../../../class.ump"
+  // line 201 "../../../class.ump"
   public Task getTask(String id){
     for (Task task : tasks) {
       if (task.getId().equals(id)) {
@@ -605,20 +605,20 @@ public class Facade
     return null;
   }
 
-  // line 208 "../../../class.ump"
+  // line 215 "../../../class.ump"
   public void allocateTask(User user, Task task){
     task.setUserId(user.getId());
 		user.addTaskId(task.getId());
   }
 
-  // line 213 "../../../class.ump"
+  // line 220 "../../../class.ump"
   public boolean markCompleted(Task task){
     if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 219 "../../../class.ump"
+  // line 226 "../../../class.ump"
   public void addToShopping(ShoppingList list, String item){
     list.addItem(item);
   }
