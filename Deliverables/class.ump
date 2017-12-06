@@ -92,6 +92,13 @@ class ShoppingList {
 	//1 -- 0..1 Task;
 }
 
+class Items {
+	String name = "";
+	Boolean bought = false;
+
+	//0..* -- 1 ShoppingList;
+}
+
 class Home {
 	String name;
 	String[] userIds;
@@ -108,7 +115,7 @@ class Facade {
 	DatabaseReference taskRef = database.getReference("tasks");
 
 	// Listeners
-	void createListeners() {
+	void createListeners(final MainActivity.SectionsPagerAdapter sectionsPagerAdapter) {
 		userRef.addValueEventListener(new ValueEventListener() {
 			@Override
 			public void onDataChange(DataSnapshot dataSnapshot) {
@@ -118,6 +125,7 @@ class Facade {
 						User user = userSnapshot.getValue(User.class);
 						Facade.getInstance().addUser(user);
 				}
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -135,6 +143,7 @@ class Facade {
 					ShoppingList list = shoppingListSnapshot.getValue(ShoppingList.class);
 					Facade.getInstance().addShoppingList(list);
 				}
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override
@@ -152,7 +161,7 @@ class Facade {
 					Task task = taskSnapshot.getValue(Task.class);
 					Facade.getInstance().addTask(task);
 				}
-
+				sectionsPagerAdapter.notifyDataSetChanged();
 			}
 
 			@Override

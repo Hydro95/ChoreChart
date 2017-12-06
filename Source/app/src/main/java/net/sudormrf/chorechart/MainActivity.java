@@ -11,10 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-
-import android.widget.Toast;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        Facade.getInstance().createListeners(); //for the database
+        Facade.getInstance().createListeners(mSectionsPagerAdapter); //for the database
 
     }
 
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         getMenuInflater().inflate(R.menu.menu_add, menu);
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        //getMenuInflater().inflate(R.menu.menu_edit, menu);
         return true;
     }
 
@@ -85,15 +81,18 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         System.out.println(id);
 
+        /*
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             System.out.println("hi");
             return true;
         }
-        else if(id == R.id.action_add) {
+        */
+        //else if(id == R.id.action_add) {
+        if(id == R.id.action_add) {
             TabLayout t = (TabLayout) findViewById(R.id.tabs);
             int y = t.getSelectedTabPosition();
-            System.out.println(y);
+
             if(y == Page.Tasks.getValue()) {
                 Intent intent = new Intent(this, EditTaskActivity.class);
                 startActivity(intent);
@@ -106,21 +105,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AddList.class);
                 startActivity(intent);
             }
-
         }
         else if(id == R.id.action_about) {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
 
-
         return super.onOptionsItemSelected(item);
-    }
-
-    //handle switching to the user modifier activity
-    public void modifyUser(View view) {
-        Intent intent = new Intent(this, UserModifierActivity.class);
-        startActivity(intent);
     }
 
     /**
@@ -154,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
         public int getCount() {
             // Show 3 total pages.
             return 3;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
         }
     }
 }

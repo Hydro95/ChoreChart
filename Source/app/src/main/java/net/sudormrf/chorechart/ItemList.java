@@ -1,21 +1,27 @@
 package net.sudormrf.chorechart;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.design.widget.TabLayout;
-import android.support.v7.app.AlertDialog;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.content.Intent;
 import android.view.MenuItem;
 
 public class ItemList extends AppCompatActivity {
+
+    ShoppingList shoppingList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
+
+        int index = getIntent().getIntExtra("index", -1);
+
+        shoppingList = Facade.getInstance().getShoppingList(index);
     }
+
+
 
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -34,4 +40,5 @@ public class ItemList extends AppCompatActivity {
 
         return true;
     }
+
 }

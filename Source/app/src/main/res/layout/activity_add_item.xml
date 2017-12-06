@@ -23,6 +23,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ems="10"
+
+            android:hint="Item Name"
+            android:inputType="textPersonName" />
             android:hint="Name"
             android:inputType="textPersonName" />
 

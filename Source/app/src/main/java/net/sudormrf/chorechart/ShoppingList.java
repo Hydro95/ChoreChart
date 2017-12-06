@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 80 "../../../class.ump"
+// line 79 "../../../class.ump"
 public class ShoppingList
 {
 
@@ -114,6 +114,12 @@ public class ShoppingList
     return aItem;
   }
 
+  public String[] getItems()
+  {
+    String[] newItems = items.toArray(new String[items.size()]);
+    return newItems;
+  }
+
   public int numberOfItems()
   {
     int number = items.size();
@@ -135,9 +141,6 @@ public class ShoppingList
   public void delete()
   {}
 
-  public List<String> getItems() {
-    return items;
-  }
 
   public String toString()
   {

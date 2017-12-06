@@ -9,10 +9,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
             android:layout_width="wrap_content"
@@ -21,8 +26,8 @@
 
             <ImageView
                 android:id="@+id/listIcon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="128sp"
+                android:layout_height="128sp"
                 android:onClick="onIconClick"
                 app:srcCompat="@drawable/ic_logo_empty" />
 
@@ -49,6 +54,13 @@
                 android:ems="10"
                 android:hint="Location"
                 android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/listAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onAddListClick"
+                android:text="@string/lbl_add_list_items" />
 
             <Button
                 android:id="@+id/okButton"

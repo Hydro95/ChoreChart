@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 16 "../../../class.ump"
+// line 15 "../../../class.ump"
 public class User
 {
 
@@ -129,7 +129,7 @@ public class User
   public void delete()
   {}
 
-  // line 24 "../../../class.ump"
+  // line 23 "../../../class.ump"
    public List<String> getTaskIds(){
     return taskIds;
   }
