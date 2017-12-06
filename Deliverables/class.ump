@@ -93,6 +93,13 @@ class ShoppingList {
 	//1 -- 0..1 Task;
 }
 
+class Items {
+	String name = "";
+	Boolean bought = false;
+
+	//0..* -- 1 ShoppingList;
+}
+
 class Home {
 	String name;
 	String[] userIds;
