@@ -18,17 +18,16 @@ import java.util.List;
 
 public class TasksFragment extends Fragment {
 
-    private TaskArrayAdapter adapter;
-
-    public TasksFragment() {
-        super();
-        adapter = new TaskArrayAdapter((getActivity(), Facade.getInstance().getTasks()));
-    }
-
     //TODO: remove constructor taking arguments replace with newInstance method (cause this will have unexpected behavior)
-    public TasksFragment(List<Task> list) {
-        super();
-        adapter = new TaskArrayAdapter(getActivity(), list);
+    public static TasksFragment newInstance(int userIndex) {
+
+        TasksFragment fragment = new TasksFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("userIndex", userIndex);
+        fragment.setArguments(bundle);
+
+        return fragment;
     }
 
     @Override
@@ -41,6 +40,16 @@ public class TasksFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_generic_list, container, false);
         ArrayList<Task> tasks = new ArrayList<Task>();
+
+        Bundle args = getArguments();
+        int userIndex = args.getInt("userIndex", -1);
+
+        TaskArrayAdapter adapter;
+
+        if(userIndex == -1)
+            adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
+        else
+            adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getUser(userIndex).getTasks());
 
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);

@@ -14,20 +14,11 @@ public class MyTasks extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_tasks);
-
-        List<Task> list;
-        Intent intent = getIntent();
-        int userIndex = intent.getIntExtra("userIndex", -1);
-        if(userIndex == -1)
-            list = Facade.getInstance().getTasks();
-        else
-            list = Facade.getInstance().getUser(userIndex).getTasks();
-
-
+        
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        TasksFragment fragment = new TasksFragment(list);
+        TasksFragment fragment = TasksFragment.newInstance(getIntent().getIntExtra("userIndex", -1));
         fragmentTransaction.add(R.id.main_fragment, fragment);
         fragmentTransaction.commit();
 
