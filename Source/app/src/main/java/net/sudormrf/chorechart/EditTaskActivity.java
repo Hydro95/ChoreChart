@@ -22,7 +22,8 @@ import java.util.List;
 public class EditTaskActivity extends AppCompatActivity implements
         DateTimeFragment.OnDateTimeSetListener,
         DatePickerFragment.OnDateSetListener,
-        TimePickerFragment.OnTimeSetListener {
+        TimePickerFragment.OnTimeSetListener,
+        ItemListFragment.OnItemAddListener {
 
     //Date stored as variable to facilitate getting data from the fragment.
     private Calendar deadline;
@@ -49,7 +50,7 @@ public class EditTaskActivity extends AppCompatActivity implements
 
         //Setup users menu
         Spinner users = (Spinner) findViewById(R.id.user);
-        List<User> userList = new ArrayList(Facade.getInstance().getUsers());
+        List<User> userList = new ArrayList<>(Facade.getInstance().getUsers());
 
         //Add dummy user value for no allocation.
         User nullUser = new User();
@@ -67,12 +68,12 @@ public class EditTaskActivity extends AppCompatActivity implements
              @Override
              public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                  if(b == true) {
-                     System.out.println("checked");
                      task.markCompleted();
-                 }
-                 else {
-                     System.out.println("not checked");
-                     System.out.println("fail the task?");
+                     User u = task.getUser();
+                     int y = u.getPoints() + 1;
+                     u.setPoints(y);
+
+                     incrementDeadline();
                  }
              }
         });
@@ -108,6 +109,10 @@ public class EditTaskActivity extends AppCompatActivity implements
 
             //Repeat
             repeat.setSelection(repeatToInt(task.getFrequency()));
+
+            //Init fragment stuff
+            ItemListFragment itf = (ItemListFragment) getSupportFragmentManager().findFragmentById(R.id.items);
+            itf.setId(task.getId());
 
             isNewTask = false;
         }
@@ -228,6 +233,40 @@ public class EditTaskActivity extends AppCompatActivity implements
         deadline.set(Calendar.MINUTE, time.get(Calendar.MINUTE));
         timeSet = true;
         updateDeadline();
+    }
+
+    public void onItemAdd(Item item)
+    {
+        task.addItem(item);
+    }
+
+    private void incrementDeadline() {
+        if(task.getFrequency() != Task.Repeat.NEVER) {
+            task.renewTask();
+            //Parse date
+            Calendar d = Calendar.getInstance();
+            d.setTimeInMillis(Long.parseLong(task.getDeadline()));
+
+            switch (task.getFrequency()) {
+                case DAILY:
+                    d.add(Calendar.DAY_OF_MONTH, 1);
+                    break;
+                case WEEKLY:
+                    d.add(Calendar.WEEK_OF_YEAR, 1);
+                    break;
+                case MONTHY:
+                    d.add(Calendar.MONTH, 1);
+                    break;
+                case YEARLY:
+                    d.add(Calendar.YEAR, 1);
+                    break;
+            }
+
+            task.setDeadline(Long.toString(d.getTimeInMillis()));
+            dateSet = true;
+            timeSet = true;
+            updateDeadline();
+        }
     }
 
     private void updateDeadline()

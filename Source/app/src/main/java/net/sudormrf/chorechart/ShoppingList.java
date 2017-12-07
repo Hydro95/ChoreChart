@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 79 "../../../class.ump"
+// line 80 "../../../class.ump"
 public class ShoppingList
 {
 
@@ -17,7 +17,9 @@ public class ShoppingList
   private String location;
   private String icon;
   private String id;
-  private List<String> items;
+
+  //ShoppingList Associations
+  private List<Item> items;
 
   //------------------------
   // CONSTRUCTOR
@@ -29,7 +31,7 @@ public class ShoppingList
     location = "";
     icon = "";
     id = Facade.getInstance().getShoppingRef().push().getKey();
-    items = new ArrayList<String>();
+    items = new ArrayList<Item>();
   }
 
   //------------------------
@@ -68,20 +70,6 @@ public class ShoppingList
     return wasSet;
   }
 
-  public boolean addItem(String aItem)
-  {
-    boolean wasAdded = false;
-    wasAdded = items.add(aItem);
-    return wasAdded;
-  }
-
-  public boolean removeItem(String aItem)
-  {
-    boolean wasRemoved = false;
-    wasRemoved = items.remove(aItem);
-    return wasRemoved;
-  }
-
   /**
    * list name
    */
@@ -108,15 +96,19 @@ public class ShoppingList
     return id;
   }
 
-  public String getItem(int index)
+  public Item getItem(int index)
   {
-    String aItem = items.get(index);
+    Item aItem = items.get(index);
     return aItem;
   }
 
-  public String[] getItems()
+  /**
+   * void createList(String name, Home home, String[] items) {}
+   * 1 -- 0..1 Task;
+   */
+  public List<Item> getItems()
   {
-    String[] newItems = items.toArray(new String[items.size()]);
+    List<Item> newItems = Collections.unmodifiableList(items);
     return newItems;
   }
 
@@ -132,14 +124,73 @@ public class ShoppingList
     return has;
   }
 
-  public int indexOfItem(String aItem)
+  public int indexOfItem(Item aItem)
   {
     int index = items.indexOf(aItem);
     return index;
   }
 
+  public static int minimumNumberOfItems()
+  {
+    return 0;
+  }
+
+  public boolean addItem(Item aItem)
+  {
+    boolean wasAdded = false;
+    if (items.contains(aItem)) { return false; }
+    items.add(aItem);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeItem(Item aItem)
+  {
+    boolean wasRemoved = false;
+    if (items.contains(aItem))
+    {
+      items.remove(aItem);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addItemAt(Item aItem, int index)
+  {  
+    boolean wasAdded = false;
+    if(addItem(aItem))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      items.remove(aItem);
+      items.add(index, aItem);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveItemAt(Item aItem, int index)
+  {
+    boolean wasAdded = false;
+    if(items.contains(aItem))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      items.remove(aItem);
+      items.add(index, aItem);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addItemAt(aItem, index);
+    }
+    return wasAdded;
+  }
+
   public void delete()
-  {}
+  {
+    items.clear();
+  }
 
 
   public String toString()

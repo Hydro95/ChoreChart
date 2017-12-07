@@ -1,11 +1,17 @@
 package net.sudormrf.chorechart;
 
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.content.Intent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class ItemList extends AppCompatActivity {
 
@@ -19,6 +25,20 @@ public class ItemList extends AppCompatActivity {
         int index = getIntent().getIntExtra("index", -1);
 
         shoppingList = Facade.getInstance().getShoppingList(index);
+
+        Item test = new Item();
+        test.setName("Test");
+        test.setBought(true);
+        shoppingList.addItem(test);
+
+        List<Item> listOfItems= shoppingList.getItems();
+
+        setContentView(R.layout.item_layout);
+
+        ItemAdapter adapter = new ItemAdapter(this, listOfItems);
+        ListView listView = (ListView) findViewById(R.id.itemList);
+
+        listView.setAdapter(adapter);
     }
 
 

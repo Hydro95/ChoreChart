@@ -27,7 +27,6 @@
         <item>Monthly</item>
         <item>Yearly</item>
     </string-array>
-    <string name="hello_blank_fragment">Blank</string>
     <string name="title_fragment_date_time">Deadline</string>
     <string name="title_datetime_default"><![CDATA[<Enter datetime>]]></string>
     <string name="label_duration">Estimated time to completion</string>
@@ -44,4 +43,8 @@
     <string name="lbl_group_name">sudo rm -rf /</string>
     <string name="lbl_add_list_items">Manage shopping list items</string>
     <string name="textview">TextView</string>
+    <string name="lbl_items">Items</string>
+    <string name="lbl_add_item">Add Item</string>
+    <string name="lbl_item_name">Item Name</string>
+    <string name="checkbox">CheckBox</string>
 </resources>
