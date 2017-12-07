@@ -15,14 +15,14 @@ import java.util.List;
  * Created by ryanc on 2017-12-01.
  */
 
-public class ItemAdapter extends ArrayAdapter<String> {
+public class ItemAdapter extends ArrayAdapter<Item> {
 
-    ItemAdapter(Context context, List<String> lists){super(context, 0, lists); }
+    ItemAdapter(Context context, List<Item> lists){super(context, 0, lists); }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         //Get the data item for this position
-        String item = getItem(position);
+        Item item = getItem(position);
         //Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_layout, parent, false);
@@ -33,7 +33,8 @@ public class ItemAdapter extends ArrayAdapter<String> {
 
         //populate the data into the template view using the data object
 
-        itemName.setText(item);
+        itemName.setText(item.getName());
+        itemName.setChecked(item.getBought());
 
         // Return the completed view to render on screen
         return convertView;

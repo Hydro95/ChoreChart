@@ -46,4 +46,5 @@
     <string name="lbl_items">Items</string>
     <string name="lbl_add_item">Add Item</string>
     <string name="lbl_item_name">Item Name</string>
+    <string name="checkbox">CheckBox</string>
 </resources>
