@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class ItemListFragment extends Fragment {
 
-    private ItemListAdapter itmAdpt;
+    private ItemListAdapter itemListAdapter;
     private OnItemAddListener addListener;
     private String id;
     private List<Item> itemList;
@@ -37,7 +37,7 @@ public class ItemListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
         ListView lst = (ListView) view.findViewById(R.id.item_list_view);
-        lst.setAdapter(itmAdpt);
+        lst.setAdapter(itemListAdapter);
 
         Button addItemBtn = (Button) view.findViewById(R.id.addItemBtn);
         addItemBtn.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +59,7 @@ public class ItemListFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 Facade.getInstance().getTask(id).removeItem(delThis);
                                 itemList.remove(delThis);
-                                itmAdpt.notifyDataSetChanged();
+                                itemListAdapter.notifyDataSetChanged();
                             }
 
                         })
@@ -122,7 +122,7 @@ public class ItemListFragment extends Fragment {
                 }
 
                 itemList.add(items);
-                itmAdpt.notifyDataSetChanged();
+                itemListAdapter.notifyDataSetChanged();
                 b.dismiss();
             }
         });
@@ -136,18 +136,18 @@ public class ItemListFragment extends Fragment {
             itemList = new ArrayList<>();
         }
         else {
-            itemList = new ArrayList<>(Facade.getInstance().getTask(id).getItem());
+            itemList = new ArrayList<>(Facade.getInstance().getTask(id).getItems());
         }
 
         FragmentActivity g = getActivity();
-        itmAdpt = new ItemListAdapter(this.getActivity(), itemList);
-        itmAdpt.notifyDataSetChanged();
+        itemListAdapter = new ItemListAdapter(this.getActivity(), itemList);
+        itemListAdapter.notifyDataSetChanged();
 
         //Update view
         View v = getView();
         if(v != null) {
             ListView lst = (ListView) v.findViewById(R.id.item_list_view);
-            lst.setAdapter(itmAdpt);
+            lst.setAdapter(itemListAdapter);
         }
     }
 
