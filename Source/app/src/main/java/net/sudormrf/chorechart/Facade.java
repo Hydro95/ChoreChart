@@ -509,6 +509,7 @@ public class Facade
   public void publishUsers(){
     for (User user : users) {
 			this.getUserRef().child(user.getId()).setValue(user);
+            this.getUserRef().child(user.getId()).child("taskIds").setValue(user.getTaskIds());
 		}
   }
 

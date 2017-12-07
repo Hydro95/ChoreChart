@@ -9,7 +9,11 @@ import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -28,14 +32,6 @@ public class ItemList extends AppCompatActivity {
 
         shoppingList = Facade.getInstance().getShoppingList(index);
 
-        /*
-        Item test = new Item();
-        test.setName("Test");
-        test.setBought(true);
-        shoppingList.addItem(test);
-        */
-
-
         List<Item> listOfItems = shoppingList.getItems();
 
         ItemAdapter adapter = new ItemAdapter(this, listOfItems);
@@ -44,8 +40,6 @@ public class ItemList extends AppCompatActivity {
         listView.setAdapter(adapter);
 
     }
-
-
 
     public boolean onCreateOptionsMenu(Menu menu)
     {

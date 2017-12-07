@@ -134,6 +134,7 @@ public class User
     return taskIds;
   }
 
+
   // line 28 "../../../class.ump"
    public List<Task> getTasks(){
     List<Task> list = new ArrayList<Task>();
@@ -143,7 +144,6 @@ public class User
     	}
     	return list;
   }
-
 
   public String toString()
   {
