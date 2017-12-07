@@ -41,7 +41,7 @@ public class TasksFragment extends Fragment {
         ArrayList<Task> tasks = new ArrayList<Task>();
 
         Bundle args = getArguments();
-        String userId;
+        final String userId;
         if(args != null)
             userId = args.getString("userId");
         else
@@ -62,7 +62,7 @@ public class TasksFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
                 Intent intent = new Intent(getContext(), EditTaskActivity.class);
-                intent.putExtra("index", index);
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
 

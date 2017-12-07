@@ -81,10 +81,10 @@ public class EditTaskActivity extends AppCompatActivity implements
         dateSet = false;
         timeSet = false;
 
-        int index = getIntent().getIntExtra("index", -1);
+        String userId = getIntent().getStringExtra("userId");
 
-        if(index != -1) {
-            task = Facade.getInstance().getTask(index);
+        if(userId != null) {
+            task = Facade.getInstance().getTask(userId);
             deadline.setTimeInMillis(Long.parseLong(task.getDeadline()));
 
             EditText name = findViewById(R.id.name);
