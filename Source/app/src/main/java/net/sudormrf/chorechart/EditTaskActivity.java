@@ -188,7 +188,9 @@ public class EditTaskActivity extends AppCompatActivity implements
         else {
             task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()-1).getId());
             User tmpUser = Facade.getInstance().getUser(user.getSelectedItemPosition()-1);
-            tmpUser.addTaskId(task.getId());
+            if (!tmpUser.getTaskIds().contains(task.getId())) {
+                tmpUser.addTaskId(task.getId());
+            }
 
             //Umple state machine hook. (Status)
             task.setUserId();

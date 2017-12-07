@@ -30,10 +30,15 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 
         CheckBox itemName = convertView.findViewById(R.id.itemCheckBox);
 
+        TextView itemQuantityName = convertView.findViewById(R.id.itemQuantityText);
+
         //populate the data into the template view using the data object
 
         itemName.setText(item.getName());
         itemName.setChecked(item.getBought());
+
+        itemQuantityName.setText("Amount: " + item.getQuantity());
+
 
         // Return the completed view to render on screen
         return convertView;
