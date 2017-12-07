@@ -39,6 +39,11 @@ public class ShoppingListArrayAdapter extends ArrayAdapter<ShoppingList> {
 
         //populate the data into the template view using the data object
 
+        RoundedBitmapDrawable rDrawable;
+
+        rDrawable = ImageHelper.roundedImageFromBase64(getContext().getResources(), list.getIcon());
+
+        listIcon.setImageDrawable(rDrawable);
         listName.setText(list.getName());
         listLocation.setText(list.getLocation());
 
