@@ -187,6 +187,9 @@ public class EditTaskActivity extends AppCompatActivity implements
         }
         else {
             task.setUserId(Facade.getInstance().getUser(user.getSelectedItemPosition()-1).getId());
+            User tmpUser = Facade.getInstance().getUser(user.getSelectedItemPosition()-1);
+            tmpUser.addTaskId(task.getId());
+
             //Umple state machine hook. (Status)
             task.setUserId();
         }
@@ -205,6 +208,7 @@ public class EditTaskActivity extends AppCompatActivity implements
         try {
             Facade.getInstance().addTask(task);
             Facade.getInstance().publishTasks();
+            Facade.getInstance().publishUsers();
             finish();
         }
         catch(Exception e) {

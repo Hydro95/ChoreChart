@@ -2,6 +2,8 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.Exclude;
+
 import java.util.*;
 
 // line 16 "../../../class.ump"
@@ -136,6 +138,7 @@ public class User
 
 
   // line 28 "../../../class.ump"
+  @Exclude
    public List<Task> getTasks(){
     List<Task> list = new ArrayList<Task>();
     	for(String taskid : taskIds)
