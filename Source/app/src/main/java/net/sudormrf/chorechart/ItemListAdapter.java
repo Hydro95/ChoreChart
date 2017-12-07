@@ -37,10 +37,8 @@ public class ItemListAdapter extends ArrayAdapter<Item> {
         Item selected = getItem(position);
 
         TextView itemName = (TextView) row.findViewById(R.id.itemName);
-        TextView itemQuantityName = row.findViewById(R.id.itemQuantityText);
 
         itemName.setText(selected.getName());
-        itemQuantityName.setText("Amount: " + selected.getQuantity());
 
         return row;
     }
