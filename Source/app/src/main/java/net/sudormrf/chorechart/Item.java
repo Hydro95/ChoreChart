@@ -3,7 +3,7 @@
 
 package net.sudormrf.chorechart;
 
-// line 93 "../../../class.ump"
+// line 102 "../../../class.ump"
 public class Item
 {
 
@@ -88,7 +88,7 @@ public class Item
   public void delete()
   {}
 
-  // line 100 "../../../class.ump"
+  // line 109 "../../../class.ump"
    public boolean equals(Item other){
     return this.name.equals(other.name) && this.bought == other.bought;
   }

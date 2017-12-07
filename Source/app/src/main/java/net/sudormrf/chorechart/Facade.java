@@ -9,7 +9,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.*;
 
-// line 113 "../../../class.ump"
+// line 122 "../../../class.ump"
 public class Facade
 {
 
@@ -505,7 +505,7 @@ public class Facade
     shoppingLists.clear();
   }
 
-  // line 179 "../../../class.ump"
+  // line 188 "../../../class.ump"
   public void publishUsers(){
     for (User user : users) {
 			this.getUserRef().child(user.getId()).setValue(user);
@@ -513,21 +513,21 @@ public class Facade
 		}
   }
 
-  // line 185 "../../../class.ump"
+  // line 194 "../../../class.ump"
   public void publishTasks(){
     for (Task task : tasks) {
 			this.getTaskRef().child(task.getId()).setValue(task);
 		}
   }
 
-  // line 191 "../../../class.ump"
+  // line 200 "../../../class.ump"
   public void publishShoppingLists(){
     for (ShoppingList list : shoppingLists) {
 			this.getShoppingRef().child(list.getId()).setValue(list);
 		}
   }
 
-  // line 197 "../../../class.ump"
+  // line 206 "../../../class.ump"
   public User getUser(String id){
     for (User user : users) {
       if (user.getId().equals(id)) {
@@ -537,7 +537,7 @@ public class Facade
     return null;
   }
 
-  // line 206 "../../../class.ump"
+  // line 215 "../../../class.ump"
   public Task getTask(String id){
     for (Task task : tasks) {
       if (task.getId().equals(id)) {
@@ -547,20 +547,20 @@ public class Facade
     return null;
   }
 
-  // line 220 "../../../class.ump"
+  // line 229 "../../../class.ump"
   public void allocateTask(User user, Task task){
     task.setUserId(user.getId());
 		user.addTaskId(task.getId());
   }
 
-  // line 225 "../../../class.ump"
+  // line 234 "../../../class.ump"
   public boolean markCompleted(Task task){
     if(currentUser.getId() == task.getUserId())
 			return task.markCompleted();  // Not sure how to respond if task is not InProgress
 		return false;
   }
 
-  // line 231 "../../../class.ump"
+  // line 240 "../../../class.ump"
   public void addToShopping(ShoppingList list, Item item){
     list.addItem(item);
   }
@@ -582,7 +582,7 @@ public class Facade
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 122 ../../../class.ump
+  // line 131 ../../../class.ump
   void createListeners (final MainActivity.SectionsPagerAdapter sectionsPagerAdapter) 
   {
     userRef.addValueEventListener(new ValueEventListener() {

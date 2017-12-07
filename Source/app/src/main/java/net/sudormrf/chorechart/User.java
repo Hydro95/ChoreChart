@@ -134,6 +134,17 @@ public class User
     return taskIds;
   }
 
+
+  // line 28 "../../../class.ump"
+   public List<Task> getTasks(){
+    List<Task> list = new ArrayList<Task>();
+    	for(String taskid : taskIds)
+    	{
+    		list.add(Facade.getInstance().getTask(taskid));
+    	}
+    	return list;
+  }
+
   public String toString()
   {
 	  String outputString = "";

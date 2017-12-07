@@ -225,4 +225,9 @@ public class UserModifierActivity extends AppCompatActivity {
 
     private void pickImage() { CropImage.startPickImageActivity(this); }
 
+    public void onViewTasksClick(View view) {
+        Intent intent = new Intent(this, MyTasks.class);
+        intent.putExtra("userId", user.getId());
+        startActivity(intent);
+    }
 }
