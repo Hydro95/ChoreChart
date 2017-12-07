@@ -18,13 +18,17 @@ public class AddItem extends AppCompatActivity {
 
     ShoppingList shoppingList;
 
-    String item;
+    Item item;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
+
+        int index = getIntent().getIntExtra("index", -1);
+
+        shoppingList = Facade.getInstance().getShoppingList(index);
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -43,7 +47,18 @@ public class AddItem extends AppCompatActivity {
         String itemName = name.getText().toString();
         String itemQuantity = quantity.getText().toString();
 
-        item = itemQuantity + "x " + itemName;
+        item = new Item();
+
+        item.setName(itemName);
+        item.setQuantity(itemQuantity);
+
+        if (item.getId() == null) {
+            item.setId(Facade.getInstance().getShoppingRef().child(shoppingList.getId()).push().getKey());
+        }
+
+        shoppingList.addItem(item);
+
+        Facade.getInstance().publishShoppingLists();
 
         finish();
     }

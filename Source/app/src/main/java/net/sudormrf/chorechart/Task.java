@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 34 "../../../class.ump"
+// line 35 "../../../class.ump"
 public class Task
 {
 
@@ -291,19 +291,19 @@ public class Task
     return aItem;
   }
 
-  public List<Item> getItem()
+  public List<Item> getItems()
   {
-    List<Item> newItem = Collections.unmodifiableList(items);
-    return newItem;
+    List<Item> newItems = Collections.unmodifiableList(items);
+    return newItems;
   }
 
-  public int numberOfItem()
+  public int numberOfItems()
   {
     int number = items.size();
     return number;
   }
 
-  public boolean hasItem()
+  public boolean hasItems()
   {
     boolean has = items.size() > 0;
     return has;
@@ -345,7 +345,7 @@ public class Task
     return index;
   }
 
-  public static int minimumNumberOfItem()
+  public static int minimumNumberOfItems()
   {
     return 0;
   }
@@ -376,7 +376,7 @@ public class Task
     if(addItem(aItem))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfItem()) { index = numberOfItem() - 1; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
       items.remove(aItem);
       items.add(index, aItem);
       wasAdded = true;
@@ -390,7 +390,7 @@ public class Task
     if(items.contains(aItem))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfItem()) { index = numberOfItem() - 1; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
       items.remove(aItem);
       items.add(index, aItem);
       wasAdded = true;
@@ -495,12 +495,12 @@ public class Task
     }
   }
 
-  // line 49 "../../../class.ump"
+  // line 50 "../../../class.ump"
    public User getUser(){
     return Facade.getInstance().getUser(userId);
   }
 
-  // line 53 "../../../class.ump"
+  // line 54 "../../../class.ump"
    public boolean hasAllocation(){
     return userId != "";
   }
@@ -524,7 +524,7 @@ public class Task
   // DEVELOPER CODE - PROVIDED AS-IS
   //------------------------
   
-  // line 36 ../../../class.ump
+  // line 37 ../../../class.ump
   public enum Repeat 
   {
     NEVER, DAILY, WEEKLY, MONTHY, YEARLY
