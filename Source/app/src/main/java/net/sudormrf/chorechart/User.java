@@ -134,7 +134,6 @@ public class User
     return taskIds;
   }
 
-
   public String toString()
   {
 	  String outputString = "";
