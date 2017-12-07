@@ -13,8 +13,8 @@ import java.util.List;
  * Created by Walter on 2017-12-06.
  */
 
-public class ItemListAdapter extends ArrayAdapter<Items> {
-    public ItemListAdapter(Context context, List<Items> items)
+public class ItemListAdapter extends ArrayAdapter<Item> {
+    public ItemListAdapter(Context context, List<Item> items)
     {
         super(context, R.layout.item_list_row, items);
     }
@@ -34,7 +34,7 @@ public class ItemListAdapter extends ArrayAdapter<Items> {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View row = inflater.inflate(R.layout.item_list_row, parent, false);
 
-        Items selected = getItem(position);
+        Item selected = getItem(position);
 
         TextView itemName = (TextView) row.findViewById(R.id.itemName);
         itemName.setText(selected.getName());

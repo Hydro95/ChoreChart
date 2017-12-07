@@ -235,7 +235,7 @@ public class EditTaskActivity extends AppCompatActivity implements
         updateDeadline();
     }
 
-    public void onItemAdd(Items item)
+    public void onItemAdd(Item item)
     {
         task.addItem(item);
     }

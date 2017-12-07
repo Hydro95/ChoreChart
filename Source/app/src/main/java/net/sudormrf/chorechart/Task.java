@@ -27,7 +27,7 @@ public class Task
   private Status status;
 
   //Task Associations
-  private List<Items> items;
+  private List<Item> items;
   private List<Tools> tools;
 
   //------------------------
@@ -44,7 +44,7 @@ public class Task
     frequency = Repeat.NEVER;
     id = Facade.getInstance().getTaskRef().push().getKey();
     userId = "";
-    items = new ArrayList<Items>();
+    items = new ArrayList<Item>();
     tools = new ArrayList<Tools>();
     setStatus(Status.Unallocated);
   }
@@ -285,31 +285,31 @@ public class Task
     status = aStatus;
   }
 
-  public Items getItem(int index)
+  public Item getItem(int index)
   {
-    Items aItem = items.get(index);
+    Item aItem = items.get(index);
     return aItem;
   }
 
-  public List<Items> getItems()
+  public List<Item> getItem()
   {
-    List<Items> newItems = Collections.unmodifiableList(items);
-    return newItems;
+    List<Item> newItem = Collections.unmodifiableList(items);
+    return newItem;
   }
 
-  public int numberOfItems()
+  public int numberOfItem()
   {
     int number = items.size();
     return number;
   }
 
-  public boolean hasItems()
+  public boolean hasItem()
   {
     boolean has = items.size() > 0;
     return has;
   }
 
-  public int indexOfItem(Items aItem)
+  public int indexOfItem(Item aItem)
   {
     int index = items.indexOf(aItem);
     return index;
@@ -345,12 +345,12 @@ public class Task
     return index;
   }
 
-  public static int minimumNumberOfItems()
+  public static int minimumNumberOfItem()
   {
     return 0;
   }
 
-  public boolean addItem(Items aItem)
+  public boolean addItem(Item aItem)
   {
     boolean wasAdded = false;
     if (items.contains(aItem)) { return false; }
@@ -359,7 +359,7 @@ public class Task
     return wasAdded;
   }
 
-  public boolean removeItem(Items aItem)
+  public boolean removeItem(Item aItem)
   {
     boolean wasRemoved = false;
     if (items.contains(aItem))
@@ -370,13 +370,13 @@ public class Task
     return wasRemoved;
   }
 
-  public boolean addItemAt(Items aItem, int index)
+  public boolean addItemAt(Item aItem, int index)
   {  
     boolean wasAdded = false;
     if(addItem(aItem))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      if(index > numberOfItem()) { index = numberOfItem() - 1; }
       items.remove(aItem);
       items.add(index, aItem);
       wasAdded = true;
@@ -384,13 +384,13 @@ public class Task
     return wasAdded;
   }
 
-  public boolean addOrMoveItemAt(Items aItem, int index)
+  public boolean addOrMoveItemAt(Item aItem, int index)
   {
     boolean wasAdded = false;
     if(items.contains(aItem))
     {
       if(index < 0 ) { index = 0; }
-      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      if(index > numberOfItem()) { index = numberOfItem() - 1; }
       items.remove(aItem);
       items.add(index, aItem);
       wasAdded = true;

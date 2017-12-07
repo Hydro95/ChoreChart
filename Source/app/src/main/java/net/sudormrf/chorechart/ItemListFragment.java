@@ -25,7 +25,7 @@ public class ItemListFragment extends Fragment {
     private ItemListAdapter itmAdpt;
     private OnItemAddListener addListener;
     private String id;
-    private List<Items> itemList;
+    private List<Item> itemList;
 
     public ItemListFragment() {
         // Required empty public constructor
@@ -50,7 +50,7 @@ public class ItemListFragment extends Fragment {
         lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final Items delThis = itemList.get(i);
+                final Item delThis = itemList.get(i);
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Delete Item")
                         .setMessage("Are you sure you want to delete this item?")
@@ -114,7 +114,7 @@ public class ItemListFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String itemName = name.getText().toString().trim();
-                Items items = new Items();
+                Item items = new Item();
                 items.setName(itemName);
 
                 if(addListener != null) {
@@ -136,7 +136,7 @@ public class ItemListFragment extends Fragment {
             itemList = new ArrayList<>();
         }
         else {
-            itemList = new ArrayList<>(Facade.getInstance().getTask(id).getItems());
+            itemList = new ArrayList<>(Facade.getInstance().getTask(id).getItem());
         }
 
         FragmentActivity g = getActivity();
@@ -153,7 +153,7 @@ public class ItemListFragment extends Fragment {
 
     public interface OnItemAddListener
     {
-        public void onItemAdd(Items item);
+        public void onItemAdd(Item item);
     }
 
 }

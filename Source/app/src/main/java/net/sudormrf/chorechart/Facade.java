@@ -560,7 +560,7 @@ public class Facade
   }
 
   // line 232 "../../../class.ump"
-  public void addToShopping(ShoppingList list, String item){
+  public void addToShopping(ShoppingList list, Item item){
     list.addItem(item);
   }
 
