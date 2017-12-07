@@ -27,6 +27,7 @@ public class Task
   private Status status;
 
   //Task Associations
+  private List<Items> items;
   private List<Tools> tools;
 
   //------------------------
@@ -43,6 +44,7 @@ public class Task
     frequency = Repeat.NEVER;
     id = Facade.getInstance().getTaskRef().push().getKey();
     userId = "";
+    items = new ArrayList<Items>();
     tools = new ArrayList<Tools>();
     setStatus(Status.Unallocated);
   }
@@ -242,6 +244,24 @@ public class Task
     return wasEventProcessed;
   }
 
+  public boolean renewTask()
+  {
+    boolean wasEventProcessed = false;
+    
+    Status aStatus = status;
+    switch (aStatus)
+    {
+      case Completed:
+        setStatus(Status.InProgress);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
+  }
+
   public boolean extendDeadline()
   {
     boolean wasEventProcessed = false;
@@ -263,6 +283,36 @@ public class Task
   private void setStatus(Status aStatus)
   {
     status = aStatus;
+  }
+
+  public Items getItem(int index)
+  {
+    Items aItem = items.get(index);
+    return aItem;
+  }
+
+  public List<Items> getItems()
+  {
+    List<Items> newItems = Collections.unmodifiableList(items);
+    return newItems;
+  }
+
+  public int numberOfItems()
+  {
+    int number = items.size();
+    return number;
+  }
+
+  public boolean hasItems()
+  {
+    boolean has = items.size() > 0;
+    return has;
+  }
+
+  public int indexOfItem(Items aItem)
+  {
+    int index = items.indexOf(aItem);
+    return index;
   }
 
   public Tools getTool(int index)
@@ -293,6 +343,63 @@ public class Task
   {
     int index = tools.indexOf(aTool);
     return index;
+  }
+
+  public static int minimumNumberOfItems()
+  {
+    return 0;
+  }
+
+  public boolean addItem(Items aItem)
+  {
+    boolean wasAdded = false;
+    if (items.contains(aItem)) { return false; }
+    items.add(aItem);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeItem(Items aItem)
+  {
+    boolean wasRemoved = false;
+    if (items.contains(aItem))
+    {
+      items.remove(aItem);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addItemAt(Items aItem, int index)
+  {  
+    boolean wasAdded = false;
+    if(addItem(aItem))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      items.remove(aItem);
+      items.add(index, aItem);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveItemAt(Items aItem, int index)
+  {
+    boolean wasAdded = false;
+    if(items.contains(aItem))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfItems()) { index = numberOfItems() - 1; }
+      items.remove(aItem);
+      items.add(index, aItem);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addItemAt(aItem, index);
+    }
+    return wasAdded;
   }
 
   public static int minimumNumberOfTools()
@@ -379,6 +486,7 @@ public class Task
 
   public void delete()
   {
+    items.clear();
     ArrayList<Tools> copyOfTools = new ArrayList<Tools>(tools);
     tools.clear();
     for(Tools aTool : copyOfTools)

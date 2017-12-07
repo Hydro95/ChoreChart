@@ -4,6 +4,7 @@ namespace net.sudormrf.chorechart;
 every time you recompile you must:
 
 Remove the umple gen'd getter for User.getTaskIds()
+Remove the umple gen'd getter for Items.isBought()
 
 Fix replace umple gen'd getter for ShoppingList.getItems with the one
 described bellow (don't know why it compiles the one for Shopping list
@@ -63,10 +64,11 @@ class Task {
 			release -> Unallocated;
 			deadlinePassed -> Failed;
 		}
-		Completed {}
+		Completed { renewTask -> InProgress; }
 		Failed { extendDeadline -> Unallocated; }
 	}
 
+	0..1 -> * Items;
 }
 
 
@@ -92,7 +94,11 @@ class Item {
 	String name = "";
 	Boolean bought = false;
 
-	
+	public boolean equals(Items other) {
+		return this.name.equals(other.name) && this.bought == other.bought;
+	}
+
+	//0..* -- 1 ShoppingList;
 }
 
 class Home {
