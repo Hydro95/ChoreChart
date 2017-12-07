@@ -18,9 +18,21 @@
             android:id="@+id/itemCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.1"
+            android:padding="10dp"
             android:text="@string/checkbox"
             android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/itemQuantityText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            android:paddingRight="10dp"
+            android:text="Amount: 0"
+            android:textAlignment="textEnd"
+            android:textSize="18sp" />
+
     </LinearLayout>
 
 </RelativeLayout>

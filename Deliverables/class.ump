@@ -68,7 +68,7 @@ class Task {
 		Failed { extendDeadline -> Unallocated; }
 	}
 
-	0..1 -> * Items;
+	0..1 -> * Item;
 }
 
 
@@ -92,9 +92,11 @@ class ShoppingList {
 
 class Item {
 	String name = "";
+	String quantity = "";
 	Boolean bought = false;
+	String id = Facade.getInstance().getShoppingRef().push().getKey();
 
-	public boolean equals(Items other) {
+	public boolean equals(Item other) {
 		return this.name.equals(other.name) && this.bought == other.bought;
 	}
 

@@ -16,29 +16,33 @@ import java.util.List;
 public class ItemList extends AppCompatActivity {
 
     ShoppingList shoppingList;
+    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_list);
 
-        int index = getIntent().getIntExtra("index", -1);
+        index = getIntent().getIntExtra("index", -1);
+
 
         shoppingList = Facade.getInstance().getShoppingList(index);
 
+        /*
         Item test = new Item();
         test.setName("Test");
         test.setBought(true);
         shoppingList.addItem(test);
+        */
 
-        List<Item> listOfItems= shoppingList.getItems();
 
-        setContentView(R.layout.item_layout);
+        List<Item> listOfItems = shoppingList.getItems();
 
         ItemAdapter adapter = new ItemAdapter(this, listOfItems);
-        ListView listView = (ListView) findViewById(R.id.itemList);
+        ListView listView = findViewById(R.id.itemList);
 
         listView.setAdapter(adapter);
+
     }
 
 
@@ -55,6 +59,7 @@ public class ItemList extends AppCompatActivity {
 
         if(id == R.id.action_add) {
             Intent intent = new Intent(this, AddItem.class);
+            intent.putExtra("index", index);
             startActivity(intent);
         }
 
