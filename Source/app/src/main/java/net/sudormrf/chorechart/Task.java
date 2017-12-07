@@ -2,6 +2,8 @@
 /*This code was generated using the UMPLE 1.22.0.5146 modeling language!*/
 
 package net.sudormrf.chorechart;
+import com.google.firebase.database.Exclude;
+
 import java.util.*;
 
 // line 44 "../../../class.ump"
@@ -496,6 +498,7 @@ public class Task
   }
 
   // line 59 "../../../class.ump"
+  @Exclude
    public User getUser(){
     return Facade.getInstance().getUser(userId);
   }
