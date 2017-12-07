@@ -6,7 +6,6 @@ package net.sudormrf.chorechart;
 // line 91 "../../../class.ump"
 public class Item
 {
-
   //------------------------
   // MEMBER VARIABLES
   //------------------------
@@ -55,13 +54,13 @@ public class Item
     return bought;
   }
 
-  public boolean isBought()
-  {
-    return bought;
-  }
-
   public void delete()
   {}
+
+  // line 101 "../../../class.ump"
+   public boolean equals(Item other){
+    return this.name.equals(other.name) && this.bought == other.bought;
+  }
 
 
   public String toString()

@@ -79,16 +79,7 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        System.out.println(id);
 
-        /*
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            System.out.println("hi");
-            return true;
-        }
-        */
-        //else if(id == R.id.action_add) {
         if(id == R.id.action_add) {
             TabLayout t = (TabLayout) findViewById(R.id.tabs);
             int y = t.getSelectedTabPosition();
