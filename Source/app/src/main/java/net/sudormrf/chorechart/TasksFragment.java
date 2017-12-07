@@ -1,8 +1,8 @@
 package net.sudormrf.chorechart;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +18,12 @@ import java.util.List;
 
 public class TasksFragment extends Fragment {
 
-    //TODO: remove constructor taking arguments replace with newInstance method (cause this will have unexpected behavior)
-    public static TasksFragment newInstance(int userIndex) {
+    public static TasksFragment newInstance(String userId) {
 
         TasksFragment fragment = new TasksFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt("userIndex", userIndex);
+        bundle.putString("userId", userId);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -42,14 +41,18 @@ public class TasksFragment extends Fragment {
         ArrayList<Task> tasks = new ArrayList<Task>();
 
         Bundle args = getArguments();
-        int userIndex = args.getInt("userIndex", -1);
+        String userId;
+        if(args != null)
+            userId = args.getString("userId");
+        else
+            userId = null;
 
         TaskArrayAdapter adapter;
 
-        if(userIndex == -1)
+        if(userId == null)
             adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getTasks());
         else
-            adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getUser(userIndex).getTasks());
+            adapter = new TaskArrayAdapter(getActivity(), Facade.getInstance().getUser(userId).getTasks());
 
         ListView listView = (ListView) view.findViewById(R.id.generic_list);
         listView.setAdapter(adapter);

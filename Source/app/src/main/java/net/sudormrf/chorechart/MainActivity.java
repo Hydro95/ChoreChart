@@ -14,6 +14,10 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TasksFragment tasksFragment = new TasksFragment();
+    private ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
+    private PeopleFragment peopleFragment = new PeopleFragment();
+
     private enum Page {
         Tasks(0),
         ShoppingList(1),
@@ -120,13 +124,13 @@ public class MainActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0)
-                return new TasksFragment();
-          
+                return tasksFragment;
+
             else if (position == 1)
-                return new ShoppingListFragment();
+                return shoppingListFragment;
 
             else if (position == 2)
-                return new PeopleFragment();
+                return peopleFragment;
           
             else
                 return new TasksFragment();

@@ -80,7 +80,8 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".MyTasks"></activity>
+        <activity android:name=".MyTasks" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

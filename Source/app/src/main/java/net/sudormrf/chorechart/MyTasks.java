@@ -1,26 +1,45 @@
 package net.sudormrf.chorechart;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class MyTasks extends FragmentActivity {
+public class MyTasks extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_tasks);
-        
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        TasksFragment fragment = TasksFragment.newInstance(getIntent().getIntExtra("userIndex", -1));
-        fragmentTransaction.add(R.id.main_fragment, fragment);
-        fragmentTransaction.commit();
+        setContentView(R.layout.fragment_generic_list);
+        ArrayList<Task> tasks = new ArrayList<Task>();
 
+        TaskArrayAdapter adapter;
+
+        adapter = new TaskArrayAdapter(this, Facade.getInstance().getUser(
+                getIntent().getStringExtra("userId")).getTasks());
+
+        Log.d("test", getIntent().getStringExtra("userId"));
+        Log.d("test", Facade.getInstance().getUser(getIntent().getStringExtra("userId")).getTaskIds().get(0));
+
+        ListView listView = (ListView) findViewById(R.id.generic_list);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapter, View view, int index, long id) {
+                Intent intent = new Intent(getBaseContext(), EditTaskActivity.class);
+                intent.putExtra("index", index);
+                //TODO: ^^ this is going to give the wrong item change it to id from index
+                startActivity(intent);
+            }
+
+        });
     }
 }
