@@ -4,7 +4,7 @@
 package net.sudormrf.chorechart;
 import java.util.*;
 
-// line 36 "../../../class.ump"
+// line 37 "../../../class.ump"
 public class Parent extends User
 {
 
@@ -30,7 +30,7 @@ public class Parent extends User
     super.delete();
   }
 
-  // line 40 "../../../class.ump"
+  // line 41 "../../../class.ump"
   public void createNewAccount(String name){
     
   }

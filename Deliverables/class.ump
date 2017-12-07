@@ -24,6 +24,7 @@ class User {
     	return taskIds;
     }
 
+    @Exclude
     public List<Task> getTasks() {
     	List<Task> list = new ArrayList<Task>();
     	for(String taskid : taskIds)

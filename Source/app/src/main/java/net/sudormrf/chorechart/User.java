@@ -134,7 +134,7 @@ public class User
     return taskIds;
   }
 
-  // line 27 "../../../class.ump"
+  // line 28 "../../../class.ump"
    public List<Task> getTasks(){
     List<Task> list = new ArrayList<Task>();
     	for(String taskid : taskIds)

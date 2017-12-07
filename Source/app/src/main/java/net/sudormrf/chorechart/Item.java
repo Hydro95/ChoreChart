@@ -3,26 +3,30 @@
 
 package net.sudormrf.chorechart;
 
-// line 104 "../../../class.ump"
-public class Items
+// line 102 "../../../class.ump"
+public class Item
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Items Attributes
+  //Item Attributes
   private String name;
+  private String quantity;
   private boolean bought;
+  private String id;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Items()
+  public Item()
   {
     name = "";
+    quantity = "";
     bought = false;
+    id = Facade.getInstance().getShoppingRef().push().getKey();
   }
 
   //------------------------
@@ -37,10 +41,26 @@ public class Items
     return wasSet;
   }
 
+  public boolean setQuantity(String aQuantity)
+  {
+    boolean wasSet = false;
+    quantity = aQuantity;
+    wasSet = true;
+    return wasSet;
+  }
+
   public boolean setBought(boolean aBought)
   {
     boolean wasSet = false;
     bought = aBought;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setId(String aId)
+  {
+    boolean wasSet = false;
+    id = aId;
     wasSet = true;
     return wasSet;
   }
@@ -50,18 +70,28 @@ public class Items
     return name;
   }
 
+  public String getQuantity()
+  {
+    return quantity;
+  }
+
   public boolean getBought()
   {
     return bought;
   }
 
-  public boolean isBought()
+  public String getId()
   {
-    return bought;
+    return id;
   }
 
   public void delete()
   {}
+
+  // line 109 "../../../class.ump"
+   public boolean equals(Item other){
+    return this.name.equals(other.name) && this.bought == other.bought;
+  }
 
 
   public String toString()
@@ -69,7 +99,9 @@ public class Items
 	  String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
-            "bought" + ":" + getBought()+ "]"
+            "quantity" + ":" + getQuantity()+ "," +
+            "bought" + ":" + getBought()+ "," +
+            "id" + ":" + getId()+ "]"
      + outputString;
   }
 }

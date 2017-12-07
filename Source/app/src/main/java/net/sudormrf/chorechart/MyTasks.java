@@ -24,8 +24,8 @@ public class MyTasks extends AppCompatActivity {
         adapter = new TaskArrayAdapter(this, Facade.getInstance().getUser(
                 getIntent().getStringExtra("userId")).getTasks());
 
-        Log.d("test", getIntent().getStringExtra("userId"));
-        Log.d("test", Facade.getInstance().getUser(getIntent().getStringExtra("userId")).getTaskIds().get(0));
+        Log.d("test", Facade.getInstance().getUser(getIntent().getStringExtra("userId")).getName());
+        Log.d("test", Integer.toString(Facade.getInstance().getUser(getIntent().getStringExtra("userId")).getTaskIds().size()));
 
         ListView listView = (ListView) findViewById(R.id.generic_list);
         listView.setAdapter(adapter);
