@@ -44,4 +44,6 @@
     <string name="lbl_add_list_items">Manage shopping list items</string>
     <string name="textview">TextView</string>
     <string name="lbl_items">Items</string>
+    <string name="lbl_add_item">Add Item</string>
+    <string name="lbl_item_name">Item Name</string>
 </resources>
